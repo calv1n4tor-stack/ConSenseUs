@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ConSenseUs — Confidence Through Collective Intelligence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;1,300&family=Instrument+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+/* ── THEMES ── */
+[data-theme="dark"]{
+  --bg:#07080a;
+  --surface:#0f1012;
+  --surface2:#171819;
+  --surface3:#1f2022;
+  --border:rgba(255,255,255,0.07);
+  --border2:rgba(255,255,255,0.13);
+  --text:#f2f0ea;
+  --text2:rgba(242,240,234,0.6);
+  --text3:rgba(242,240,234,0.3);
+  --wattle:#ccda47;
+  --wattle-dim:rgba(204,218,71,0.1);
+  --wattle-glow:rgba(204,218,71,0.25);
+  --bgreen:#0a3625;
+  --bgreen-mid:#1a5c3a;
+  --bgreen-light:#2ecc8a;
+  --bgreen-dim:rgba(46,204,138,0.1);
+  --red:#e05a4a;
+  --red-dim:rgba(224,90,74,0.1);
+  --blue:#5b8fff;
+  --blue-dim:rgba(91,143,255,0.1);
+  --amber:#f0a030;
+  --amber-dim:rgba(240,160,48,0.1);
+  --shadow:rgba(0,0,0,0.5);
+}
+[data-theme="light"]{
+  --bg:#f5f0e6;
+  --surface:#fdfaf4;
+  --surface2:#f0ebe0;
+  --surface3:#e8e2d6;
+  --border:rgba(10,54,37,0.1);
+  --border2:rgba(10,54,37,0.18);
+  --text:#0d1a10;
+  --text2:rgba(13,26,16,0.55);
+  --text3:rgba(13,26,16,0.3);
+  --wattle:#8a9400;
+  --wattle-dim:rgba(138,148,0,0.08);
+  --wattle-glow:rgba(138,148,0,0.2);
+  --bgreen:#0a3625;
+  --bgreen-mid:#1a5c3a;
+  --bgreen-light:#1a8a55;
+  --bgreen-dim:rgba(26,138,85,0.1);
+  --red:#c0392b;
+  --red-dim:rgba(192,57,43,0.08);
+  --blue:#2060d0;
+  --blue-dim:rgba(32,96,208,0.08);
+  --amber:#b07800;
+  --amber-dim:rgba(176,120,0,0.08);
+  --shadow:rgba(10,54,37,0.12);
+}
+
+html{font-size:16px;scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Instrument Sans',sans-serif;min-height:100vh;overflow-x:hidden;transition:background 0.4s,color 0.4s}
+
+/* noise */
+body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:200;opacity:0.5}
+
+/* ── HEADER ── */
+header{padding:2rem 3rem 0;max-width:1200px;margin:0 auto;position:relative;z-index:10}
+.brand-bar{display:flex;align-items:center;gap:1rem;margin-bottom:2rem}
+.brand-name{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:800;letter-spacing:-0.02em;color:var(--text)}
+.brand-name .con{color:var(--wattle)}
+.brand-name .sense{color:var(--bgreen-light)}
+.ver-badge{font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.2em;color:var(--text3);border:1px solid var(--border2);padding:0.22rem 0.6rem;border-radius:20px}
+.theme-toggle{margin-left:auto;background:var(--surface2);border:1px solid var(--border2);border-radius:20px;padding:0.35rem 0.8rem;font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.15em;text-transform:uppercase;cursor:pointer;color:var(--text2);transition:all 0.3s}
+.theme-toggle:hover{border-color:var(--wattle);color:var(--wattle)}
+.header-rule{height:2px;background:linear-gradient(90deg,var(--wattle),var(--bgreen-light),transparent);margin-bottom:0}
+.hero-title{font-family:'Syne',sans-serif;font-size:clamp(2.6rem,5.5vw,5rem);font-weight:800;line-height:0.94;letter-spacing:-0.03em;margin:1.5rem 0 0.85rem}
+.hero-title .w{color:var(--wattle)}
+.hero-title .g{color:var(--bgreen-light)}
+.hero-sub{font-size:0.84rem;font-weight:300;color:var(--text2);max-width:460px;line-height:1.7;margin-bottom:2rem}
+.sub-rule{height:1px;background:var(--border)}
+
+/* ── WRAP ── */
+.wrap{max-width:1200px;margin:0 auto;padding:0 3rem 6rem;position:relative;z-index:10}
+
+/* ── CONFIG ── */
+.config{padding:1.75rem 0 1.25rem}
+.cfg-row{display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap;margin-bottom:1.25rem}
+.cfg-label{font-family:'DM Mono',monospace;font-size:0.56rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--text3);white-space:nowrap}
+
+/* key input */
+.key-wrap{flex:1;min-width:240px;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;display:flex;align-items:center;gap:0.6rem;padding:0.65rem 1rem}
+.key-ico{font-size:0.7rem;color:var(--text3)}
+.key-in{flex:1;background:transparent;border:none;outline:none;font-family:'DM Mono',monospace;font-size:0.7rem;color:var(--text);letter-spacing:0.04em}
+.key-in::placeholder{color:var(--text3)}
+
+/* segments */
+.seg{display:flex;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:3px;gap:2px}
+.seg-b{font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.14em;text-transform:uppercase;padding:0.38rem 0.85rem;border-radius:5px;border:none;cursor:pointer;background:transparent;color:var(--text3);transition:all 0.3s}
+.seg-b.on{background:var(--surface3);color:var(--text);border:1px solid var(--border2)}
+
+/* tiers */
+.tier-row{display:flex;gap:0.5rem;flex-wrap:wrap}
+.tier-b{font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.13em;text-transform:uppercase;padding:0.42rem 0.95rem;border-radius:20px;border:1px solid var(--border2);cursor:pointer;background:transparent;color:var(--text3);transition:all 0.3s;display:flex;align-items:center;gap:0.35rem}
+.tier-b .tc{font-size:0.48rem;opacity:0.55}
+.tier-b.t-fast.on{background:var(--bgreen-dim);color:var(--bgreen-light);border-color:rgba(46,204,138,0.3)}
+.tier-b.t-bal.on{background:var(--wattle-dim);color:var(--wattle);border-color:rgba(204,218,71,0.3)}
+.tier-b.t-max.on{background:var(--amber-dim);color:var(--amber);border-color:rgba(240,160,48,0.3)}
+
+/* ── AGENT CARDS ── */
+.agents-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0.65rem;margin-bottom:1.5rem}
+.agent-card{border-radius:10px;border:1px solid var(--border2);background:var(--surface);overflow:hidden;transition:all 0.3s}
+.agent-card.disabled{opacity:0.35}
+.ac-top{display:flex;align-items:center;justify-content:space-between;padding:0.75rem 0.9rem 0.55rem}
+.ac-left{display:flex;align-items:center;gap:0.5rem}
+.ac-ico{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.65rem;flex-shrink:0}
+.ac-name{font-family:'DM Mono',monospace;font-size:0.56rem;letter-spacing:0.15em;text-transform:uppercase}
+.ac-title{font-family:'DM Mono',monospace;font-size:0.5rem;letter-spacing:0.1em;color:var(--text3);padding:0 0.9rem 0.4rem}
+
+/* role colors */
+.r-arch .ac-ico{background:rgba(204,218,71,0.12);color:var(--wattle)}
+.r-arch .ac-name{color:var(--wattle)}
+.r-arch{border-top:2px solid var(--wattle)}
+.r-int .ac-ico{background:var(--red-dim);color:var(--red)}
+.r-int .ac-name{color:var(--red)}
+.r-int{border-top:2px solid var(--red)}
+.r-aud .ac-ico{background:var(--blue-dim);color:var(--blue)}
+.r-aud .ac-name{color:var(--blue)}
+.r-aud{border-top:2px solid var(--blue)}
+.r-real .ac-ico{background:var(--amber-dim);color:var(--amber)}
+.r-real .ac-name{color:var(--amber)}
+.r-real{border-top:2px solid var(--amber)}
+
+/* toggle */
+.ac-tog{width:28px;height:16px;border-radius:8px;position:relative;cursor:pointer;background:var(--surface3);border:1px solid var(--border2);transition:all 0.25s;flex-shrink:0}
+.ac-tog.on{border-color:var(--bgreen-light);background:rgba(46,204,138,0.2)}
+.ac-tog::after{content:'';position:absolute;top:2px;left:2px;width:10px;height:10px;border-radius:50%;background:var(--text3);transition:transform 0.25s,background 0.25s}
+.ac-tog.on::after{transform:translateX(12px);background:var(--bgreen-light)}
+
+/* model select */
+.ac-sel{width:100%;padding:0.42rem 0.75rem;background:var(--surface2);border:none;border-top:1px solid var(--border);font-family:'DM Mono',monospace;font-size:0.56rem;color:var(--text2);cursor:pointer;outline:none;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='5'%3E%3Cpath d='M0 0l4 5 4-5z' fill='rgba(200,200,200,0.3)'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 0.7rem center;padding-right:1.8rem}
+.ac-sel option{background:var(--surface2)}
+
+/* benchmark bars */
+.bench{padding:0.55rem 0.9rem 0.75rem;border-top:1px solid var(--border)}
+.bench-row{display:flex;align-items:center;gap:0.5rem;margin-bottom:0.3rem}
+.bench-label{font-family:'DM Mono',monospace;font-size:0.46rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text3);width:52px;flex-shrink:0}
+.bench-track{flex:1;height:3px;background:var(--border2);border-radius:2px;overflow:hidden}
+.bench-fill{height:100%;border-radius:2px;transition:width 0.6s cubic-bezier(0.32,0.72,0,1)}
+.r-arch .bench-fill{background:var(--wattle)}
+.r-int .bench-fill{background:var(--red)}
+.r-aud .bench-fill{background:var(--blue)}
+.r-real .bench-fill{background:var(--amber)}
+.bench-val{font-family:'DM Mono',monospace;font-size:0.46rem;color:var(--text3);width:22px;text-align:right}
+
+/* ── QUERY ── */
+.q-wrap{margin-bottom:1.1rem}
+.q-box{background:var(--surface);border:1px solid var(--border2);border-radius:10px;padding:1rem 1.2rem}
+textarea{width:100%;background:transparent;border:none;outline:none;font-family:'Syne',sans-serif;font-size:0.95rem;color:var(--text);resize:none;min-height:68px;line-height:1.6;font-weight:400}
+textarea::placeholder{color:var(--text3)}
+
+/* ── CONTROLS ── */
+.ctrl{display:flex;align-items:center;gap:0.7rem;flex-wrap:wrap;margin-bottom:0.6rem}
+.run-btn{display:inline-flex;align-items:center;gap:0.6rem;background:var(--wattle);color:var(--bgreen);border:none;padding:0.78rem 1.55rem;border-radius:24px;font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;cursor:pointer;font-weight:600;transition:all 0.3s cubic-bezier(0.32,0.72,0,1)}
+.run-btn:hover{background:var(--bgreen-light);color:#fff;transform:translateY(-1px)}
+.run-btn:disabled{opacity:0.35;cursor:not-allowed;transform:none}
+.icon-btn{display:none;align-items:center;gap:0.5rem;background:transparent;border:1px solid var(--border2);padding:0.78rem 1.3rem;border-radius:24px;font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.14em;text-transform:uppercase;cursor:pointer;color:var(--text2);transition:all 0.3s}
+.icon-btn.show{display:inline-flex}
+.icon-btn:hover{border-color:var(--wattle);color:var(--wattle)}
+.icon-btn:disabled{opacity:0.3;cursor:not-allowed}
+
+.status-bar{font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.1em;color:var(--text3);display:none;align-items:center;gap:0.55rem;margin-top:0.35rem}
+.status-bar.show{display:flex}
+.sdot{width:5px;height:5px;border-radius:50%;background:var(--wattle);animation:sdot 1.3s ease-in-out infinite}
+@keyframes sdot{0%,100%{opacity:0.2;transform:scale(0.7)}50%{opacity:1;transform:scale(1)}}
+.err{background:var(--red-dim);border:1px solid rgba(224,90,74,0.2);border-radius:6px;padding:0.8rem 1rem;font-family:'DM Mono',monospace;font-size:0.65rem;color:var(--red);margin-top:0.7rem}
+
+/* ── ROUND TABLE ── */
+.debate-area{margin-top:2.5rem;opacity:0;transform:translateY(12px);transition:all 0.5s cubic-bezier(0.32,0.72,0,1)}
+.debate-area.show{opacity:1;transform:translateY(0)}
+
+.round-hdr{display:flex;align-items:center;gap:0.7rem;margin:2rem 0 1.25rem}
+.rh-num{font-family:'DM Mono',monospace;font-size:0.53rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--text3)}
+.rh-title{font-family:'Syne',sans-serif;font-size:1.25rem;font-weight:700;color:var(--text)}
+.rh-rule{flex:1;height:1px;background:var(--border)}
+
+/* round table visual */
+.table-scene{position:relative;width:100%;max-width:720px;margin:0 auto 2rem;aspect-ratio:1/0.7}
+.table-surface{position:absolute;left:50%;top:50%;transform:translate(-50%,-40%);width:45%;aspect-ratio:1;border-radius:50%;background:linear-gradient(135deg,var(--bgreen) 0%,#0d2b1c 100%);border:2px solid rgba(204,218,71,0.2);box-shadow:0 8px 40px var(--shadow),inset 0 1px 0 rgba(204,218,71,0.1)}
+.table-label{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:'DM Mono',monospace;font-size:0.52rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(204,218,71,0.5);text-align:center;line-height:1.6}
+
+/* seat positions - 4 around table */
+.seat{position:absolute;width:160px;transition:all 0.4s cubic-bezier(0.32,0.72,0,1)}
+.seat-top{top:0;left:50%;transform:translateX(-50%)}
+.seat-right{top:50%;right:0;transform:translateY(-50%)}
+.seat-bottom{bottom:0;left:50%;transform:translateX(-50%)}
+.seat-left{top:50%;left:0;transform:translateY(-50%)}
+
+/* seat card */
+.seat-card{background:var(--surface);border:1px solid var(--border2);border-radius:10px;padding:0.8rem;position:relative;transition:all 0.4s cubic-bezier(0.32,0.72,0,1)}
+.seat-card.active{box-shadow:0 0 0 2px var(--seat-color),0 8px 30px rgba(0,0,0,0.3);transform:scale(1.03)}
+.seat-card.done{border-color:rgba(46,204,138,0.25)}
+.seat-card.waiting{opacity:0.5}
+.seat-top-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:0.5rem}
+.seat-ico{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.62rem;background:var(--surface3)}
+.seat-info{flex:1;margin-left:0.4rem}
+.seat-role{font-family:'DM Mono',monospace;font-size:0.5rem;letter-spacing:0.14em;text-transform:uppercase}
+.seat-title{font-family:'DM Mono',monospace;font-size:0.44rem;letter-spacing:0.08em;color:var(--text3);margin-top:1px}
+.seat-status{font-family:'DM Mono',monospace;font-size:0.44rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.15rem 0.4rem;border-radius:3px}
+.st-wait{background:var(--surface3);color:var(--text3)}
+.st-active{background:var(--wattle-dim);color:var(--wattle);animation:stpulse 1.2s ease-in-out infinite}
+.st-done{background:var(--bgreen-dim);color:var(--bgreen-light)}
+@keyframes stpulse{0%,100%{opacity:0.6}50%{opacity:1}}
+
+/* speech bubble */
+.bubble{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:0.65rem 0.75rem;margin-top:0.5rem;font-size:0.72rem;line-height:1.65;color:var(--text2);font-weight:300;max-height:100px;overflow:hidden;display:none;position:relative}
+.bubble.show{display:block;animation:bubbleIn 0.35s cubic-bezier(0.32,0.72,0,1)}
+@keyframes bubbleIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.bubble::after{content:'';position:absolute;bottom:0;left:0;right:0;height:24px;background:linear-gradient(transparent,var(--surface2))}
+
+/* connector lines from seats to table */
+.connector{position:absolute;background:var(--border);pointer-events:none}
+
+/* loading pulse */
+.pulse{display:flex;gap:4px;align-items:center}
+.pd{width:4px;height:4px;border-radius:50%;background:var(--text3);animation:pd 1.1s ease-in-out infinite}
+.pd:nth-child(2){animation-delay:.18s}.pd:nth-child(3){animation-delay:.36s}
+@keyframes pd{0%,100%{opacity:0.15;transform:scale(0.7)}50%{opacity:0.8;transform:scale(1)}}
+
+/* tag rendering */
+.tag-v{display:inline-block;font-family:'DM Mono',monospace;font-size:0.5rem;padding:0.08rem 0.32rem;border-radius:3px;vertical-align:middle;margin:0 2px;font-weight:500}
+.tv{background:rgba(46,204,138,0.12);color:var(--bgreen-light);border:1px solid rgba(46,204,138,0.22)}
+.tu{background:var(--amber-dim);color:var(--amber);border:1px solid rgba(240,160,48,0.25)}
+.tc2{background:var(--red-dim);color:var(--red);border:1px solid rgba(224,90,74,0.22)}
+
+/* ── FULL TRANSCRIPT (list view below table) ── */
+.transcript-section{display:none}
+.transcript-section.show{display:block}
+.transcript-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:0.65rem}
+.tr-card{background:var(--surface);border:1px solid var(--border2);border-radius:10px;overflow:hidden}
+.tr-card-head{display:flex;align-items:center;justify-content:space-between;padding:0.75rem 1rem;border-bottom:1px solid var(--border)}
+.tr-card-id{display:flex;align-items:center;gap:0.45rem}
+.tr-name{font-family:'DM Mono',monospace;font-size:0.54rem;letter-spacing:0.15em;text-transform:uppercase}
+.tr-model{font-family:'DM Mono',monospace;font-size:0.48rem;color:var(--text3);background:var(--surface2);padding:0.15rem 0.45rem;border-radius:3px;border:1px solid var(--border)}
+.tr-body{padding:1rem;font-size:0.8rem;line-height:1.72;color:var(--text2);font-weight:300}
+
+/* ── VOTE SECTION ── */
+.vote-section{display:none;margin:1.5rem 0}
+.vote-section.show{display:block}
+.vote-hdr{display:flex;align-items:center;gap:0.75rem;margin-bottom:1rem}
+.vote-title{font-family:'Syne',sans-serif;font-size:1.15rem;font-weight:700}
+.vote-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:0.6rem}
+.vote-card{background:var(--surface);border:1px solid var(--border2);border-radius:8px;padding:0.85rem 1rem;transition:all 0.4s}
+.vote-card.selected{border-color:var(--wattle);background:var(--wattle-dim)}
+.vote-agent{font-family:'DM Mono',monospace;font-size:0.52rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--text3);margin-bottom:0.35rem}
+.vote-choice{font-family:'DM Mono',monospace;font-size:0.6rem;color:var(--text);display:flex;align-items:center;gap:0.4rem}
+.vote-dot{width:6px;height:6px;border-radius:50%;background:var(--wattle);animation:sdot 1s ease-in-out infinite}
+
+/* ── ARBITER ── */
+.arbiter-section{display:none;margin:1.5rem 0}
+.arbiter-section.show{display:block;animation:arbiterIn 0.6s cubic-bezier(0.32,0.72,0,1)}
+@keyframes arbiterIn{from{opacity:0;transform:scale(0.96)}to{opacity:1;transform:scale(1)}}
+.arb-shell{border-radius:14px;padding:3px;background:linear-gradient(135deg,var(--wattle),var(--bgreen-light),var(--wattle));box-shadow:0 0 40px var(--wattle-glow)}
+.arb-core{background:var(--bg);border-radius:12px;padding:2rem 2.25rem}
+.arb-crown{text-align:center;margin-bottom:1.5rem;padding-bottom:1.25rem;border-bottom:1px solid var(--border)}
+.arb-ico{font-size:1.8rem;margin-bottom:0.4rem}
+.arb-label{font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--wattle);margin-bottom:0.25rem}
+.arb-model-tag{font-family:'DM Mono',monospace;font-size:0.52rem;color:var(--text3);background:var(--surface2);padding:0.2rem 0.6rem;border-radius:4px;border:1px solid var(--border2);display:inline-block}
+.arb-verdict{font-size:0.92rem;line-height:1.82;color:var(--text2);font-weight:300;margin-bottom:1.75rem}
+
+/* score matrix */
+.score-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0.65rem;margin-bottom:1.5rem}
+.score-cell{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:0.8rem 0.65rem;text-align:center}
+.sc-label{font-family:'DM Mono',monospace;font-size:0.46rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--text3);margin-bottom:0.45rem;line-height:1.4}
+.sc-val{font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:700;line-height:1}
+.sc-track{height:3px;background:rgba(255,255,255,0.06);border-radius:2px;margin-top:0.45rem;overflow:hidden}
+.sc-fill{height:100%;border-radius:2px;width:0%;transition:width 1.2s cubic-bezier(0.32,0.72,0,1)}
+.s-log .sc-val{color:var(--bgreen-light)}.s-log .sc-fill{background:var(--bgreen-light)}
+.s-fac .sc-val{color:var(--blue)}.s-fac .sc-fill{background:var(--blue)}
+.s-exe .sc-val{color:var(--amber)}.s-exe .sc-fill{background:var(--amber)}
+.s-con .sc-val{color:var(--wattle)}.s-con .sc-fill{background:var(--wattle)}
+
+/* deciding factor */
+.df-box{background:var(--wattle-dim);border:1px solid rgba(204,218,71,0.2);border-radius:8px;padding:0.85rem 1rem;margin-bottom:1.25rem}
+.df-lbl{font-family:'DM Mono',monospace;font-size:0.5rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--wattle);margin-bottom:0.3rem}
+.df-txt{font-size:0.83rem;line-height:1.6;color:var(--text2);font-weight:300}
+
+/* tags */
+.sc-tags{display:flex;gap:0.35rem;flex-wrap:wrap;margin-top:0.85rem}
+.sct{font-family:'DM Mono',monospace;font-size:0.5rem;letter-spacing:0.08em;padding:0.22rem 0.6rem;border-radius:4px}
+.sct-s{background:var(--bgreen-dim);color:var(--bgreen-light);border:1px solid rgba(46,204,138,0.2)}
+.sct-c{background:var(--red-dim);color:var(--red);border:1px solid rgba(224,90,74,0.2)}
+
+/* tts */
+.tts-btn{display:none;align-items:center;gap:0.5rem;background:var(--surface2);border:1px solid var(--border2);padding:0.6rem 1.1rem;border-radius:20px;font-family:'DM Mono',monospace;font-size:0.56rem;letter-spacing:0.14em;text-transform:uppercase;cursor:pointer;color:var(--text2);margin-top:1.25rem;transition:all 0.3s}
+.tts-btn.show{display:inline-flex}
+.tts-btn:hover{border-color:var(--wattle);color:var(--wattle)}
+
+/* reset */
+.reset-btn{display:inline-flex;align-items:center;gap:0.45rem;background:transparent;border:1px solid var(--border2);padding:0.55rem 1rem;border-radius:20px;font-family:'DM Mono',monospace;font-size:0.56rem;letter-spacing:0.15em;text-transform:uppercase;cursor:pointer;color:var(--text3);margin-top:1.5rem;transition:all 0.3s}
+.reset-btn:hover{border-color:var(--text);color:var(--text)}
+
+/* footer */
+footer{border-top:1px solid var(--border);padding:1.25rem 3rem;max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;position:relative;z-index:10}
+.ft{font-family:'DM Mono',monospace;font-size:0.52rem;letter-spacing:0.14em;color:var(--text3);text-transform:uppercase}
+
+@media(max-width:768px){
+  header,.wrap,footer{padding-left:1.25rem;padding-right:1.25rem}
+  .hero-title{font-size:2.4rem}
+  .agents-grid,.transcript-grid,.vote-grid,.score-grid{grid-template-columns:1fr}
+  .table-scene{display:none}
+  .ctrl{flex-direction:column;align-items:flex-start}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand-bar">
+    <span class="brand-name"><span class="con">Con</span><span class="sense">Sense</span>Us</span>
+    <span class="ver-badge">v3.1</span>
+    <button class="theme-toggle" onclick="toggleTheme()">☀ Light</button>
+  </div>
+  <div class="header-rule"></div>
+  <h1 class="hero-title">The<br><span class="w">Round</span><br><span class="g">Table</span></h1>
+  <p class="hero-sub">Confidence through collective intelligence. Four agents. One question. A verdict that survives scrutiny.</p>
+  <div class="sub-rule"></div>
+</header>
+
+<div class="wrap">
+<div class="config">
+
+  <!-- API + MODE -->
+  <div class="cfg-row">
+    <span class="cfg-label">API Key</span>
+    <div class="key-wrap">
+      <span class="key-ico">⬡</span>
+      <input class="key-in" id="api-key" type="password" placeholder="sk-or-... OpenRouter · sk-ant-... Anthropic">
+    </div>
+    <div class="seg">
+      <button class="seg-b on" onclick="setMode('openrouter',this)">OpenRouter</button>
+      <button class="seg-b" onclick="setMode('anthropic',this)">Anthropic</button>
+    </div>
+  </div>
+
+  <!-- TIERS -->
+  <div class="cfg-row" style="margin-bottom:0.85rem">
+    <span class="cfg-label">Tier</span>
+    <div class="tier-row">
+      <button class="tier-b t-fast" data-tier="fast" onclick="setTier('fast',this)">⚡ Fast <span class="tc">~$0.04</span></button>
+      <button class="tier-b t-bal on" data-tier="balanced" onclick="setTier('balanced',this)">◈ Balanced <span class="tc">~$0.06</span></button>
+      <button class="tier-b t-max" data-tier="max" onclick="setTier('max',this)">★ Maximum <span class="tc">~$0.80</span></button>
+    </div>
+  </div>
+
+  <!-- AGENT CARDS -->
+  <span class="cfg-label" style="display:block;margin-bottom:0.65rem">Agents — assign models, toggle roles</span>
+  <div class="agents-grid" id="agents-grid"></div>
+
+  <!-- QUERY -->
+  <span class="cfg-label" style="display:block;margin-bottom:0.5rem;margin-top:0.5rem">Your question, decision, or claim</span>
+  <div class="q-wrap">
+    <div class="q-box">
+      <textarea id="query" placeholder="Enter any decision, claim, or question for the Round Table..." rows="3"></textarea>
+    </div>
+  </div>
+
+  <!-- CONTROLS -->
+  <div class="ctrl">
+    <button class="run-btn" id="run-btn" onclick="runDebate()">
+      Convene the Round Table →
+    </button>
+    <button class="icon-btn" id="verify-btn" onclick="runVerification()">◆ Independent Verification</button>
+    <button class="icon-btn" id="export-btn" onclick="exportAudit()">↓ Export Audit</button>
+  </div>
+  <div class="status-bar" id="status-bar"><span class="sdot"></span><span id="status-txt"></span></div>
+  <div id="err-area"></div>
+</div>
+
+<!-- DEBATE AREA -->
+<div class="debate-area" id="debate-area">
+
+  <!-- ROUND TABLE VISUAL -->
+  <div id="table-container" style="display:none">
+    <div class="round-hdr">
+      <span class="rh-num" id="round-num-label">Round 01 /</span>
+      <span class="rh-title" id="round-title-label">Opening Arguments</span>
+      <div class="rh-rule"></div>
+    </div>
+    <div class="table-scene" id="table-scene">
+      <div class="table-surface">
+        <div class="table-label" id="table-center-label">Round 1<br>In Progress</div>
+      </div>
+      <!-- Seats populated by JS -->
+    </div>
+  </div>
+
+  <!-- TRANSCRIPT R1 -->
+  <div class="transcript-section" id="r1-transcript">
+    <div class="transcript-grid" id="r1-grid"></div>
+  </div>
+
+  <!-- TRANSCRIPT R2 -->
+  <div id="r2-container" style="display:none">
+    <div class="round-hdr" style="margin-top:1.5rem">
+      <span class="rh-num">Round 02 /</span>
+      <span class="rh-title">Cross-Examination</span>
+      <div class="rh-rule"></div>
+    </div>
+    <div class="transcript-section" id="r2-transcript">
+      <div class="transcript-grid" id="r2-grid"></div>
+    </div>
+  </div>
+
+  <!-- VOTE -->
+  <div class="vote-section" id="vote-section">
+    <div class="vote-hdr">
+      <span class="rh-num">Vote /</span>
+      <span class="vote-title">Selecting the Arbiter</span>
+      <div class="rh-rule"></div>
+    </div>
+    <div class="vote-grid" id="vote-grid"></div>
+  </div>
+
+  <!-- ARBITER -->
+  <div class="arbiter-section" id="arbiter-section">
+    <div class="round-hdr">
+      <span class="rh-num">Final /</span>
+      <span class="rh-title">The Arbiter's Verdict</span>
+      <div class="rh-rule"></div>
+    </div>
+    <div class="arb-shell">
+      <div class="arb-core">
+        <div class="arb-crown">
+          <div class="arb-ico">⚖</div>
+          <div class="arb-label">The Arbiter</div>
+          <div class="arb-model-tag" id="arb-model-tag">—</div>
+        </div>
+        <div class="arb-verdict" id="arb-verdict">—</div>
+        <div class="score-grid">
+          <div class="score-cell s-log"><div class="sc-label">Logical Soundness</div><div class="sc-val" id="s-log">—</div><div class="sc-track"><div class="sc-fill" id="sf-log"></div></div></div>
+          <div class="score-cell s-fac"><div class="sc-label">Factual Grounding</div><div class="sc-val" id="s-fac">—</div><div class="sc-track"><div class="sc-fill" id="sf-fac"></div></div></div>
+          <div class="score-cell s-exe"><div class="sc-label">Execution Risk</div><div class="sc-val" id="s-exe">—</div><div class="sc-track"><div class="sc-fill" id="sf-exe"></div></div></div>
+          <div class="score-cell s-con"><div class="sc-label">Confidence</div><div class="sc-val" id="s-con">—</div><div class="sc-track"><div class="sc-fill" id="sf-con"></div></div></div>
+        </div>
+        <div class="df-box">
+          <div class="df-lbl">Deciding Factor</div>
+          <div class="df-txt" id="df-txt">—</div>
+        </div>
+        <div class="sc-tags" id="sc-tags"></div>
+        <button class="tts-btn" id="tts-btn" onclick="hearVerdict()">▶ Hear the Verdict</button>
+      </div>
+    </div>
+    <button class="reset-btn" onclick="resetAll()">↺ New Debate</button>
+  </div>
+
+</div><!-- end debate-area -->
+</div><!-- end wrap -->
+
+<footer>
+  <span class="ft">ConSenseUs v3.1 · The Round Table</span>
+  <span class="ft">Confidence Through Collective Intelligence</span>
+</footer>
+
+<script>
+// ── MODELS ──
+const OR_MODELS=[
+  {id:'anthropic/claude-sonnet-4-5',label:'Claude Sonnet 4.5',bench:{r:88,f:85,s:72}},
+  {id:'anthropic/claude-opus-4',label:'Claude Opus 4',bench:{r:95,f:90,s:55}},
+  {id:'openai/gpt-4.1',label:'GPT-4.1',bench:{r:90,f:82,s:78}},
+  {id:'openai/gpt-4o',label:'GPT-4o',bench:{r:87,f:80,s:82}},
+  {id:'openai/gpt-4.1-mini',label:'GPT-4.1 Mini',bench:{r:74,f:70,s:92}},
+  {id:'x-ai/grok-3',label:'Grok 3',bench:{r:89,f:78,s:75}},
+  {id:'google/gemini-2.5-pro',label:'Gemini 2.5 Pro',bench:{r:86,f:92,s:68}},
+  {id:'google/gemini-2.0-flash-001',label:'Gemini 2.0 Flash',bench:{r:78,f:80,s:95}},
+  {id:'deepseek/deepseek-r1',label:'DeepSeek R1',bench:{r:92,f:75,s:65}},
+  {id:'deepseek/deepseek-chat-v3-5',label:'DeepSeek V3',bench:{r:80,f:74,s:88}},
+  {id:'meta-llama/llama-4-maverick',label:'Llama 4 Maverick',bench:{r:78,f:72,s:85}},
+  {id:'anthropic/claude-haiku-4-5',label:'Claude Haiku 4.5',bench:{r:70,f:68,s:96}},
+];
+const ANT_MODELS=[
+  {id:'claude-sonnet-4-5-20251001',label:'Claude Sonnet 4.5',bench:{r:88,f:85,s:72}},
+  {id:'claude-opus-4-20250514',label:'Claude Opus 4',bench:{r:95,f:90,s:55}},
+  {id:'claude-haiku-4-5-20251001',label:'Claude Haiku 4.5',bench:{r:70,f:68,s:96}},
+];
+
+const TIERS={
+  fast:{advocate:'anthropic/claude-haiku-4-5',devil:'openai/gpt-4.1-mini',factcheck:'google/gemini-2.0-flash-001',strategist:'deepseek/deepseek-chat-v3-5'},
+  balanced:{advocate:'anthropic/claude-sonnet-4-5',devil:'openai/gpt-4.1',factcheck:'google/gemini-2.5-pro',strategist:'deepseek/deepseek-r1'},
+  max:{advocate:'anthropic/claude-sonnet-4-5',devil:'x-ai/grok-3',factcheck:'google/gemini-2.5-pro',strategist:'deepseek/deepseek-r1'},
+};
+
+const ROLES={
+  advocate:{
+    key:'advocate',icon:'▲',name:'Architect',title:'The Architect',color:'arch',
+    desc:'Builds the strongest case for the premise.',
+    seat:'seat-top',
+    bench:{r:88,f:82,s:75},
+    r1:`You are The Architect. Build the 3 strongest arguments FOR the premise. No hedging. No concessions. Every claim must include a mechanism and specific evidence. NEVER use "however" or "on the other hand". Max 200 words.`,
+    r2:`You are The Architect. The Round Table has heard all opening arguments. Defend your strongest point against the Interrogator's attack. Acknowledge one [CONTRADICTED] tag only if you can immediately reframe why it doesn't undermine your thesis. Penalized for agreement. Max 150 words.`,
+    vPrompt:`You are an independent verification agent. Assess The Architect's claims: which are factually solid vs speculative? What is their strongest surviving argument? Max 120 words.`
+  },
+  devil:{
+    key:'devil',icon:'▼',name:'Interrogator',title:'The Interrogator',color:'int',
+    desc:'Finds and destroys the weakest assumption.',
+    seat:'seat-right',
+    bench:{r:85,f:70,s:80},
+    r1:`You are The Interrogator. Find the weakest structural assumption and make it collapse. Agreement = failure. No softening phrases. Attack sequence: (1) Name weakest assumption. (2) Show why it fails in the real world. (3) What is being hidden. (4) Actual outcome when assumption breaks. Max 180 words.`,
+    r2:`You are The Interrogator. The Architect patched their argument. Find the new crack. If they pivoted, attack the pivot. Strictly forbidden from sounding like agreement. Max 150 words.`,
+    vPrompt:`You are an independent verification agent. Were The Interrogator's attacks logically valid? Which was strongest? What was overblown? Max 120 words.`
+  },
+  factcheck:{
+    key:'factcheck',icon:'◆',name:'Auditor',title:'The Auditor',color:'aud',
+    desc:'Verifies every claim. No opinions.',
+    seat:'seat-bottom',
+    bench:{r:75,f:95,s:70},
+    r1:`You are The Auditor. Tag every factual claim. Format ONLY as: [TAG] → Claim (max 12 words) → Evidence (max 15 words). Maximum 8 claims. No preamble. No summary. Tags: [VERIFIED] [UNVERIFIED] [CONTRADICTED]. If uncertain about a source write [uncertain source].`,
+    r2:`You are The Auditor. Tag all new claims from Round 1 cross-examination using same format. Update any Round 1 [UNVERIFIED] tags if new evidence was provided. Maximum 8 claims. Same format only.`,
+    vPrompt:`You are an independent verification agent. Cross-check ALL factual claims from the full debate. Final factual audit: verified, unverified, contradicted. Max 120 words.`
+  },
+  strategist:{
+    key:'strategist',icon:'●',name:'Realist',title:'The Realist',color:'real',
+    desc:'Evaluates execution risk. No position taken.',
+    seat:'seat-left',
+    bench:{r:82,f:78,s:78},
+    r1:`You are The Realist. No position for or against. Execution risk only. Output: (1) Most likely failure mode with specific mechanism. (2) Hidden dependency nobody mentioned. (3) Concrete decision criterion — specific threshold that changes the answer. Max 160 words.`,
+    r2:`You are The Realist. Update the risk picture based on the full Round 1 debate and Auditor tags. What changed? What didn't? Update failure mode and decision criterion. Max 140 words.`,
+    vPrompt:`You are an independent verification agent. Were The Realist's failure modes realistic? Was the decision criterion actionable? Max 120 words.`
+  }
+};
+
+// SYNTH CANDIDATES for vote
+const SYNTH_CANDIDATES=[
+  {id:'anthropic/claude-sonnet-4-5',label:'Claude Sonnet 4.5'},
+  {id:'anthropic/claude-opus-4',label:'Claude Opus 4'},
+  {id:'openai/gpt-4.1',label:'GPT-4.1'},
+  {id:'google/gemini-2.5-pro',label:'Gemini 2.5 Pro'},
+];
+const ANT_SYNTH=[
+  {id:'claude-opus-4-20250514',label:'Claude Opus 4'},
+  {id:'claude-sonnet-4-5-20251001',label:'Claude Sonnet 4.5'},
+];
+
+// ── STATE ──
+let apiMode='openrouter';
+let currentTier='balanced';
+let activeRoles=new Set(['advocate','devil','factcheck','strategist']);
+let debateResults={r1:{},r2:{}};
+let lastQuery='';
+let lastVerdict=null;
+let verdictText='';
+
+// ── THEME ──
+function toggleTheme(){
+  const h=document.documentElement;
+  const isDark=h.getAttribute('data-theme')==='dark';
+  h.setAttribute('data-theme',isDark?'light':'dark');
+  document.querySelector('.theme-toggle').textContent=isDark?'☾ Dark':'☀ Light';
+}
+
+// ── MODE / TIER ──
+function setMode(m,btn){
+  apiMode=m;
+  document.querySelectorAll('.seg-b').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  renderAgents();
+}
+function setTier(t,btn){
+  currentTier=t;
+  document.querySelectorAll('.tier-b').forEach(b=>b.className=b.className.replace(/t-fast|t-bal|t-max/,'').trim().replace(' on',''));
+  btn.classList.add('on');
+  renderAgents();
+}
+
+// ── RENDER AGENTS ──
+function renderAgents(){
+  const grid=document.getElementById('agents-grid');
+  grid.innerHTML='';
+  const models=apiMode==='openrouter'?OR_MODELS:ANT_MODELS;
+  const td=TIERS[currentTier];
+  Object.entries(ROLES).forEach(([key,role])=>{
+    const on=activeRoles.has(key);
+    const defM=td[key]||models[0].id;
+    const mData=models.find(m=>m.id===defM)||models[0];
+    const card=document.createElement('div');
+    card.className=`agent-card r-${role.color}${on?'':' disabled'}`;
+    card.innerHTML=`
+      <div class="ac-top">
+        <div class="ac-left">
+          <div class="ac-ico">${role.icon}</div>
+          <div class="ac-info">
+            <div class="ac-name">${role.name}</div>
+          </div>
+        </div>
+        <div class="ac-tog ${on?'on':''}" onclick="toggleRole('${key}',this)"></div>
+      </div>
+      <div class="ac-title">${role.title}</div>
+      <select class="ac-sel" id="model-${key}" ${on?'':'disabled'}>
+        ${models.map(m=>`<option value="${m.id}" ${m.id===defM?'selected':''}>${m.label}</option>`).join('')}
+      </select>
+      <div class="bench">
+        <div class="bench-row"><span class="bench-label">Reasoning</span><div class="bench-track"><div class="bench-fill" style="width:${mData.bench?.r||75}%"></div></div><span class="bench-val">${mData.bench?.r||75}</span></div>
+        <div class="bench-row"><span class="bench-label">Factual</span><div class="bench-track"><div class="bench-fill" style="width:${mData.bench?.f||75}%"></div></div><span class="bench-val">${mData.bench?.f||75}</span></div>
+        <div class="bench-row"><span class="bench-label">Speed</span><div class="bench-track"><div class="bench-fill" style="width:${mData.bench?.s||75}%"></div></div><span class="bench-val">${mData.bench?.s||75}</span></div>
+      </div>`;
+    // update bench on model change
+    card.querySelector('.ac-sel').addEventListener('change',function(){
+      const sel=models.find(m=>m.id===this.value)||{bench:{r:75,f:75,s:75}};
+      const fills=card.querySelectorAll('.bench-fill');
+      const vals=card.querySelectorAll('.bench-val');
+      const b=sel.bench||{r:75,f:75,s:75};
+      fills[0].style.width=b.r+'%';fills[1].style.width=b.f+'%';fills[2].style.width=b.s+'%';
+      vals[0].textContent=b.r;vals[1].textContent=b.f;vals[2].textContent=b.s;
+    });
+    grid.appendChild(card);
+  });
+}
+
+function toggleRole(key,el){
+  if(activeRoles.has(key)){
+    if(activeRoles.size<=2)return;
+    activeRoles.delete(key);
+    el.classList.remove('on');
+    el.closest('.agent-card').classList.add('disabled');
+    document.getElementById(`model-${key}`).disabled=true;
+  }else{
+    activeRoles.add(key);
+    el.classList.add('on');
+    el.closest('.agent-card').classList.remove('disabled');
+    document.getElementById(`model-${key}`).disabled=false;
+  }
+}
+
+// ── HELPERS ──
+function mLabel(id){return[...OR_MODELS,...ANT_MODELS].find(m=>m.id===id)?.label||id.split('/').pop()}
+function setStatus(t){const s=document.getElementById('status-bar');s.classList.add('show');document.getElementById('status-txt').textContent=t}
+function clearStatus(){document.getElementById('status-bar').classList.remove('show')}
+function showErr(m){document.getElementById('err-area').innerHTML=`<div class="err">⚠ ${m}</div>`}
+function clearErr(){document.getElementById('err-area').innerHTML=''}
+function renderTags(t){return t.replace(/\[VERIFIED\]/g,'<span class="tag-v tv">VERIFIED</span>').replace(/\[UNVERIFIED\]/g,'<span class="tag-v tu">UNVERIFIED</span>').replace(/\[CONTRADICTED\]/g,'<span class="tag-v tc2">CONTRADICTED</span>')}
+
+// ── API CALL ──
+async function callModel(modelId,system,user,maxTokens=900){
+  const key=document.getElementById('api-key').value.trim();
+  if(!key)throw new Error('API key required');
+  let url,headers,body;
+  if(apiMode==='openrouter'){
+    url='https://openrouter.ai/api/v1/chat/completions';
+    headers={'Content-Type':'application/json','Authorization':`Bearer ${key}`,'HTTP-Referer':'https://consenseus.app','X-Title':'ConSenseUs'};
+    body=JSON.stringify({model:modelId,max_tokens:maxTokens,messages:[{role:'system',content:system},{role:'user',content:user}]});
+  }else{
+    url='https://api.anthropic.com/v1/messages';
+    headers={'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01'};
+    body=JSON.stringify({model:modelId,max_tokens:maxTokens,system,messages:[{role:'user',content:user}]});
+  }
+  const resp=await fetch(url,{method:'POST',headers,body});
+  if(!resp.ok){const e=await resp.json().catch(()=>({}));throw new Error(e?.error?.message||`Error ${resp.status}`)}
+  const data=await resp.json();
+  return apiMode==='openrouter'?(data.choices?.[0]?.message?.content||''):(data.content?.[0]?.text||'');
+}
+
+// ── BUILD ROUND TABLE SEATS ──
+function buildSeats(roles){
+  const scene=document.getElementById('table-scene');
+  // remove old seats
+  scene.querySelectorAll('.seat').forEach(s=>s.remove());
+  const positions=['seat-top','seat-right','seat-bottom','seat-left'];
+  roles.forEach((rKey,i)=>{
+    const role=ROLES[rKey];
+    const pos=positions[i]||'seat-top';
+    const seat=document.createElement('div');
+    seat.className=`seat ${pos}`;
+    seat.id=`seat-${rKey}`;
+    seat.innerHTML=`
+      <div class="seat-card waiting" id="scard-${rKey}" style="--seat-color:var(--${role.color==='arch'?'wattle':role.color==='int'?'red':role.color==='aud'?'blue':'amber'})">
+        <div class="seat-top-bar">
+          <div class="seat-ico r-${role.color}" style="background:var(--${role.color==='arch'?'wattle-dim':role.color+'-dim'})">${role.icon}</div>
+          <div class="seat-info">
+            <div class="seat-role r-${role.color}" style="color:var(--${role.color==='arch'?'wattle':role.color==='int'?'red':role.color==='aud'?'blue':'amber'})">${role.name}</div>
+            <div class="seat-title">${role.title}</div>
+          </div>
+          <span class="seat-status st-wait" id="sstatus-${rKey}">Waiting</span>
+        </div>
+        <div class="bubble" id="bubble-${rKey}"></div>
+      </div>`;
+    scene.appendChild(seat);
+  });
+}
+
+function setSeatActive(rKey){
+  document.getElementById(`scard-${rKey}`)?.classList.remove('waiting');
+  document.getElementById(`scard-${rKey}`)?.classList.add('active');
+  const st=document.getElementById(`sstatus-${rKey}`);
+  if(st){st.className='seat-status st-active';st.textContent='Speaking'}
+  const bub=document.getElementById(`bubble-${rKey}`);
+  if(bub){bub.innerHTML='<div class="pulse"><div class="pd"></div><div class="pd"></div><div class="pd"></div></div>';bub.classList.add('show')}
+}
+
+function setSeatDone(rKey,text){
+  document.getElementById(`scard-${rKey}`)?.classList.remove('active','waiting');
+  document.getElementById(`scard-${rKey}`)?.classList.add('done');
+  const st=document.getElementById(`sstatus-${rKey}`);
+  if(st){st.className='seat-status st-done';st.textContent='✓ Done'}
+  const bub=document.getElementById(`bubble-${rKey}`);
+  if(bub){bub.innerHTML=renderTags(text.substring(0,180)+(text.length>180?'…':''));bub.classList.add('show')}
+}
+
+function addTranscriptCard(gridId,rKey,modelId,text,round){
+  const role=ROLES[rKey];
+  const grid=document.getElementById(gridId);
+  const color=role.color==='arch'?'wattle':role.color==='int'?'red':role.color==='aud'?'blue':'amber';
+  const card=document.createElement('div');
+  card.className='tr-card';
+  card.style.borderTop=`2px solid var(--${color})`;
+  card.innerHTML=`
+    <div class="tr-card-head">
+      <div class="tr-card-id">
+        <span style="color:var(--${color});font-size:0.65rem">${role.icon}</span>
+        <span class="tr-name" style="color:var(--${color})">${role.name}</span>
+      </div>
+      <span class="tr-model">${mLabel(modelId)}</span>
+    </div>
+    <div class="tr-body">${renderTags(text)}</div>`;
+  grid.appendChild(card);
+}
+
+// ── MAIN DEBATE ──
+async function runDebate(){
+  const query=document.getElementById('query').value.trim();
+  if(!query){document.getElementById('query').focus();return}
+  if(!document.getElementById('api-key').value.trim()){showErr('Enter your API key above.');return}
+  const roles=Array.from(activeRoles);
+  if(roles.length<2){showErr('Enable at least 2 roles.');return}
+
+  const btn=document.getElementById('run-btn');
+  btn.disabled=true;btn.textContent='Convening...';
+  clearErr();
+  document.getElementById('verify-btn').classList.remove('show');
+  document.getElementById('export-btn').classList.remove('show');
+  lastQuery=query;lastVerdict=null;verdictText='';
+  debateResults={r1:{},r2:{}};
+
+  // reset UI
+  ['r1-transcript','r2-transcript'].forEach(id=>{document.getElementById(id).classList.remove('show');document.getElementById(id.replace('transcript','grid')).innerHTML=''});
+  document.getElementById('r2-container').style.display='none';
+  document.getElementById('vote-section').classList.remove('show');
+  document.getElementById('arbiter-section').classList.remove('show');
+  document.getElementById('table-container').style.display='none';
+  document.getElementById('vote-grid').innerHTML='';
+
+  const area=document.getElementById('debate-area');
+  area.classList.add('show');
+
+  try{
+    // ── BUILD TABLE ──
+    document.getElementById('table-container').style.display='block';
+    buildSeats(roles);
+    document.getElementById('table-center-label').textContent='Round 1\nIn Progress';
+    document.getElementById('round-num-label').textContent='Round 01 /';
+    document.getElementById('round-title-label').textContent='Opening Arguments';
+
+    // ── ROUND 1 — SEQUENTIAL ──
+    setStatus('Round 1 — agents taking the floor sequentially...');
+    for(const rKey of roles){
+      const mid=document.getElementById(`model-${rKey}`).value;
+      setSeatActive(rKey);
+      setStatus(`Round 1 — ${ROLES[rKey].title} is speaking...`);
+      const text=await callModel(mid,ROLES[rKey].r1,query,rKey==='factcheck'?1200:900);
+      setSeatDone(rKey,text);
+      debateResults.r1[rKey]={text,mid};
+    }
+
+    // show R1 transcript
+    document.getElementById('r1-transcript').classList.add('show');
+    roles.forEach(rKey=>{
+      const {text,mid}=debateResults.r1[rKey];
+      addTranscriptCard('r1-grid',rKey,mid,text,1);
+    });
+
+    // ── ROUND 2 — SEQUENTIAL ──
+    document.getElementById('table-center-label').textContent='Round 2\nCross-Exam';
+    document.getElementById('round-num-label').textContent='Round 02 /';
+    document.getElementById('round-title-label').textContent='Cross-Examination';
+    document.getElementById('r2-container').style.display='block';
+    document.getElementById('r2-transcript').classList.add('show');
+
+    // Reset seats for round 2
+    roles.forEach(rKey=>{
+      const sc=document.getElementById(`scard-${rKey}`);
+      if(sc){sc.classList.remove('done','active');sc.classList.add('waiting')}
+      const st=document.getElementById(`sstatus-${rKey}`);
+      if(st){st.className='seat-status st-wait';st.textContent='Waiting'}
+      const bub=document.getElementById(`bubble-${rKey}`);
+      if(bub){bub.classList.remove('show')}
+    });
+
+    const r1Summary=roles.map(rKey=>`${ROLES[rKey].title}:\n${debateResults.r1[rKey].text}`).join('\n\n---\n\n');
+    setStatus('Round 2 — cross-examination in progress...');
+
+    for(const rKey of roles){
+      const mid=document.getElementById(`model-${rKey}`).value;
+      setSeatActive(rKey);
+      setStatus(`Round 2 — ${ROLES[rKey].title} is cross-examining...`);
+      const ctx=`ORIGINAL QUESTION: ${query}\n\nFULL ROUND 1 TRANSCRIPT:\n${r1Summary}`;
+      const text=await callModel(mid,ROLES[rKey].r2,ctx,rKey==='factcheck'?1200:900);
+      setSeatDone(rKey,text);
+      debateResults.r2[rKey]={text,mid};
+      addTranscriptCard('r2-grid',rKey,mid,text,2);
+    }
+
+    // ── DEMOCRATIC VOTE ──
+    setStatus('The table is voting on the Arbiter...');
+    document.getElementById('vote-section').classList.add('show');
+    document.getElementById('table-center-label').textContent='Voting\nArbiter';
+
+    const synthCandidates=apiMode==='openrouter'?SYNTH_CANDIDATES:ANT_SYNTH;
+    const candidateNames=synthCandidates.map(c=>c.label).join(', ');
+    const votePrompt=`The debate on the following question has concluded:\n\n"${query}"\n\nYou participated as an agent in this debate. Based on the complexity of the arguments and the need for the highest quality synthesis, vote for which AI model should deliver the final verdict.\n\nCandidates: ${candidateNames}\n\nRespond with ONLY the exact model name from the list above. Nothing else.`;
+    const fullDebateCtx=`${r1Summary}\n\nROUND 2:\n${roles.map(rKey=>`${ROLES[rKey].title}: ${debateResults.r2[rKey].text}`).join('\n\n')}`;
+
+    const voteCards={};
+    roles.forEach(rKey=>{
+      const vcard=document.createElement('div');
+      vcard.className='vote-card';
+      vcard.innerHTML=`<div class="vote-agent">${ROLES[rKey].title}</div><div class="vote-choice"><span class="vote-dot"></span> Deliberating...</div>`;
+      document.getElementById('vote-grid').appendChild(vcard);
+      voteCards[rKey]=vcard;
+    });
+
+    const votes={};
+    await Promise.all(roles.map(async rKey=>{
+      const mid=debateResults.r1[rKey].mid;
+      try{
+        const vote=await callModel(mid,`You are ${ROLES[rKey].title}. Vote for the best Arbiter model.`,votePrompt,50);
+        const matched=synthCandidates.find(c=>vote.includes(c.label)||vote.includes(c.id.split('/').pop()));
+        const finalVote=matched?matched.label:synthCandidates[0].label;
+        votes[rKey]=finalVote;
+        voteCards[rKey].innerHTML=`<div class="vote-agent">${ROLES[rKey].title}</div><div class="vote-choice">✓ ${finalVote}</div>`;
+        votes[finalVote]=(votes[finalVote]||0)+1;
+      }catch{
+        votes[rKey]=synthCandidates[0].label;
+        voteCards[rKey].innerHTML=`<div class="vote-agent">${ROLES[rKey].title}</div><div class="vote-choice">✓ ${synthCandidates[0].label}</div>`;
+      }
+    }));
+
+    // tally
+    const tally={};
+    Object.values(votes).forEach(v=>{if(typeof v==='string'){tally[v]=(tally[v]||0)+1}});
+    let winner=synthCandidates[0].label;
+    let maxV=0;
+    Object.entries(tally).forEach(([model,count])=>{if(count>maxV){maxV=count;winner=model}});
+    const winnerModel=synthCandidates.find(c=>c.label===winner)||synthCandidates[0];
+
+    // highlight winner
+    Object.entries(votes).forEach(([rKey,vote])=>{
+      if(typeof vote==='string'&&vote===winner)voteCards[rKey].classList.add('selected');
+    });
+
+    await new Promise(r=>setTimeout(r,800));
+
+    // ── SYNTHESIS ──
+    setStatus(`The Arbiter (${winnerModel.label}) is delivering the verdict...`);
+    document.getElementById('table-center-label').textContent='Arbiter\nSpeaking';
+    document.getElementById('arbiter-section').classList.add('show');
+    document.getElementById('arb-model-tag').textContent=winnerModel.label;
+    document.getElementById('arb-verdict').innerHTML='<div class="pulse"><div class="pd"></div><div class="pd"></div><div class="pd"></div></div>';
+
+    const fullDebate=`QUESTION: ${query}\n\nROUND 1:\n${roles.map(rKey=>`${ROLES[rKey].title}: ${debateResults.r1[rKey].text}`).join('\n\n')}\n\nROUND 2:\n${roles.map(rKey=>`${ROLES[rKey].title}: ${debateResults.r2[rKey].text}`).join('\n\n')}`;
+
+    const synthSys=`You are The Arbiter. The Round Table has debated. Deliver a decisive verdict.
+
+HARD RULES:
+- MUST take a position. "It depends" requires an immediate threshold.
+- MUST NOT recommend "more research" as a conclusion.
+- Every [UNVERIFIED] or [CONTRADICTED] tag from The Auditor factors into confidence scores.
+- Execution Risk: higher = riskier (0=safe, 100=extremely risky).
+
+Output ONLY valid JSON, no markdown:
+{"verdict":"150-200 word decisive conclusion","logical_soundness":0-100,"factual_grounding":0-100,"execution_risk":0-100,"confidence":0-100,"survived":["claim that held","another"],"collapsed":["destroyed claim","failed assumption"],"deciding_factor":"single most important variable in one sentence"}`;
+
+    const synthText=await callModel(winnerModel.id,synthSys,fullDebate,1200);
+    let parsed;
+    try{parsed=JSON.parse(synthText.replace(/```json|```/g,'').trim())}
+    catch{parsed={verdict:synthText,logical_soundness:70,factual_grounding:65,execution_risk:55,confidence:68,survived:[],collapsed:[],deciding_factor:'Unable to parse structured verdict.'}}
+
+    verdictText=parsed.verdict;
+    lastVerdict=parsed;
+    document.getElementById('arb-verdict').textContent=parsed.verdict;
+    document.getElementById('df-txt').textContent=parsed.deciding_factor||'—';
+    document.getElementById('table-center-label').textContent='Verdict\nDelivered';
+
+    setTimeout(()=>{
+      const scores={log:parsed.logical_soundness,fac:parsed.factual_grounding,exe:parsed.execution_risk,con:parsed.confidence};
+      Object.entries(scores).forEach(([k,v])=>{
+        const el=document.getElementById(`s-${k}`);
+        const fill=document.getElementById(`sf-${k}`);
+        if(el&&v!==undefined)el.textContent=v+'%';
+        if(fill&&v!==undefined)fill.style.width=v+'%';
+      });
+    },150);
+
+    const tags=document.getElementById('sc-tags');
+    tags.innerHTML='';
+    (parsed.survived||[]).forEach(s=>{const t=document.createElement('span');t.className='sct sct-s';t.textContent='✓ '+s;tags.appendChild(t)});
+    (parsed.collapsed||[]).forEach(c=>{const t=document.createElement('span');t.className='sct sct-c';t.textContent='✗ '+c;tags.appendChild(t)});
+
+    document.getElementById('tts-btn').classList.add('show');
+    document.getElementById('verify-btn').classList.add('show');
+    document.getElementById('export-btn').classList.add('show');
+    clearStatus();
+
+  }catch(err){
+    showErr(`Debate failed: ${err.message}`);
+    clearStatus();
+  }finally{
+    btn.disabled=false;btn.textContent='Convene the Round Table →';
+  }
+}
+
+// ── TTS ──
+async function hearVerdict(){
+  if(!verdictText)return;
+  const key=document.getElementById('api-key').value.trim();
+  if(!key){showErr('API key required for TTS');return}
+  const btn=document.getElementById('tts-btn');
+  btn.textContent='⏳ Generating...';
+  btn.disabled=true;
+  try{
+    const resp=await fetch('https://api.openai.com/v1/audio/speech',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Authorization':`Bearer ${key}`},
+      body:JSON.stringify({model:'tts-1',voice:'onyx',input:verdictText})
+    });
+    if(!resp.ok)throw new Error('TTS failed');
+    const blob=await resp.blob();
+    const url=URL.createObjectURL(blob);
+    const audio=new Audio(url);
+    audio.play();
+    btn.textContent='▶ Playing...';
+    audio.onended=()=>{btn.textContent='▶ Hear the Verdict';btn.disabled=false}
+  }catch(e){
+    // fallback to browser TTS
+    if('speechSynthesis' in window){
+      const utt=new SpeechSynthesisUtterance(verdictText);
+      utt.rate=0.92;utt.pitch=0.9;
+      window.speechSynthesis.speak(utt);
+      btn.textContent='▶ Playing...';
+      utt.onend=()=>{btn.textContent='▶ Hear the Verdict';btn.disabled=false}
+    }else{
+      btn.textContent='▶ Hear the Verdict';btn.disabled=false;
+      showErr('TTS unavailable. Check your OpenAI API key.');
+    }
+  }
+}
+
+// ── VERIFICATION ──
+async function runVerification(){
+  const roles=Array.from(activeRoles);
+  const vBtn=document.getElementById('verify-btn');
+  vBtn.disabled=true;vBtn.textContent='Verifying...';
+  setStatus('Independent verification — different models cross-checking...');
+  const models=apiMode==='openrouter'?OR_MODELS:ANT_MODELS;
+  const getAlt=rKey=>{const used=document.getElementById(`model-${rKey}`).value;return models.find(m=>m.id!==used)?.id||models[0].id};
+  const fullD=`QUESTION: ${lastQuery}\n\nROUND 1:\n${roles.map(rKey=>`${ROLES[rKey].title}: ${debateResults.r1[rKey]?.text||''}`).join('\n\n')}\n\nROUND 2:\n${roles.map(rKey=>`${ROLES[rKey].title}: ${debateResults.r2[rKey]?.text||''}`).join('\n\n')}`;
+  try{
+    await Promise.all(roles.map(async rKey=>{
+      const altM=getAlt(rKey);
+      const text=await callModel(altM,ROLES[rKey].vPrompt,fullD,700);
+      addTranscriptCard('r2-grid',rKey,altM,`[VERIFICATION BY ${mLabel(altM).toUpperCase()}]\n${text}`,3);
+    }));
+    clearStatus();
+  }catch(e){showErr(`Verification failed: ${e.message}`);clearStatus()}
+  finally{vBtn.disabled=false;vBtn.innerHTML='◆ Independent Verification'}
+}
+
+// ── EXPORT ──
+function exportAudit(){
+  const roles=Array.from(activeRoles);
+  let md=`# ConSenseUs Debate Audit\n\n**Question:** ${lastQuery}\n\n**Date:** ${new Date().toLocaleString()}\n\n---\n\n## Round 1 — Opening Arguments\n\n`;
+  roles.forEach(rKey=>{if(debateResults.r1[rKey]){md+=`### ${ROLES[rKey].title} (${mLabel(debateResults.r1[rKey].mid)})\n\n${debateResults.r1[rKey].text}\n\n`}});
+  md+=`---\n\n## Round 2 — Cross-Examination\n\n`;
+  roles.forEach(rKey=>{if(debateResults.r2[rKey]){md+=`### ${ROLES[rKey].title} (${mLabel(debateResults.r2[rKey].mid)})\n\n${debateResults.r2[rKey].text}\n\n`}});
+  if(lastVerdict){
+    md+=`---\n\n## The Arbiter's Verdict\n\n${lastVerdict.verdict}\n\n### Decision Matrix\n\n| Metric | Score |\n|---|---|\n| Logical Soundness | ${lastVerdict.logical_soundness}% |\n| Factual Grounding | ${lastVerdict.factual_grounding}% |\n| Execution Risk | ${lastVerdict.execution_risk}% |\n| Confidence | ${lastVerdict.confidence}% |\n\n**Deciding Factor:** ${lastVerdict.deciding_factor}\n\n`;
+    if(lastVerdict.survived?.length)md+=`**Survived:** ${lastVerdict.survived.join(', ')}\n\n`;
+    if(lastVerdict.collapsed?.length)md+=`**Collapsed:** ${lastVerdict.collapsed.join(', ')}\n\n`;
+  }
+  md+=`---\n*Generated by ConSenseUs v3.1 · The Round Table*`;
+  const blob=new Blob([md],{type:'text/markdown'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download=`consenseus-audit-${Date.now()}.md`;
+  a.click();
+}
+
+// ── RESET ──
+function resetAll(){
+  document.getElementById('query').value='';
+  const area=document.getElementById('debate-area');
+  area.classList.remove('show');
+  setTimeout(()=>{
+    document.getElementById('table-container').style.display='none';
+    document.getElementById('r1-transcript').classList.remove('show');
+    document.getElementById('r1-grid').innerHTML='';
+    document.getElementById('r2-container').style.display='none';
+    document.getElementById('r2-grid').innerHTML='';
+    document.getElementById('vote-section').classList.remove('show');
+    document.getElementById('vote-grid').innerHTML='';
+    document.getElementById('arbiter-section').classList.remove('show');
+    document.getElementById('verify-btn').classList.remove('show');
+    document.getElementById('export-btn').classList.remove('show');
+    document.getElementById('tts-btn').classList.remove('show');
+    ['log','fac','exe','con'].forEach(k=>{
+      const el=document.getElementById(`s-${k}`);const fill=document.getElementById(`sf-${k}`);
+      if(el)el.textContent='—';if(fill)fill.style.width='0%';
+    });
+    document.getElementById('sc-tags').innerHTML='';
+    document.getElementById('arb-verdict').textContent='—';
+    document.getElementById('df-txt').textContent='—';
+  },450);
+  document.getElementById('query').focus();
+}
+
+// ── INIT ──
+renderAgents();
+</script>
+</body>
+</html>
