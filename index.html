@@ -405,6 +405,15 @@ header{
   box-shadow:
     0 1px 0 rgba(255,255,255,0.03) inset,
     0 24px 48px -24px rgba(var(--shadow-color),0.35);
+  transition:max-height 0.6s cubic-bezier(0.32,0.72,0,1),opacity 0.5s cubic-bezier(0.32,0.72,0,1),transform 0.6s cubic-bezier(0.32,0.72,0,1);
+  max-height:2000px;
+  overflow:hidden;
+}
+.config-shell.collapsed{
+  max-height:0;
+  opacity:0;
+  transform:translateY(-12px);
+  pointer-events:none;
 }
 .config{
   background:var(--surface-solid);
@@ -717,6 +726,51 @@ textarea::placeholder{color:var(--text3);font-style:italic}
 .sdot{width:5px;height:5px;border-radius:50%;background:var(--wattle);animation:sdot 1.3s ease-in-out infinite;box-shadow:0 0 8px var(--wattle)}
 @keyframes sdot{0%,100%{opacity:0.2;transform:scale(0.7)}50%{opacity:1;transform:scale(1)}}
 
+/* ── BACKGROUND MODE — fixed top status bar ─────────────────── */
+#bg-status-bar{
+  display:none;
+  position:fixed;
+  top:0;left:0;right:0;
+  height:48px;
+  background:#ccda47;
+  color:#0a3625;
+  z-index:9999;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 1.5rem;
+  font-family:'JetBrains Mono',monospace;
+  font-size:0.62rem;
+  letter-spacing:0.15em;
+  text-transform:uppercase;
+  font-weight:600;
+  box-shadow:0 2px 16px rgba(0,0,0,0.25);
+  cursor:default;
+  transition:background 0.3s;
+}
+#bg-status-bar.active{display:flex}
+#bg-status-bar.verdict-ready{
+  animation:verdictFlash 0.6s cubic-bezier(0.22,1,0.36,1);
+  cursor:pointer;
+}
+@keyframes verdictFlash{
+  0%{background:#ccda47}
+  40%{background:#ffffff}
+  100%{background:#ccda47}
+}
+#bg-status-bar .bgsb-left{display:flex;align-items:center;gap:0.75rem}
+#bg-status-bar .bgsb-dot{
+  width:7px;height:7px;border-radius:50%;
+  background:#0a3625;
+  animation:bgdot 1.2s ease-in-out infinite;
+}
+@keyframes bgdot{0%,100%{opacity:0.3;transform:scale(0.7)}50%{opacity:1;transform:scale(1.1)}}
+#bg-status-bar .bgsb-dot.done{animation:none;opacity:1}
+#bg-status-bar .bgsb-progress{
+  font-size:0.54rem;
+  opacity:0.65;
+  letter-spacing:0.1em;
+}
+
 .err{
   background:var(--red-dim);border:1px solid var(--red-glow);
   border-radius:10px;padding:0.9rem 1.1rem;
@@ -1008,55 +1062,6 @@ textarea::placeholder{color:var(--text3);font-style:italic}
   letter-spacing:-0.008em;
 }
 
-/* ── VOTE SECTION — ballot tiles ────────────────────────────── */
-.vote-section{display:none;margin:2rem 0}
-.vote-section.show{display:block;animation:fadeUp 0.6s cubic-bezier(0.22,1,0.36,1)}
-.vote-hdr{display:flex;align-items:baseline;gap:1rem;margin-bottom:1.2rem}
-.vote-title{
-  font-family:'Fraunces',serif;
-  font-variation-settings:"opsz" 72,"SOFT" 40,"WONK" 0;
-  font-size:1.45rem;font-weight:400;letter-spacing:-0.025em;
-}
-.vote-title em{font-style:italic;color:var(--wattle);font-weight:500}
-
-.vote-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:0.65rem;
-}
-.vote-card{
-  background:var(--bg-tint);
-  border:1px solid var(--border2);
-  border-radius:12px;
-  padding:1rem 1.1rem;
-  transition:all 0.6s cubic-bezier(0.32,0.72,0,1);
-  position:relative;
-}
-.vote-card.selected{
-  border-color:var(--wattle);
-  background:linear-gradient(135deg,var(--wattle-dim),transparent);
-  box-shadow:0 0 0 1px var(--wattle-glow),0 0 28px var(--wattle-glow);
-  transform:translateY(-2px);
-}
-.vote-card.selected::before{
-  content:'';position:absolute;top:8px;right:8px;
-  width:16px;height:16px;border-radius:50%;
-  background:var(--wattle);
-  box-shadow:0 0 0 3px var(--wattle-dim),0 0 12px var(--wattle-glow);
-}
-.vote-agent{
-  font-family:'JetBrains Mono',monospace;
-  font-size:0.56rem;letter-spacing:0.16em;text-transform:uppercase;
-  color:var(--text3);margin-bottom:0.45rem;font-weight:500;
-}
-.vote-choice{
-  font-family:'Fraunces',serif;
-  font-variation-settings:"opsz" 14,"SOFT" 80,"WONK" 0;
-  font-size:0.88rem;color:var(--text);font-weight:500;
-  display:flex;align-items:center;gap:0.45rem;letter-spacing:-0.01em;
-}
-.vote-dot{width:6px;height:6px;border-radius:50%;background:var(--wattle);animation:sdot 1s ease-in-out infinite;box-shadow:0 0 6px var(--wattle)}
-
 /* ═════════════════════════════════════════════════════════════
    THE ARBITER — final verdict plaque
    ═════════════════════════════════════════════════════════════ */
@@ -1277,7 +1282,7 @@ footer{
   header{padding-top:1.25rem}
   .hero-title{font-size:clamp(2.6rem,11vw,4rem)}
   .config{padding:1.25rem}
-  .agents-grid,.transcript-grid,.vote-grid,.score-grid{grid-template-columns:1fr}
+  .agents-grid,.transcript-grid,.score-grid{grid-template-columns:1fr}
   .score-grid{grid-template-columns:repeat(2,1fr)}
   .table-scene{display:none}
   .ctrl{flex-direction:column;align-items:stretch}
@@ -1301,6 +1306,15 @@ footer{
 </head>
 <body>
 
+<!-- ── BACKGROUND MODE STATUS BAR (fixed, top of viewport) ── -->
+<div id="bg-status-bar">
+  <div class="bgsb-left">
+    <div class="bgsb-dot" id="bgsb-dot"></div>
+    <span id="bgsb-txt">Convening...</span>
+  </div>
+  <span class="bgsb-progress" id="bgsb-progress"></span>
+</div>
+
 <header>
   <div class="brand-bar">
     <div class="brand-mark">
@@ -1316,7 +1330,7 @@ footer{
       </div>
       <span class="brand-name"><span class="con">Con</span><span class="sense">Sense</span>Us</span>
     </div>
-    <span class="ver-badge">v3.1 · Round Table</span>
+    <span class="ver-badge">v3.2 · Round Table</span>
     <div class="masthead-meta">
       <span>Four Agents</span>
       <span>Two Rounds</span>
@@ -1335,11 +1349,11 @@ footer{
       </h1>
     </div>
     <aside class="hero-side">
-      <p class="hero-sub">Confidence through collective intelligence. Four specialized agents convene, argue, cross-examine — and a democratically-chosen arbiter delivers the verdict.</p>
+      <p class="hero-sub">Confidence through collective intelligence. Four specialized agents convene, argue, cross-examine — and the Arbiter delivers the verdict.</p>
       <div class="hero-specs">
         <div class="spec"><span class="spec-k">Agents</span><span class="spec-v">04<em>/ roles</em></span></div>
         <div class="spec"><span class="spec-k">Rounds</span><span class="spec-v">02<em>/ debate</em></span></div>
-        <div class="spec"><span class="spec-k">Arbiter</span><span class="spec-v"><em>voted in</em></span></div>
+        <div class="spec"><span class="spec-k">Arbiter</span><span class="spec-v"><em>direct</em></span></div>
       </div>
     </aside>
   </section>
@@ -1356,7 +1370,7 @@ footer{
   <div class="sec-rule"></div>
 </div>
 
-<div class="config-shell">
+<div class="config-shell" id="config-shell">
 <div class="config">
 
   <!-- API + MODE -->
@@ -1441,16 +1455,6 @@ In Progress</div>
     </div>
   </div>
 
-  <!-- VOTE -->
-  <div class="vote-section" id="vote-section">
-    <div class="vote-hdr">
-      <span class="rh-num">Ballot /</span>
-      <span class="vote-title">Selecting the <em>Arbiter</em></span>
-      <div class="rh-rule"></div>
-    </div>
-    <div class="vote-grid" id="vote-grid"></div>
-  </div>
-
   <!-- ARBITER -->
   <div class="arbiter-section" id="arbiter-section">
     <div class="round-hdr">
@@ -1487,14 +1491,16 @@ In Progress</div>
 </main><!-- end wrap -->
 
 <footer>
-  <span class="ft">ConSenseUs v3.1 <em>·</em> The Round Table</span>
+  <span class="ft">ConSenseUs v3.2 <em>·</em> The Round Table</span>
   <span class="ft">Confidence <em>through</em> Collective Intelligence</span>
 </footer>
 
 <script>
 // ── MODELS ──
+// CHANGE 3: Added Claude Sonnet 4.6 to OR_MODELS
 const OR_MODELS=[
   {id:'anthropic/claude-sonnet-4-5',label:'Claude Sonnet 4.5',bench:{r:88,f:85,s:72}},
+  {id:'anthropic/claude-sonnet-4-6',label:'Claude Sonnet 4.6',bench:{r:90,f:86,s:76}},
   {id:'anthropic/claude-opus-4',label:'Claude Opus 4',bench:{r:95,f:90,s:55}},
   {id:'openai/gpt-4.1',label:'GPT-4.1',bench:{r:90,f:82,s:78}},
   {id:'openai/gpt-4o',label:'GPT-4o',bench:{r:87,f:80,s:82}},
@@ -1513,10 +1519,39 @@ const ANT_MODELS=[
   {id:'claude-haiku-4-5-20251001',label:'Claude Haiku 4.5',bench:{r:70,f:68,s:96}},
 ];
 
+// CHANGE 3: synth changed to claude-opus-4-7 for balanced and max tiers
+// CHANGE 4: Added synth property directly to each tier (replaces vote system)
 const TIERS={
-  fast:{advocate:'anthropic/claude-haiku-4-5',devil:'openai/gpt-4.1-mini',factcheck:'google/gemini-2.0-flash-001',strategist:'deepseek/deepseek-chat-v3-5'},
-  balanced:{advocate:'anthropic/claude-sonnet-4-5',devil:'openai/gpt-4.1',factcheck:'google/gemini-2.5-pro',strategist:'deepseek/deepseek-r1'},
-  max:{advocate:'anthropic/claude-sonnet-4-5',devil:'x-ai/grok-3',factcheck:'google/gemini-2.5-pro',strategist:'deepseek/deepseek-r1'},
+  fast:{
+    advocate:'anthropic/claude-haiku-4-5',
+    devil:'openai/gpt-4.1-mini',
+    factcheck:'google/gemini-2.0-flash-001',
+    strategist:'deepseek/deepseek-chat-v3-5',
+    synth:'openai/gpt-4.1',
+    synthLabel:'GPT-4.1',
+    antSynth:'claude-sonnet-4-5-20251001',
+    antSynthLabel:'Claude Sonnet 4.5',
+  },
+  balanced:{
+    advocate:'anthropic/claude-sonnet-4-5',
+    devil:'openai/gpt-4.1',
+    factcheck:'google/gemini-2.5-pro',
+    strategist:'deepseek/deepseek-r1',
+    synth:'anthropic/claude-opus-4-7',
+    synthLabel:'Claude Opus 4.7',
+    antSynth:'claude-opus-4-7-20250514',
+    antSynthLabel:'Claude Opus 4.7',
+  },
+  max:{
+    advocate:'anthropic/claude-sonnet-4-5',
+    devil:'x-ai/grok-3',
+    factcheck:'google/gemini-2.5-pro',
+    strategist:'deepseek/deepseek-r1',
+    synth:'anthropic/claude-opus-4-7',
+    synthLabel:'Claude Opus 4.7',
+    antSynth:'claude-opus-4-7-20250514',
+    antSynthLabel:'Claude Opus 4.7',
+  },
 };
 
 const ROLES={
@@ -1557,18 +1592,6 @@ const ROLES={
     vPrompt:`You are an independent verification agent. Were The Realist's failure modes realistic? Was the decision criterion actionable? Max 120 words.`
   }
 };
-
-// SYNTH CANDIDATES for vote
-const SYNTH_CANDIDATES=[
-  {id:'anthropic/claude-sonnet-4-5',label:'Claude Sonnet 4.5'},
-  {id:'anthropic/claude-opus-4',label:'Claude Opus 4'},
-  {id:'openai/gpt-4.1',label:'GPT-4.1'},
-  {id:'google/gemini-2.5-pro',label:'Gemini 2.5 Pro'},
-];
-const ANT_SYNTH=[
-  {id:'claude-opus-4-20250514',label:'Claude Opus 4'},
-  {id:'claude-sonnet-4-5-20251001',label:'Claude Sonnet 4.5'},
-];
 
 // ── STATE ──
 let apiMode='openrouter';
@@ -1632,7 +1655,6 @@ function renderAgents(){
         <div class="bench-row"><span class="bench-label">Factual</span><div class="bench-track"><div class="bench-fill" style="width:${mData.bench?.f||75}%"></div></div><span class="bench-val">${mData.bench?.f||75}</span></div>
         <div class="bench-row"><span class="bench-label">Speed</span><div class="bench-track"><div class="bench-fill" style="width:${mData.bench?.s||75}%"></div></div><span class="bench-val">${mData.bench?.s||75}</span></div>
       </div>`;
-    // update bench on model change
     card.querySelector('.ac-sel').addEventListener('change',function(){
       const sel=models.find(m=>m.id===this.value)||{bench:{r:75,f:75,s:75}};
       const fills=card.querySelectorAll('.bench-fill');
@@ -1668,6 +1690,36 @@ function showErr(m){document.getElementById('err-area').innerHTML=`<div class="e
 function clearErr(){document.getElementById('err-area').innerHTML=''}
 function renderTags(t){return t.replace(/\[VERIFIED\]/g,'<span class="tag-v tv">VERIFIED</span>').replace(/\[UNVERIFIED\]/g,'<span class="tag-v tu">UNVERIFIED</span>').replace(/\[CONTRADICTED\]/g,'<span class="tag-v tc2">CONTRADICTED</span>')}
 
+// ── BACKGROUND MODE STATUS BAR ──
+// CHANGE 2: slim fixed status bar at top of viewport
+function bgBarShow(txt,progress=''){
+  const bar=document.getElementById('bg-status-bar');
+  document.getElementById('bgsb-txt').textContent=txt;
+  document.getElementById('bgsb-progress').textContent=progress;
+  document.getElementById('bgsb-dot').classList.remove('done');
+  bar.classList.remove('verdict-ready');
+  bar.classList.add('active');
+  bar.onclick=null;bar.style.cursor='default';
+}
+function bgBarUpdate(txt,progress=''){
+  document.getElementById('bgsb-txt').textContent=txt;
+  document.getElementById('bgsb-progress').textContent=progress;
+}
+function bgBarVerdictReady(){
+  const bar=document.getElementById('bg-status-bar');
+  document.getElementById('bgsb-dot').classList.add('done');
+  document.getElementById('bgsb-txt').textContent='Verdict Ready ↓';
+  document.getElementById('bgsb-progress').textContent='Click to scroll';
+  bar.classList.add('verdict-ready');
+  bar.style.cursor='pointer';
+  bar.onclick=()=>{
+    document.getElementById('arbiter-section').scrollIntoView({behavior:'smooth',block:'start'});
+  };
+}
+function bgBarHide(){
+  document.getElementById('bg-status-bar').classList.remove('active','verdict-ready');
+}
+
 // ── API CALL ──
 async function callModel(modelId,system,user,maxTokens=900){
   const key=document.getElementById('api-key').value.trim();
@@ -1691,7 +1743,6 @@ async function callModel(modelId,system,user,maxTokens=900){
 // ── BUILD ROUND TABLE SEATS ──
 function buildSeats(roles){
   const scene=document.getElementById('table-scene');
-  // remove old seats
   scene.querySelectorAll('.seat').forEach(s=>s.remove());
   const positions=['seat-top','seat-right','seat-bottom','seat-left'];
   roles.forEach((rKey,i)=>{
@@ -1770,15 +1821,20 @@ async function runDebate(){
   debateResults={r1:{},r2:{}};
 
   // reset UI
-  ['r1-transcript','r2-transcript'].forEach(id=>{document.getElementById(id).classList.remove('show');document.getElementById(id.replace('transcript','grid')).innerHTML=''});
+  ['r1-transcript','r2-transcript'].forEach(id=>{
+    document.getElementById(id).classList.remove('show');
+    document.getElementById(id.replace('transcript','grid')).innerHTML='';
+  });
   document.getElementById('r2-container').style.display='none';
-  document.getElementById('vote-section').classList.remove('show');
   document.getElementById('arbiter-section').classList.remove('show');
   document.getElementById('table-container').style.display='none';
-  document.getElementById('vote-grid').innerHTML='';
 
   const area=document.getElementById('debate-area');
   area.classList.add('show');
+
+  // CHANGE 2: collapse config panel, show bg status bar
+  document.getElementById('config-shell').classList.add('collapsed');
+  bgBarShow('Convening Round Table…','Round 1 · Parallel');
 
   try{
     // ── BUILD TABLE ──
@@ -1788,16 +1844,42 @@ async function runDebate(){
     document.getElementById('round-num-label').textContent='Round 01 /';
     document.getElementById('round-title-label').textContent='Opening Arguments';
 
-    // ── ROUND 1 — SEQUENTIAL ──
-    setStatus('Round 1 — agents taking the floor sequentially...');
-    for(const rKey of roles){
+    // ── ROUND 1 — PARALLEL (CHANGE 1) ──
+    // All four agents fire simultaneously with Promise.all.
+    // Staggered CSS delays (0, 800, 1600, 2400ms) visually reveal seats one at a time.
+    // Each seat activates on its delay, then transitions to Done when its API call completes.
+    setStatus('Round 1 — all agents speaking in parallel...');
+    bgBarUpdate('Round 1 · All agents speaking','0 / '+roles.length+' done');
+
+    const SEAT_DELAYS=[0,800,1600,2400];
+    let r1DoneCount=0;
+
+    const r1Promises=roles.map((rKey,i)=>{
       const mid=document.getElementById(`model-${rKey}`).value;
-      setSeatActive(rKey);
-      setStatus(`Round 1 — ${ROLES[rKey].title} is speaking...`);
-      const text=await callModel(mid,ROLES[rKey].r1,query,rKey==='factcheck'?1200:900);
-      setSeatDone(rKey,text);
-      debateResults.r1[rKey]={text,mid};
-    }
+      const delay=SEAT_DELAYS[i]||0;
+
+      // staggered visual activation
+      const activatePromise=new Promise(resolve=>{
+        setTimeout(()=>{
+          setSeatActive(rKey);
+          bgBarUpdate(`Round 1 · ${ROLES[rKey].title} speaking`,r1DoneCount+' / '+roles.length+' done');
+          resolve();
+        },delay);
+      });
+
+      // fire API immediately (parallel), but show seat after delay
+      const apiPromise=callModel(mid,ROLES[rKey].r1,query,rKey==='factcheck'?1200:900);
+
+      return Promise.all([activatePromise,apiPromise]).then(([,text])=>{
+        setSeatDone(rKey,text);
+        r1DoneCount++;
+        bgBarUpdate('Round 1 · '+r1DoneCount+' / '+roles.length+' done');
+        debateResults.r1[rKey]={text,mid};
+        return {rKey,text,mid};
+      });
+    });
+
+    await Promise.all(r1Promises);
 
     // show R1 transcript
     document.getElementById('r1-transcript').classList.add('show');
@@ -1825,73 +1907,32 @@ async function runDebate(){
 
     const r1Summary=roles.map(rKey=>`${ROLES[rKey].title}:\n${debateResults.r1[rKey].text}`).join('\n\n---\n\n');
     setStatus('Round 2 — cross-examination in progress...');
+    bgBarUpdate('Round 2 · Cross-examination','0 / '+roles.length+' done');
 
+    let r2DoneCount=0;
     for(const rKey of roles){
       const mid=document.getElementById(`model-${rKey}`).value;
       setSeatActive(rKey);
-      setStatus(`Round 2 — ${ROLES[rKey].title} is cross-examining...`);
+      bgBarUpdate(`Round 2 · ${ROLES[rKey].title} cross-examining`,r2DoneCount+' / '+roles.length+' done');
       const ctx=`ORIGINAL QUESTION: ${query}\n\nFULL ROUND 1 TRANSCRIPT:\n${r1Summary}`;
       const text=await callModel(mid,ROLES[rKey].r2,ctx,rKey==='factcheck'?1200:900);
       setSeatDone(rKey,text);
+      r2DoneCount++;
       debateResults.r2[rKey]={text,mid};
       addTranscriptCard('r2-grid',rKey,mid,text,2);
     }
 
-    // ── DEMOCRATIC VOTE ──
-    setStatus('The table is voting on the Arbiter...');
-    document.getElementById('vote-section').classList.add('show');
-    document.getElementById('table-center-label').textContent='Voting\nArbiter';
+    // ── DIRECT ARBITER SYNTHESIS (CHANGE 4: vote removed) ──
+    // Use tier's designated synth model directly — no vote, saves 4 API calls + ~8-12s
+    const tierConf=TIERS[currentTier];
+    const arbiterModelId=apiMode==='openrouter'?tierConf.synth:tierConf.antSynth;
+    const arbiterLabel=apiMode==='openrouter'?tierConf.synthLabel:tierConf.antSynthLabel;
 
-    const synthCandidates=apiMode==='openrouter'?SYNTH_CANDIDATES:ANT_SYNTH;
-    const candidateNames=synthCandidates.map(c=>c.label).join(', ');
-    const votePrompt=`The debate on the following question has concluded:\n\n"${query}"\n\nYou participated as an agent in this debate. Based on the complexity of the arguments and the need for the highest quality synthesis, vote for which AI model should deliver the final verdict.\n\nCandidates: ${candidateNames}\n\nRespond with ONLY the exact model name from the list above. Nothing else.`;
-    const fullDebateCtx=`${r1Summary}\n\nROUND 2:\n${roles.map(rKey=>`${ROLES[rKey].title}: ${debateResults.r2[rKey].text}`).join('\n\n')}`;
-
-    const voteCards={};
-    roles.forEach(rKey=>{
-      const vcard=document.createElement('div');
-      vcard.className='vote-card';
-      vcard.innerHTML=`<div class="vote-agent">${ROLES[rKey].title}</div><div class="vote-choice"><span class="vote-dot"></span> Deliberating...</div>`;
-      document.getElementById('vote-grid').appendChild(vcard);
-      voteCards[rKey]=vcard;
-    });
-
-    const votes={};
-    await Promise.all(roles.map(async rKey=>{
-      const mid=debateResults.r1[rKey].mid;
-      try{
-        const vote=await callModel(mid,`You are ${ROLES[rKey].title}. Vote for the best Arbiter model.`,votePrompt,50);
-        const matched=synthCandidates.find(c=>vote.includes(c.label)||vote.includes(c.id.split('/').pop()));
-        const finalVote=matched?matched.label:synthCandidates[0].label;
-        votes[rKey]=finalVote;
-        voteCards[rKey].innerHTML=`<div class="vote-agent">${ROLES[rKey].title}</div><div class="vote-choice">✓ ${finalVote}</div>`;
-        votes[finalVote]=(votes[finalVote]||0)+1;
-      }catch{
-        votes[rKey]=synthCandidates[0].label;
-        voteCards[rKey].innerHTML=`<div class="vote-agent">${ROLES[rKey].title}</div><div class="vote-choice">✓ ${synthCandidates[0].label}</div>`;
-      }
-    }));
-
-    // tally
-    const tally={};
-    Object.values(votes).forEach(v=>{if(typeof v==='string'){tally[v]=(tally[v]||0)+1}});
-    let winner=synthCandidates[0].label;
-    let maxV=0;
-    Object.entries(tally).forEach(([model,count])=>{if(count>maxV){maxV=count;winner=model}});
-    const winnerModel=synthCandidates.find(c=>c.label===winner)||synthCandidates[0];
-
-    // highlight winner
-    Object.entries(votes).forEach(([rKey,vote])=>{
-      if(typeof vote==='string'&&vote===winner)voteCards[rKey].classList.add('selected');
-    });
-
-    await new Promise(r=>setTimeout(r,800));
-
-    // ── SYNTHESIS ──
-    setStatus(`The Arbiter (${winnerModel.label}) is delivering the verdict...`);
+    bgBarUpdate(`Arbiter · ${arbiterLabel} deliberating…`,'Final synthesis');
+    setStatus(`The Arbiter (${arbiterLabel}) is delivering the verdict...`);
     document.getElementById('table-center-label').textContent='Arbiter\nSpeaking';
     document.getElementById('arbiter-section').classList.add('show');
-    document.getElementById('arb-model-tag').textContent=winnerModel.label;
+    document.getElementById('arb-model-tag').textContent=arbiterLabel;
     document.getElementById('arb-verdict').innerHTML='<div class="pulse"><div class="pd"></div><div class="pd"></div><div class="pd"></div></div>';
 
     const fullDebate=`QUESTION: ${query}\n\nROUND 1:\n${roles.map(rKey=>`${ROLES[rKey].title}: ${debateResults.r1[rKey].text}`).join('\n\n')}\n\nROUND 2:\n${roles.map(rKey=>`${ROLES[rKey].title}: ${debateResults.r2[rKey].text}`).join('\n\n')}`;
@@ -1907,7 +1948,7 @@ HARD RULES:
 Output ONLY valid JSON, no markdown:
 {"verdict":"150-200 word decisive conclusion","logical_soundness":0-100,"factual_grounding":0-100,"execution_risk":0-100,"confidence":0-100,"survived":["claim that held","another"],"collapsed":["destroyed claim","failed assumption"],"deciding_factor":"single most important variable in one sentence"}`;
 
-    const synthText=await callModel(winnerModel.id,synthSys,fullDebate,1200);
+    const synthText=await callModel(arbiterModelId,synthSys,fullDebate,1200);
     let parsed;
     try{parsed=JSON.parse(synthText.replace(/```json|```/g,'').trim())}
     catch{parsed={verdict:synthText,logical_soundness:70,factual_grounding:65,execution_risk:55,confidence:68,survived:[],collapsed:[],deciding_factor:'Unable to parse structured verdict.'}}
@@ -1938,9 +1979,15 @@ Output ONLY valid JSON, no markdown:
     document.getElementById('export-btn').classList.add('show');
     clearStatus();
 
+    // CHANGE 2: flash status bar to verdict ready
+    bgBarVerdictReady();
+
   }catch(err){
     showErr(`Debate failed: ${err.message}`);
     clearStatus();
+    bgBarHide();
+    // re-expand config on error
+    document.getElementById('config-shell').classList.remove('collapsed');
   }finally{
     btn.disabled=false;btn.textContent='Convene the Round Table';
   }
@@ -1968,7 +2015,6 @@ async function hearVerdict(){
     btn.textContent='▶ Playing...';
     audio.onended=()=>{btn.textContent='▶ Hear the Verdict';btn.disabled=false}
   }catch(e){
-    // fallback to browser TTS
     if('speechSynthesis' in window){
       const utt=new SpeechSynthesisUtterance(verdictText);
       utt.rate=0.92;utt.pitch=0.9;
@@ -2014,7 +2060,7 @@ function exportAudit(){
     if(lastVerdict.survived?.length)md+=`**Survived:** ${lastVerdict.survived.join(', ')}\n\n`;
     if(lastVerdict.collapsed?.length)md+=`**Collapsed:** ${lastVerdict.collapsed.join(', ')}\n\n`;
   }
-  md+=`---\n*Generated by ConSenseUs v3.1 · The Round Table*`;
+  md+=`---\n*Generated by ConSenseUs v3.2 · The Round Table*`;
   const blob=new Blob([md],{type:'text/markdown'});
   const a=document.createElement('a');
   a.href=URL.createObjectURL(blob);
@@ -2025,6 +2071,10 @@ function exportAudit(){
 // ── RESET ──
 function resetAll(){
   document.getElementById('query').value='';
+  // CHANGE 2: re-expand config panel and hide bg bar
+  document.getElementById('config-shell').classList.remove('collapsed');
+  bgBarHide();
+
   const area=document.getElementById('debate-area');
   area.classList.remove('show');
   setTimeout(()=>{
@@ -2033,8 +2083,6 @@ function resetAll(){
     document.getElementById('r1-grid').innerHTML='';
     document.getElementById('r2-container').style.display='none';
     document.getElementById('r2-grid').innerHTML='';
-    document.getElementById('vote-section').classList.remove('show');
-    document.getElementById('vote-grid').innerHTML='';
     document.getElementById('arbiter-section').classList.remove('show');
     document.getElementById('verify-btn').classList.remove('show');
     document.getElementById('export-btn').classList.remove('show');
