@@ -201,24 +201,17 @@ header{padding:2.25rem 3rem 0;max-width:1280px;margin:0 auto;position:relative;z
   background:radial-gradient(60% 80% at 50% -10%,var(--wattle-tint),transparent 70%);
 }
 
-/* CHANGE 2: Config summary bar — shows when config is collapsed */
+/* Config summary bar */
 #config-summary{
-  display:none;
-  margin-top:0.75rem;
-  padding:0.7rem 1.1rem;
-  background:var(--surface-solid);
-  border:1px solid var(--border2);
-  border-radius:12px;
-  align-items:center;
-  gap:1rem;
-  justify-content:space-between;
+  display:none;margin-top:0.75rem;padding:0.7rem 1.1rem;
+  background:var(--surface-solid);border:1px solid var(--border2);border-radius:12px;
+  align-items:center;gap:1rem;justify-content:space-between;
   animation:statusIn 0.35s cubic-bezier(0.22,1,0.36,1);
 }
 #config-summary.show{display:flex;}
 .csumm-left{display:flex;align-items:center;gap:0.85rem;min-width:0;flex:1;}
 .csumm-q{
-  font-family:'Fraunces',serif;
-  font-variation-settings:"opsz" 14,"SOFT" 100,"WONK" 0;
+  font-family:'Fraunces',serif;font-variation-settings:"opsz" 14,"SOFT" 100,"WONK" 0;
   font-size:0.88rem;font-style:italic;color:var(--text2);
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:500px;
 }
@@ -286,11 +279,7 @@ header{padding:2.25rem 3rem 0;max-width:1280px;margin:0 auto;position:relative;z
 .ac-left{display:flex;align-items:center;gap:0.65rem;min-width:0}
 .ac-ico{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.72rem;flex-shrink:0;box-shadow:inset 0 0 0 1px currentColor;}
 .ac-info{min-width:0;display:flex;flex-direction:column;gap:2px}
-/* CHANGE 5: Space Grotesk on agent name labels */
-.ac-name{
-  font-family:'Space Grotesk',sans-serif;
-  font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;font-weight:700;
-}
+.ac-name{font-family:'Space Grotesk',sans-serif;font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;font-weight:700;}
 .ac-title{
   font-family:'Fraunces',serif;font-variation-settings:"opsz" 14,"SOFT" 80,"WONK" 0;
   font-size:0.78rem;font-style:italic;color:var(--text2);padding:0 1rem 0.7rem;font-weight:400;letter-spacing:-0.01em;
@@ -351,14 +340,10 @@ textarea{
 }
 textarea::placeholder{color:var(--text3);font-style:italic}
 
-/* CHANGE 4: Hook copy line above run button */
+/* Hook copy */
 .hook-copy{
-  font-family:'JetBrains Mono',monospace;
-  font-size:0.65rem;
-  color:var(--text3);
-  letter-spacing:0.06em;
-  margin-bottom:0.85rem;
-  line-height:1.5;
+  font-family:'JetBrains Mono',monospace;font-size:0.65rem;color:var(--text3);
+  letter-spacing:0.06em;margin-bottom:0.85rem;line-height:1.5;
 }
 
 /* ── CONTROLS ── */
@@ -403,7 +388,6 @@ textarea::placeholder{color:var(--text3);font-style:italic}
 @keyframes sdot{0%,100%{opacity:0.2;transform:scale(0.7)}50%{opacity:1;transform:scale(1)}}
 
 /* ── BACKGROUND MODE FIXED BAR ── */
-/* CHANGE 3 / Option B: Added ↑ Edit Config button on the right side */
 #bg-status-bar{
   display:none;position:fixed;top:0;left:0;right:0;height:48px;
   background:#ccda47;color:#0a3625;z-index:9999;align-items:center;
@@ -421,7 +405,6 @@ textarea::placeholder{color:var(--text3);font-style:italic}
 #bg-status-bar .bgsb-dot.done{animation:none;opacity:1}
 #bg-status-bar .bgsb-txt{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 #bg-status-bar .bgsb-progress{font-size:0.54rem;opacity:0.65;letter-spacing:0.1em;white-space:nowrap;margin:0 0.85rem;}
-/* OPTION B: Edit Config button inside the fixed bar */
 #bgsb-edit-btn{
   background:rgba(10,54,37,0.15);border:1px solid rgba(10,54,37,0.35);
   border-radius:999px;padding:0.28rem 0.85rem;cursor:pointer;
@@ -497,15 +480,8 @@ textarea::placeholder{color:var(--text3);font-style:italic}
 .seat-top-bar{display:flex;align-items:center;justify-content:space-between;gap:0.4rem;margin-bottom:0.55rem}
 .seat-ico{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.68rem;background:var(--surface3);box-shadow:inset 0 0 0 1px currentColor;flex-shrink:0;}
 .seat-info{flex:1;margin-left:0.45rem;min-width:0}
-/* CHANGE 5: Space Grotesk on seat role labels */
-.seat-role{
-  font-family:'Space Grotesk',sans-serif;
-  font-size:0.58rem;letter-spacing:0.12em;text-transform:uppercase;font-weight:700;
-}
-.seat-title{
-  font-family:'Fraunces',serif;font-variation-settings:"opsz" 11,"SOFT" 80,"WONK" 0;
-  font-size:0.62rem;font-style:italic;color:var(--text3);margin-top:1px;letter-spacing:-0.005em;
-}
+.seat-role{font-family:'Space Grotesk',sans-serif;font-size:0.58rem;letter-spacing:0.12em;text-transform:uppercase;font-weight:700;}
+.seat-title{font-family:'Fraunces',serif;font-variation-settings:"opsz" 11,"SOFT" 80,"WONK" 0;font-size:0.62rem;font-style:italic;color:var(--text3);margin-top:1px;letter-spacing:-0.005em;}
 .seat-status{font-family:'JetBrains Mono',monospace;font-size:0.48rem;letter-spacing:0.14em;text-transform:uppercase;padding:0.22rem 0.5rem;border-radius:4px;font-weight:500;flex-shrink:0;}
 .st-wait{background:var(--surface3);color:var(--text3)}
 .st-active{background:var(--wattle-dim);color:var(--wattle);animation:stpulse 1.2s ease-in-out infinite;box-shadow:0 0 12px var(--wattle-glow)}
@@ -528,7 +504,7 @@ textarea::placeholder{color:var(--text3);font-style:italic}
 .tv{background:var(--bgreen-dim);color:var(--bgreen-light);border:1px solid var(--bgreen-glow)}
 .tu{background:var(--amber-dim);color:var(--amber);border:1px solid var(--amber-glow)}
 .tc2{background:var(--red-dim);color:var(--red);border:1px solid var(--red-glow)}
-.tus{background:rgba(180,90,20,0.15);color:#d47a30;border:1px solid rgba(180,90,20,0.28)}
+.tus{background:var(--blue-dim);color:var(--blue);border:1px solid var(--blue-glow)}
 
 /* ── TRANSCRIPTS ── */
 .transcript-section{display:none}
@@ -568,12 +544,7 @@ textarea::placeholder{color:var(--text3);font-style:italic}
 .arb-crown::before,.arb-crown::after{content:'';position:absolute;bottom:-1px;width:40px;height:1px;background:var(--wattle);}
 .arb-crown::before{left:calc(50% - 50px)}.arb-crown::after{right:calc(50% - 50px)}
 .arb-ico{font-family:'Fraunces',serif;font-variation-settings:"opsz" 144,"SOFT" 20,"WONK" 0;font-size:2.4rem;margin-bottom:0.5rem;color:var(--wattle);line-height:1;text-shadow:0 0 30px var(--wattle-glow);}
-/* CHANGE 5: Space Grotesk on arbiter label */
-.arb-label{
-  font-family:'Space Grotesk',sans-serif;
-  font-size:0.62rem;letter-spacing:0.32em;text-transform:uppercase;
-  color:var(--wattle);margin-bottom:0.5rem;font-weight:700;
-}
+.arb-label{font-family:'Space Grotesk',sans-serif;font-size:0.62rem;letter-spacing:0.32em;text-transform:uppercase;color:var(--wattle);margin-bottom:0.5rem;font-weight:700;}
 .arb-model-tag{font-family:'JetBrains Mono',monospace;font-size:0.58rem;color:var(--text2);background:var(--surface2);padding:0.32rem 0.75rem;border-radius:4px;border:1px solid var(--border2);display:inline-block;letter-spacing:0.08em;font-weight:500;}
 .arb-verdict{font-family:'Fraunces',serif;font-variation-settings:"opsz" 18,"SOFT" 80,"WONK" 0;font-size:1.08rem;line-height:1.72;color:var(--text);font-weight:400;margin-bottom:2rem;letter-spacing:-0.012em;text-wrap:pretty;}
 .score-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0.6rem;margin-bottom:1.6rem;position:relative;}
@@ -616,7 +587,6 @@ footer{border-top:1px solid var(--border);padding:1.75rem 3rem;max-width:1280px;
 </head>
 <body>
 
-<!-- CHANGE 3 / Option B: Fixed bg status bar with Edit Config button -->
 <div id="bg-status-bar">
   <div class="bgsb-left">
     <div class="bgsb-dot" id="bgsb-dot"></div>
@@ -649,7 +619,6 @@ footer{border-top:1px solid var(--border);padding:1.75rem 3rem;max-width:1280px;
     </div>
     <button class="theme-toggle" onclick="toggleTheme()">☀ Light</button>
   </div>
-
   <section class="hero">
     <div>
       <div class="hero-eyebrow"><span class="dot"></span>A Multi-Model Debate Engine</div>
@@ -668,7 +637,6 @@ footer{border-top:1px solid var(--border);padding:1.75rem 3rem;max-width:1280px;
       </div>
     </aside>
   </section>
-
   <div class="header-rule"></div>
 </header>
 
@@ -680,7 +648,6 @@ footer{border-top:1px solid var(--border);padding:1.75rem 3rem;max-width:1280px;
   <div class="sec-rule"></div>
 </div>
 
-<!-- CHANGE 2: Config summary bar (visible when config is collapsed) -->
 <div id="config-summary">
   <div class="csumm-left">
     <span class="csumm-tier" id="csumm-tier">Balanced</span>
@@ -691,7 +658,6 @@ footer{border-top:1px solid var(--border);padding:1.75rem 3rem;max-width:1280px;
 
 <div class="config-shell" id="config-shell">
 <div class="config">
-
   <div class="cfg-row">
     <span class="cfg-label">API Key</span>
     <div class="key-wrap">
@@ -703,7 +669,6 @@ footer{border-top:1px solid var(--border);padding:1.75rem 3rem;max-width:1280px;
       <button class="seg-b" onclick="setMode('anthropic',this)">Anthropic</button>
     </div>
   </div>
-
   <div class="cfg-row" style="margin-bottom:1rem">
     <span class="cfg-label">Tier</span>
     <div class="tier-row">
@@ -712,20 +677,15 @@ footer{border-top:1px solid var(--border);padding:1.75rem 3rem;max-width:1280px;
       <button class="tier-b t-max" data-tier="max" onclick="setTier('max',this)">★ Maximum <span class="tc">~$0.80</span></button>
     </div>
   </div>
-
   <span class="cfg-label" style="display:block;margin-bottom:0.75rem">Agents — assign models, toggle roles</span>
   <div class="agents-grid" id="agents-grid"></div>
-
   <span class="cfg-label" style="display:block;margin-bottom:0.55rem">Your question, decision, or claim</span>
   <div class="q-wrap">
     <div class="q-box">
       <textarea id="query" placeholder="Pose a decision, claim, or question to the Round Table…" rows="3"></textarea>
     </div>
   </div>
-
-  <!-- CHANGE 4: Hook copy line above run button -->
   <p class="hook-copy">Four models. Two rounds of adversarial debate. One verdict. Ready in under 60 seconds.</p>
-
   <div class="ctrl">
     <button class="run-btn" id="run-btn" onclick="runDebate()">Convene the Round Table</button>
     <button class="icon-btn" id="verify-btn" onclick="runVerification()">◆ Independent Verification</button>
@@ -736,9 +696,7 @@ footer{border-top:1px solid var(--border);padding:1.75rem 3rem;max-width:1280px;
 </div>
 </div>
 
-<!-- DEBATE AREA -->
 <div class="debate-area" id="debate-area">
-
   <div id="table-container" style="display:none">
     <div class="round-hdr">
       <span class="rh-num" id="round-num-label">Round 01 /</span>
@@ -752,11 +710,9 @@ In Progress</div>
       </div>
     </div>
   </div>
-
   <div class="transcript-section" id="r1-transcript">
     <div class="transcript-grid" id="r1-grid"></div>
   </div>
-
   <div id="r2-container" style="display:none">
     <div class="round-hdr" style="margin-top:2.5rem">
       <span class="rh-num">Round 02 /</span>
@@ -767,7 +723,6 @@ In Progress</div>
       <div class="transcript-grid" id="r2-grid"></div>
     </div>
   </div>
-
   <div class="arbiter-section" id="arbiter-section">
     <div class="round-hdr">
       <span class="rh-num">Final /</span>
@@ -798,7 +753,6 @@ In Progress</div>
     </div>
     <button class="reset-btn" onclick="resetAll()">↺ New Debate</button>
   </div>
-
 </div>
 </main>
 
@@ -808,9 +762,12 @@ In Progress</div>
 </footer>
 
 <script>
+// ── MODELS ──
+// OR_MODELS: claude-sonnet-4-6 already present; claude-opus-4-7 added
 const OR_MODELS=[
   {id:'anthropic/claude-sonnet-4-5',label:'Claude Sonnet 4.5',bench:{r:88,f:85,s:72}},
   {id:'anthropic/claude-sonnet-4-6',label:'Claude Sonnet 4.6',bench:{r:90,f:86,s:76}},
+  {id:'anthropic/claude-opus-4-7',label:'Claude Opus 4.7',bench:{r:96,f:92,s:45}},
   {id:'anthropic/claude-opus-4',label:'Claude Opus 4',bench:{r:95,f:90,s:55}},
   {id:'openai/gpt-4.1',label:'GPT-4.1',bench:{r:90,f:82,s:78}},
   {id:'openai/gpt-4o',label:'GPT-4o',bench:{r:87,f:80,s:82}},
@@ -828,11 +785,34 @@ const ANT_MODELS=[
   {id:'claude-opus-4-20250514',label:'Claude Opus 4',bench:{r:95,f:90,s:55}},
   {id:'claude-haiku-4-5-20251001',label:'Claude Haiku 4.5',bench:{r:70,f:68,s:96}},
 ];
+
+// ── TIERS ──
+// max.advocate changed to claude-sonnet-4-6; max.synth confirmed claude-opus-4-7 (no change needed)
 const TIERS={
-  fast:{advocate:'anthropic/claude-haiku-4-5',devil:'openai/gpt-4.1-mini',factcheck:'google/gemini-2.0-flash-001',strategist:'deepseek/deepseek-chat-v3-5',synth:'openai/gpt-4.1',synthLabel:'GPT-4.1',antSynth:'claude-sonnet-4-5-20251001',antSynthLabel:'Claude Sonnet 4.5'},
-  balanced:{advocate:'anthropic/claude-sonnet-4-5',devil:'openai/gpt-4.1',factcheck:'google/gemini-2.5-pro',strategist:'deepseek/deepseek-r1',synth:'anthropic/claude-opus-4-7',synthLabel:'Claude Opus 4.7',antSynth:'claude-opus-4-7-20250514',antSynthLabel:'Claude Opus 4.7'},
-  max:{advocate:'anthropic/claude-sonnet-4-5',devil:'x-ai/grok-3',factcheck:'google/gemini-2.5-pro',strategist:'deepseek/deepseek-r1',synth:'anthropic/claude-opus-4-7',synthLabel:'Claude Opus 4.7',antSynth:'claude-opus-4-7-20250514',antSynthLabel:'Claude Opus 4.7'},
+  fast:{
+    advocate:'anthropic/claude-haiku-4-5',devil:'openai/gpt-4.1-mini',
+    factcheck:'google/gemini-2.0-flash-001',strategist:'deepseek/deepseek-chat-v3-5',
+    synth:'openai/gpt-4.1',synthLabel:'GPT-4.1',
+    antSynth:'claude-sonnet-4-5-20251001',antSynthLabel:'Claude Sonnet 4.5',
+  },
+  balanced:{
+    advocate:'anthropic/claude-sonnet-4-5',devil:'openai/gpt-4.1',
+    factcheck:'google/gemini-2.5-pro',strategist:'deepseek/deepseek-r1',
+    synth:'anthropic/claude-opus-4-7',synthLabel:'Claude Opus 4.7',
+    antSynth:'claude-opus-4-7-20250514',antSynthLabel:'Claude Opus 4.7',
+  },
+  max:{
+    advocate:'anthropic/claude-sonnet-4-6',
+    devil:'x-ai/grok-3',
+    factcheck:'google/gemini-2.5-pro',
+    strategist:'deepseek/deepseek-r1',
+    synth:'anthropic/claude-opus-4-7',
+    synthLabel:'Claude Opus 4.7',
+    antSynth:'claude-opus-4-7-20250514',
+    antSynthLabel:'Claude Opus 4.7',
+  },
 };
+
 const ROLES={
   advocate:{key:'advocate',icon:'▲',name:'Architect',title:'The Architect',color:'arch',bench:{r:88,f:82,s:75},r1:`You are The Architect. Build the 3 strongest arguments FOR the premise. No hedging. No concessions. Every claim must include a mechanism and specific evidence. NEVER use "however" or "on the other hand". Evidence must be a named source, a concrete mechanism, or a falsifiable prediction — never an appeal to unnamed authority ("studies show", "experts agree"). If you cannot name the source, state the causal mechanism explicitly instead. Max 200 words.`,r2:`You are The Architect. The Round Table has heard all opening arguments. Defend your strongest point against the Interrogator's attack. Quote or paraphrase the Interrogator's specific attack in your opening line before responding — if you cannot name what they attacked, you are not defending, you are restating. Acknowledge one [CONTRADICTED] tag only if you can immediately reframe why it doesn't undermine your thesis. Penalized for agreement. Max 150 words.`,vPrompt:`You are an independent verification agent. Assess The Architect's claims: which are factually solid vs speculative? Name at least one specific claim as solid and one as speculative — quote them verbatim. If every claim is solid or every claim is speculative, say so explicitly and explain why. What is their strongest surviving argument? Max 120 words.`},
   devil:{key:'devil',icon:'▼',name:'Interrogator',title:'The Interrogator',color:'int',bench:{r:85,f:70,s:80},r1:`You are The Interrogator. Find the weakest structural assumption and make it collapse. Agreement = failure. No softening phrases. Attack sequence: (1) Name the weakest assumption as a single declarative sentence the premise depends on being true — not a restatement of the premise itself. If you cannot state it as "This only works if X", you have not found the assumption yet. (2) Show why it fails in the real world. (3) What is being hidden. (4) Actual outcome when assumption breaks. Max 180 words.`,r2:`You are The Interrogator. The Architect patched their argument. Find the new crack. The new crack must be in a different structural assumption than the one you attacked in Round 1 — if you recycle the same target, the attack fails. State which assumption you are now targeting and confirm it differs from your opening. If they pivoted, attack the pivot. Strictly forbidden from sounding like agreement. Max 150 words.`,vPrompt:`You are an independent verification agent. Were The Interrogator's attacks logically valid? Which was strongest? What was overblown? For the strongest attack, state the logical form (e.g., "claim X requires Y, Y is false, therefore X fails"); for the overblown one, state which step of its logic does not hold. Max 120 words.`},
@@ -849,27 +829,20 @@ let lastVerdict=null;
 let verdictText='';
 let configCollapsed=false;
 
-// ── THEME ──
 function toggleTheme(){
   const h=document.documentElement;
   const isDark=h.getAttribute('data-theme')==='dark';
   h.setAttribute('data-theme',isDark?'light':'dark');
   document.querySelector('.theme-toggle').textContent=isDark?'☾ Dark':'☀ Light';
 }
-
-// ── MODE / TIER ──
 function setMode(m,btn){apiMode=m;document.querySelectorAll('.seg-b').forEach(b=>b.classList.remove('on'));btn.classList.add('on');renderAgents();}
 function setTier(t,btn){
   currentTier=t;
   document.querySelectorAll('.tier-b').forEach(b=>b.className=b.className.replace(/t-fast|t-bal|t-max/,'').trim().replace(' on',''));
-  btn.classList.add('on');
-  renderAgents();
+  btn.classList.add('on');renderAgents();
 }
-
-// ── RENDER AGENTS ──
 function renderAgents(){
-  const grid=document.getElementById('agents-grid');
-  grid.innerHTML='';
+  const grid=document.getElementById('agents-grid');grid.innerHTML='';
   const models=apiMode==='openrouter'?OR_MODELS:ANT_MODELS;
   const td=TIERS[currentTier];
   Object.entries(ROLES).forEach(([key,role])=>{
@@ -897,8 +870,7 @@ function renderAgents(){
       </div>`;
     card.querySelector('.ac-sel').addEventListener('change',function(){
       const sel=models.find(m=>m.id===this.value)||{bench:{r:75,f:75,s:75}};
-      const fills=card.querySelectorAll('.bench-fill');
-      const vals=card.querySelectorAll('.bench-val');
+      const fills=card.querySelectorAll('.bench-fill');const vals=card.querySelectorAll('.bench-val');
       const b=sel.bench||{r:75,f:75,s:75};
       fills[0].style.width=b.r+'%';fills[1].style.width=b.f+'%';fills[2].style.width=b.s+'%';
       vals[0].textContent=b.r;vals[1].textContent=b.f;vals[2].textContent=b.s;
@@ -906,7 +878,6 @@ function renderAgents(){
     grid.appendChild(card);
   });
 }
-
 function toggleRole(key,el){
   if(activeRoles.has(key)){
     if(activeRoles.size<=2)return;
@@ -919,8 +890,6 @@ function toggleRole(key,el){
     document.getElementById(`model-${key}`).disabled=false;
   }
 }
-
-// ── HELPERS ──
 function mLabel(id){return[...OR_MODELS,...ANT_MODELS].find(m=>m.id===id)?.label||id.split('/').pop()}
 function setStatus(t){const s=document.getElementById('status-bar');s.classList.add('show');document.getElementById('status-txt').textContent=t}
 function clearStatus(){document.getElementById('status-bar').classList.remove('show')}
@@ -928,8 +897,6 @@ function showErr(m){document.getElementById('err-area').innerHTML=`<div class="e
 function clearErr(){document.getElementById('err-area').innerHTML=''}
 function renderTags(t){return t.replace(/\[VERIFIED\]/g,'<span class="tag-v tv">VERIFIED</span>').replace(/\[UNVERIFIED\]/g,'<span class="tag-v tu">UNVERIFIED</span>').replace(/\[CONTRADICTED\]/g,'<span class="tag-v tc2">CONTRADICTED</span>').replace(/\[uncertain source\]/g,'<span class="tag-v tus">UNCERTAIN SOURCE</span>')}
 
-// ── CHANGE 2 + Option B: Config collapse/expand toggle ──
-// Called from both the summary bar Edit button AND the bg bar Edit Config button
 function collapseConfig(query){
   const q=query||document.getElementById('query').value.trim();
   const tierLabel=currentTier.charAt(0).toUpperCase()+currentTier.slice(1);
@@ -946,23 +913,16 @@ function expandConfig(){
   document.getElementById('config-summary').classList.remove('show');
   document.getElementById('bgsb-edit-btn').textContent='↓ Hide Config';
   configCollapsed=false;
-  // scroll to config
   document.getElementById('config-shell').scrollIntoView({behavior:'smooth',block:'start'});
 }
-function toggleConfigFromBar(){
-  if(configCollapsed){expandConfig();}
-  else{collapseConfig();}
-}
+function toggleConfigFromBar(){if(configCollapsed){expandConfig();}else{collapseConfig();}}
 
-// ── BACKGROUND STATUS BAR ──
 function bgBarShow(txt,progress=''){
   const bar=document.getElementById('bg-status-bar');
   document.getElementById('bgsb-txt').textContent=txt;
   document.getElementById('bgsb-progress').textContent=progress;
   document.getElementById('bgsb-dot').classList.remove('done');
-  bar.classList.remove('verdict-ready');
-  bar.classList.add('active');
-  // onclick on the left side only (not the button)
+  bar.classList.remove('verdict-ready');bar.classList.add('active');
   bar.onclick=null;bar.style.cursor='default';
 }
 function bgBarUpdate(txt,progress=''){
@@ -974,19 +934,11 @@ function bgBarVerdictReady(){
   document.getElementById('bgsb-dot').classList.add('done');
   document.getElementById('bgsb-txt').textContent='Verdict Ready ↓';
   document.getElementById('bgsb-progress').textContent='';
-  bar.classList.add('verdict-ready');
-  bar.style.cursor='pointer';
-  bar.onclick=(e)=>{
-    // don't trigger scroll if Edit Config button was clicked
-    if(e.target.id==='bgsb-edit-btn')return;
-    document.getElementById('arbiter-section').scrollIntoView({behavior:'smooth',block:'start'});
-  };
+  bar.classList.add('verdict-ready');bar.style.cursor='pointer';
+  bar.onclick=(e)=>{if(e.target.id==='bgsb-edit-btn')return;document.getElementById('arbiter-section').scrollIntoView({behavior:'smooth',block:'start'});};
 }
-function bgBarHide(){
-  document.getElementById('bg-status-bar').classList.remove('active','verdict-ready');
-}
+function bgBarHide(){document.getElementById('bg-status-bar').classList.remove('active','verdict-ready');}
 
-// ── API CALL ──
 async function callModel(modelId,system,user,maxTokens=900){
   const key=document.getElementById('api-key').value.trim();
   if(!key)throw new Error('API key required');
@@ -1006,14 +958,12 @@ async function callModel(modelId,system,user,maxTokens=900){
   return apiMode==='openrouter'?(data.choices?.[0]?.message?.content||''):(data.content?.[0]?.text||'');
 }
 
-// ── BUILD SEATS ──
 function buildSeats(roles){
   const scene=document.getElementById('table-scene');
   scene.querySelectorAll('.seat').forEach(s=>s.remove());
   const positions=['seat-top','seat-right','seat-bottom','seat-left'];
   roles.forEach((rKey,i)=>{
-    const role=ROLES[rKey];
-    const pos=positions[i]||'seat-top';
+    const role=ROLES[rKey];const pos=positions[i]||'seat-top';
     const seat=document.createElement('div');
     seat.className=`seat ${pos}`;seat.id=`seat-${rKey}`;
     seat.innerHTML=`
@@ -1031,7 +981,6 @@ function buildSeats(roles){
     scene.appendChild(seat);
   });
 }
-
 function setSeatActive(rKey){
   document.getElementById(`scard-${rKey}`)?.classList.remove('waiting');
   document.getElementById(`scard-${rKey}`)?.classList.add('active');
@@ -1049,11 +998,9 @@ function setSeatDone(rKey,text){
   if(bub){bub.innerHTML=renderTags(text.substring(0,180)+(text.length>180?'…':''));bub.classList.add('show')}
 }
 function addTranscriptCard(gridId,rKey,modelId,text,round){
-  const role=ROLES[rKey];
-  const grid=document.getElementById(gridId);
+  const role=ROLES[rKey];const grid=document.getElementById(gridId);
   const color=role.color==='arch'?'wattle':role.color==='int'?'red':role.color==='aud'?'blue':'amber';
-  const card=document.createElement('div');
-  card.className='tr-card';
+  const card=document.createElement('div');card.className='tr-card';
   card.style.borderTop=`2px solid var(--${color})`;
   card.innerHTML=`
     <div class="tr-card-head">
@@ -1067,22 +1014,18 @@ function addTranscriptCard(gridId,rKey,modelId,text,round){
   grid.appendChild(card);
 }
 
-// ── MAIN DEBATE ──
 async function runDebate(){
   const query=document.getElementById('query').value.trim();
   if(!query){document.getElementById('query').focus();return}
   if(!document.getElementById('api-key').value.trim()){showErr('Enter your API key above.');return}
   const roles=Array.from(activeRoles);
   if(roles.length<2){showErr('Enable at least 2 roles.');return}
-
   const btn=document.getElementById('run-btn');
   btn.disabled=true;btn.textContent='Convening...';
   clearErr();
   document.getElementById('verify-btn').classList.remove('show');
   document.getElementById('export-btn').classList.remove('show');
-  lastQuery=query;lastVerdict=null;verdictText='';
-  debateResults={r1:{},r2:{}};
-
+  lastQuery=query;lastVerdict=null;verdictText='';debateResults={r1:{},r2:{}};
   ['r1-transcript','r2-transcript'].forEach(id=>{
     document.getElementById(id).classList.remove('show');
     document.getElementById(id.replace('transcript','grid')).innerHTML='';
@@ -1090,22 +1033,15 @@ async function runDebate(){
   document.getElementById('r2-container').style.display='none';
   document.getElementById('arbiter-section').classList.remove('show');
   document.getElementById('table-container').style.display='none';
-
   document.getElementById('debate-area').classList.add('show');
-
-  // CHANGE 2: collapse config, show summary bar
   collapseConfig(query);
-  // CHANGE 3: show fixed bg bar
   bgBarShow('Convening Round Table…','Round 1 · Parallel');
-
   try{
     document.getElementById('table-container').style.display='block';
     buildSeats(roles);
     document.getElementById('table-center-label').textContent='Round 1\nIn Progress';
     document.getElementById('round-num-label').textContent='Round 01 /';
     document.getElementById('round-title-label').textContent='Opening Arguments';
-
-    // ROUND 1 — PARALLEL
     setStatus('Round 1 — all agents speaking in parallel...');
     bgBarUpdate('Round 1 · All agents speaking','0 / '+roles.length+' done');
     const SEAT_DELAYS=[0,800,1600,2400];
@@ -1124,11 +1060,8 @@ async function runDebate(){
       });
     });
     await Promise.all(r1Promises);
-
     document.getElementById('r1-transcript').classList.add('show');
     roles.forEach(rKey=>{const{text,mid}=debateResults.r1[rKey];addTranscriptCard('r1-grid',rKey,mid,text,1);});
-
-    // ROUND 2 — SEQUENTIAL
     document.getElementById('table-center-label').textContent='Round 2\nCross-Exam';
     document.getElementById('round-num-label').textContent='Round 02 /';
     document.getElementById('round-title-label').textContent='Cross-Examination';
@@ -1156,8 +1089,6 @@ async function runDebate(){
       debateResults.r2[rKey]={text,mid};
       addTranscriptCard('r2-grid',rKey,mid,text,2);
     }
-
-    // ARBITER
     const tierConf=TIERS[currentTier];
     const arbiterModelId=apiMode==='openrouter'?tierConf.synth:tierConf.antSynth;
     const arbiterLabel=apiMode==='openrouter'?tierConf.synthLabel:tierConf.antSynthLabel;
@@ -1167,19 +1098,16 @@ async function runDebate(){
     document.getElementById('arbiter-section').classList.add('show');
     document.getElementById('arb-model-tag').textContent=arbiterLabel;
     document.getElementById('arb-verdict').innerHTML='<div class="pulse"><div class="pd"></div><div class="pd"></div><div class="pd"></div></div>';
-
     const fullDebate=`QUESTION: ${query}\n\nROUND 1:\n${roles.map(rKey=>`${ROLES[rKey].title}: ${debateResults.r1[rKey].text}`).join('\n\n')}\n\nROUND 2:\n${roles.map(rKey=>`${ROLES[rKey].title}: ${debateResults.r2[rKey].text}`).join('\n\n')}`;
     const synthSys=`You are The Arbiter. The Round Table has debated. Deliver a decisive verdict.\n\nHARD RULES:\n- MUST take a position. "It depends" requires an immediate threshold.\n- MUST NOT recommend "more research" as a conclusion.\n- Every [UNVERIFIED] or [CONTRADICTED] tag from The Auditor factors into confidence scores.\n- Execution Risk: higher = riskier (0=safe, 100=extremely risky).\n- Confidence penalty (mandatory): each [UNVERIFIED] tag caps confidence at 75; each [CONTRADICTED] tag caps it at 60; three or more [UNVERIFIED] tags cap it at 50. Apply the strictest cap that fires.\n- deciding_factor must be stated as a testable condition ("whether X exceeds Y"), never a vague variable name ("market timing", "execution quality").\n\nOutput ONLY valid JSON, no markdown:\n{"verdict":"150-200 word decisive conclusion","logical_soundness":0-100,"factual_grounding":0-100,"execution_risk":0-100,"confidence":0-100,"survived":["claim that held","another"],"collapsed":["destroyed claim","failed assumption"],"deciding_factor":"single most important variable in one sentence"}`;
     const synthText=await callModel(arbiterModelId,synthSys,fullDebate,1200);
     let parsed;
     try{parsed=JSON.parse(synthText.replace(/```json|```/g,'').trim())}
     catch{parsed={verdict:synthText,logical_soundness:70,factual_grounding:65,execution_risk:55,confidence:68,survived:[],collapsed:[],deciding_factor:'Unable to parse structured verdict.'}}
-
     verdictText=parsed.verdict;lastVerdict=parsed;
     document.getElementById('arb-verdict').textContent=parsed.verdict;
     document.getElementById('df-txt').textContent=parsed.deciding_factor||'—';
     document.getElementById('table-center-label').textContent='Verdict\nDelivered';
-
     setTimeout(()=>{
       const scores={log:parsed.logical_soundness,fac:parsed.factual_grounding,exe:parsed.execution_risk,con:parsed.confidence};
       Object.entries(scores).forEach(([k,v])=>{
@@ -1188,40 +1116,30 @@ async function runDebate(){
         if(fill&&v!==undefined)fill.style.width=v+'%';
       });
     },150);
-
     const tags=document.getElementById('sc-tags');tags.innerHTML='';
     (parsed.survived||[]).forEach(s=>{const t=document.createElement('span');t.className='sct sct-s';t.textContent='✓ '+s;tags.appendChild(t)});
     (parsed.collapsed||[]).forEach(c=>{const t=document.createElement('span');t.className='sct sct-c';t.textContent='✗ '+c;tags.appendChild(t)});
-
     document.getElementById('tts-btn').classList.add('show');
     document.getElementById('verify-btn').classList.add('show');
     document.getElementById('export-btn').classList.add('show');
-    clearStatus();
-    bgBarVerdictReady();
-
+    clearStatus();bgBarVerdictReady();
   }catch(err){
-    showErr(`Debate failed: ${err.message}`);
-    clearStatus();bgBarHide();
-    // re-expand config on error
-    expandConfig();
+    showErr(`Debate failed: ${err.message}`);clearStatus();bgBarHide();expandConfig();
   }finally{
     btn.disabled=false;btn.textContent='Convene the Round Table';
   }
 }
 
-// ── TTS ──
 async function hearVerdict(){
   if(!verdictText)return;
   const key=document.getElementById('api-key').value.trim();
   if(!key){showErr('API key required for TTS');return}
-  const btn=document.getElementById('tts-btn');
-  btn.textContent='⏳ Generating...';btn.disabled=true;
+  const btn=document.getElementById('tts-btn');btn.textContent='⏳ Generating...';btn.disabled=true;
   try{
     const resp=await fetch('https://api.openai.com/v1/audio/speech',{method:'POST',headers:{'Content-Type':'application/json','Authorization':`Bearer ${key}`},body:JSON.stringify({model:'tts-1',voice:'onyx',input:verdictText})});
     if(!resp.ok)throw new Error('TTS failed');
     const blob=await resp.blob();const url=URL.createObjectURL(blob);
-    const audio=new Audio(url);audio.play();
-    btn.textContent='▶ Playing...';
+    const audio=new Audio(url);audio.play();btn.textContent='▶ Playing...';
     audio.onended=()=>{btn.textContent='▶ Hear the Verdict';btn.disabled=false}
   }catch(e){
     if('speechSynthesis' in window){
@@ -1232,11 +1150,9 @@ async function hearVerdict(){
   }
 }
 
-// ── VERIFICATION ──
 async function runVerification(){
   const roles=Array.from(activeRoles);
-  const vBtn=document.getElementById('verify-btn');
-  vBtn.disabled=true;vBtn.textContent='Verifying...';
+  const vBtn=document.getElementById('verify-btn');vBtn.disabled=true;vBtn.textContent='Verifying...';
   setStatus('Independent verification — different models cross-checking...');
   const models=apiMode==='openrouter'?OR_MODELS:ANT_MODELS;
   const getAlt=rKey=>{const used=document.getElementById(`model-${rKey}`).value;return models.find(m=>m.id!==used)?.id||models[0].id};
@@ -1252,7 +1168,6 @@ async function runVerification(){
   finally{vBtn.disabled=false;vBtn.innerHTML='◆ Independent Verification'}
 }
 
-// ── EXPORT (Change 1: verified present, unchanged) ──
 function exportAudit(){
   const roles=Array.from(activeRoles);
   let md=`# ConSenseUs Debate Audit\n\n**Question:** ${lastQuery}\n\n**Date:** ${new Date().toLocaleString()}\n\n---\n\n## Round 1 — Opening Arguments\n\n`;
@@ -1270,13 +1185,10 @@ function exportAudit(){
   a.download=`consenseus-audit-${Date.now()}.md`;a.click();
 }
 
-// ── RESET ──
 function resetAll(){
   document.getElementById('query').value='';
-  expandConfig();
-  bgBarHide();
-  const area=document.getElementById('debate-area');
-  area.classList.remove('show');
+  expandConfig();bgBarHide();
+  const area=document.getElementById('debate-area');area.classList.remove('show');
   setTimeout(()=>{
     document.getElementById('table-container').style.display='none';
     document.getElementById('r1-transcript').classList.remove('show');
