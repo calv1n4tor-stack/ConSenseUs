@@ -11,7 +11,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..900,0..100,0..1;1,9..144,300..900,0..100,0..1&family=Instrument+Sans:ital,wght@0,300..500;1,300..400&family=JetBrains+Mono:ital,wght@0,300..500;1,300..400&family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
 <style>
 /* ═══════════════════════════════════════════════════════════════
-   ConSenseUs — The Round Table  v3.3
+   ConSenseUs — The Round Table  v3.4 · Debate Until Consensus
    ═══════════════════════════════════════════════════════════════ */
 
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -611,10 +611,10 @@ footer{border-top:1px solid var(--border);padding:1.75rem 3rem;max-width:1280px;
       </div>
       <span class="brand-name"><span class="con">Con</span><span class="sense">Sense</span>Us</span>
     </div>
-    <span class="ver-badge">v3.3 · Round Table</span>
+    <span class="ver-badge">v3.4 · Debate Until Consensus</span>
     <div class="masthead-meta">
       <span>Four Agents</span>
-      <span>Two Rounds</span>
+      <span>Until Consensus</span>
       <span>One Verdict</span>
     </div>
     <button class="theme-toggle" onclick="toggleTheme()">☀ Light</button>
@@ -632,7 +632,7 @@ footer{border-top:1px solid var(--border);padding:1.75rem 3rem;max-width:1280px;
       <p class="hero-sub">Confidence through collective intelligence. Four specialized agents convene, argue, cross-examine — and the Arbiter delivers the verdict.</p>
       <div class="hero-specs">
         <div class="spec"><span class="spec-k">Agents</span><span class="spec-v">04<em>/ roles</em></span></div>
-        <div class="spec"><span class="spec-k">Rounds</span><span class="spec-v">02<em>/ debate</em></span></div>
+        <div class="spec"><span class="spec-k">Rounds</span><span class="spec-v">≤5<em>/ rounds</em></span></div>
         <div class="spec"><span class="spec-k">Arbiter</span><span class="spec-v"><em>direct</em></span></div>
       </div>
     </aside>
@@ -757,11 +757,15 @@ In Progress</div>
 </main>
 
 <footer>
-  <span class="ft">ConSenseUs v3.3 <em>·</em> The Round Table</span>
+  <span class="ft">ConSenseUs v3.4 <em>·</em> Debate Until Consensus</span>
   <span class="ft">Confidence <em>through</em> Collective Intelligence</span>
 </footer>
 
 <script>
+// ── CONSENSUS CONFIG ──
+const CONSENSUS_THRESHOLD = 70;
+const MAX_ROUNDS = 5;
+
 // ── MODELS ──
 // OR_MODELS: claude-sonnet-4-6 already present; claude-opus-4-7 added
 const OR_MODELS=[
@@ -828,6 +832,98 @@ let lastQuery='';
 let lastVerdict=null;
 let verdictText='';
 let configCollapsed=false;
+
+// ── ADDITIONAL ROUND PROMPTS (rounds 3+) ──
+function getAdditionalRoundPrompt(rKey, roundNum) {
+  const prompts = {
+    advocate: `You are The Architect in Round ${roundNum}. Confidence is below ${CONSENSUS_THRESHOLD}% — panel has not converged. Review full debate history. Identify the SINGLE claim most successfully weakened by the Interrogator. Either: (a) produce new evidence that restores it, or (b) pivot to a stronger claim. State which in your first sentence. Max 150 words.`,
+    devil: `You are The Interrogator in Round ${roundNum}. Confidence is below ${CONSENSUS_THRESHOLD}% — panel has not converged. Find the assumption the Architect has STILL not adequately defended — it MUST differ from all prior round attacks. Name the new assumption in your first sentence. Max 150 words.`,
+    factcheck: `You are The Auditor in Round ${roundNum}. Tag only claims newly introduced in the most recent exchange. Use UPDATE: prefix for any prior [UNVERIFIED] now resolved. Same format: - [TAG] → Claim → Evidence. Max 8 claims, max 150 words. No text outside the list.`,
+    strategist: `You are The Realist in Round ${roundNum}. Confidence below ${CONSENSUS_THRESHOLD}%. Has the risk picture changed based on new claims or auditor updates? If yes, name which specific exchange changed your assessment. If no, state that explicitly. Max 140 words.`,
+  };
+  return prompts[rKey] || ROLES[rKey].r2;
+}
+
+// ── REUSABLE CROSS-EXAM RUNNER ──
+async function runCrossExamRound(roundNum, roles, fullContext, query) {
+  const pad = n => String(n).padStart(2,'0');
+  document.getElementById('round-num-label').textContent = `Round ${pad(roundNum)} /`;
+  document.getElementById('round-title-label').textContent = roundNum === 2 ? 'Cross-Examination' : `Re-Examination · Round ${roundNum}`;
+  document.getElementById('table-center-label').textContent = `Round ${roundNum}\nCross-Exam`;
+  const r2Container = document.getElementById('r2-container');
+  r2Container.style.display = 'block';
+  document.getElementById('r2-transcript').classList.add('show');
+  if (roundNum > 2) {
+    const hdr = document.createElement('div');
+    hdr.className = 'round-hdr'; hdr.style.marginTop = '2rem';
+    hdr.innerHTML = `<span class="rh-num">Round ${pad(roundNum)} /</span><span class="rh-title">Re-Examination · <em>Round ${roundNum}</em></span><div class="rh-rule"></div>`;
+    r2Container.appendChild(hdr);
+    const newGrid = document.createElement('div');
+    newGrid.className = 'transcript-section show';
+    newGrid.innerHTML = `<div class="transcript-grid" id="rX-grid-${roundNum}"></div>`;
+    r2Container.appendChild(newGrid);
+  }
+  const gridId = roundNum === 2 ? 'r2-grid' : `rX-grid-${roundNum}`;
+  roles.forEach(rKey => {
+    const sc=document.getElementById(`scard-${rKey}`);if(sc){sc.classList.remove('done','active');sc.classList.add('waiting');}
+    const st=document.getElementById(`sstatus-${rKey}`);if(st){st.className='seat-status st-wait';st.textContent='Waiting';}
+    const bub=document.getElementById(`bubble-${rKey}`);if(bub)bub.classList.remove('show');
+  });
+  setStatus(`Round ${roundNum} — cross-examination in progress...`);
+  bgBarUpdate(`Round ${roundNum} · Cross-examining`, `0 / ${roles.length} done`);
+  const roundResults = {};let doneCount = 0;
+  for (const rKey of roles) {
+    const mid = document.getElementById(`model-${rKey}`).value;
+    setSeatActive(rKey);
+    bgBarUpdate(`Round ${roundNum} · ${ROLES[rKey].title} speaking`, `${doneCount} / ${roles.length} done`);
+    const prompt = roundNum === 2 ? ROLES[rKey].r2 : getAdditionalRoundPrompt(rKey, roundNum);
+    const ctx = `ORIGINAL QUESTION: ${query}\n\nFULL DEBATE HISTORY SO FAR:\n${fullContext}`;
+    const text = await callModel(mid, prompt, ctx, rKey === 'factcheck' ? 1200 : 900);
+    setSeatDone(rKey, text);doneCount++;
+    roundResults[rKey] = {text, mid};
+    addTranscriptCard(gridId, rKey, mid, text);
+  }
+  return roundResults;
+}
+
+// ── ARBITER CALL ──
+async function runArbiter(query, allRoundsContext, roundNum) {
+  const tierConf = TIERS[currentTier];
+  const arbModelId = apiMode === 'openrouter' ? tierConf.synth : tierConf.antSynth;
+  const arbLabel = apiMode === 'openrouter' ? tierConf.synthLabel : tierConf.antSynthLabel;
+  bgBarUpdate(`Arbiter · ${arbLabel} deliberating…`, `After round ${roundNum}`);
+  setStatus(`Arbiter (${arbLabel}) evaluating after round ${roundNum}...`);
+  document.getElementById('table-center-label').textContent = 'Arbiter\nDeliberating';
+  document.getElementById('arbiter-section').classList.add('show');
+  document.getElementById('arb-model-tag').textContent = arbLabel;
+  document.getElementById('arb-verdict').innerHTML = '<div class="pulse"><div class="pd"></div><div class="pd"></div><div class="pd"></div></div>';
+  const sys = `You are The Arbiter. The Round Table has completed ${roundNum} rounds. Deliver a decisive verdict.\n\nHARD RULES:\n- MUST take a position. "It depends" requires an immediate threshold.\n- MUST NOT recommend "more research" as a conclusion.\n- Confidence penalty: each [UNVERIFIED] caps at 75; each [CONTRADICTED] caps at 60; 3+ [UNVERIFIED] caps at 50. Apply strictest cap.\n- deciding_factor must be a testable condition, not a vague label.\n\nOutput ONLY valid JSON, no markdown:\n{"verdict":"150-200 word conclusion","logical_soundness":0-100,"factual_grounding":0-100,"execution_risk":0-100,"confidence":0-100,"survived":["..."],"collapsed":["..."],"deciding_factor":"one testable condition","rounds_completed":${roundNum}}`;
+  const raw = await callModel(arbModelId, sys, `QUESTION: ${query}\n\nFULL DEBATE:\n${allRoundsContext}`, 1200);
+  let parsed;
+  try{parsed=JSON.parse(raw.replace(/```json|```/g,'').trim());}
+  catch{parsed={verdict:raw,logical_soundness:70,factual_grounding:65,execution_risk:55,confidence:68,survived:[],collapsed:[],deciding_factor:'Unable to parse structured verdict.',rounds_completed:roundNum};}
+  return {parsed, arbLabel};
+}
+
+// ── RENDER FINAL VERDICT ──
+function renderVerdict(parsed, totalRounds) {
+  verdictText = parsed.verdict;lastVerdict = parsed;
+  document.getElementById('arb-verdict').textContent = parsed.verdict;
+  document.getElementById('df-txt').textContent = parsed.deciding_factor || '—';
+  document.getElementById('table-center-label').textContent = `Consensus\n${totalRounds} Round${totalRounds===1?'':'s'}`;
+  document.getElementById('round-num-label').textContent = 'Final /';
+  document.getElementById('round-title-label').textContent = `Arbiter's Verdict · ${totalRounds} Round${totalRounds===1?'':'s'}`;
+  setTimeout(()=>{
+    const scores={log:parsed.logical_soundness,fac:parsed.factual_grounding,exe:parsed.execution_risk,con:parsed.confidence};
+    Object.entries(scores).forEach(([k,v])=>{const el=document.getElementById(`s-${k}`);const fill=document.getElementById(`sf-${k}`);if(el&&v!==undefined)el.textContent=v+'%';if(fill&&v!==undefined)fill.style.width=v+'%';});
+  },150);
+  const tags=document.getElementById('sc-tags');tags.innerHTML='';
+  (parsed.survived||[]).forEach(s=>{const t=document.createElement('span');t.className='sct sct-s';t.textContent='✓ '+s;tags.appendChild(t)});
+  (parsed.collapsed||[]).forEach(c=>{const t=document.createElement('span');t.className='sct sct-c';t.textContent='✗ '+c;tags.appendChild(t)});
+  document.getElementById('tts-btn').classList.add('show');
+  document.getElementById('verify-btn').classList.add('show');
+  document.getElementById('export-btn').classList.add('show');
+}
 
 function toggleTheme(){
   const h=document.documentElement;
@@ -929,10 +1025,10 @@ function bgBarUpdate(txt,progress=''){
   document.getElementById('bgsb-txt').textContent=txt;
   document.getElementById('bgsb-progress').textContent=progress;
 }
-function bgBarVerdictReady(){
+function bgBarVerdictReady(totalRounds){
   const bar=document.getElementById('bg-status-bar');
   document.getElementById('bgsb-dot').classList.add('done');
-  document.getElementById('bgsb-txt').textContent='Verdict Ready ↓';
+  document.getElementById('bgsb-txt').textContent=`Verdict Ready ↓  (${totalRounds} round${totalRounds===1?'':'s'})`;
   document.getElementById('bgsb-progress').textContent='';
   bar.classList.add('verdict-ready');bar.style.cursor='pointer';
   bar.onclick=(e)=>{if(e.target.id==='bgsb-edit-btn')return;document.getElementById('arbiter-section').scrollIntoView({behavior:'smooth',block:'start'});};
@@ -997,7 +1093,7 @@ function setSeatDone(rKey,text){
   const bub=document.getElementById(`bubble-${rKey}`);
   if(bub){bub.innerHTML=renderTags(text.substring(0,180)+(text.length>180?'…':''));bub.classList.add('show')}
 }
-function addTranscriptCard(gridId,rKey,modelId,text,round){
+function addTranscriptCard(gridId,rKey,modelId,text){
   const role=ROLES[rKey];const grid=document.getElementById(gridId);
   const color=role.color==='arch'?'wattle':role.color==='int'?'red':role.color==='aud'?'blue':'amber';
   const card=document.createElement('div');card.className='tr-card';
@@ -1026,10 +1122,11 @@ async function runDebate(){
   document.getElementById('verify-btn').classList.remove('show');
   document.getElementById('export-btn').classList.remove('show');
   lastQuery=query;lastVerdict=null;verdictText='';debateResults={r1:{},r2:{}};
+  document.getElementById('r2-container').innerHTML=`<div class="round-hdr" style="margin-top:2.5rem"><span class="rh-num">Round 02 /</span><span class="rh-title">Cross-<em>Examination</em></span><div class="rh-rule"></div></div><div class="transcript-section" id="r2-transcript"><div class="transcript-grid" id="r2-grid"></div></div>`;
   ['r1-transcript','r2-transcript'].forEach(id=>{
-    document.getElementById(id).classList.remove('show');
-    document.getElementById(id.replace('transcript','grid')).innerHTML='';
+    document.getElementById(id)?.classList.remove('show');
   });
+  document.getElementById('r1-grid').innerHTML='';
   document.getElementById('r2-container').style.display='none';
   document.getElementById('arbiter-section').classList.remove('show');
   document.getElementById('table-container').style.display='none';
@@ -1061,68 +1158,38 @@ async function runDebate(){
     });
     await Promise.all(r1Promises);
     document.getElementById('r1-transcript').classList.add('show');
-    roles.forEach(rKey=>{const{text,mid}=debateResults.r1[rKey];addTranscriptCard('r1-grid',rKey,mid,text,1);});
-    document.getElementById('table-center-label').textContent='Round 2\nCross-Exam';
-    document.getElementById('round-num-label').textContent='Round 02 /';
-    document.getElementById('round-title-label').textContent='Cross-Examination';
-    document.getElementById('r2-container').style.display='block';
-    document.getElementById('r2-transcript').classList.add('show');
-    roles.forEach(rKey=>{
-      const sc=document.getElementById(`scard-${rKey}`);
-      if(sc){sc.classList.remove('done','active');sc.classList.add('waiting')}
-      const st=document.getElementById(`sstatus-${rKey}`);
-      if(st){st.className='seat-status st-wait';st.textContent='Waiting'}
-      const bub=document.getElementById(`bubble-${rKey}`);
-      if(bub){bub.classList.remove('show')}
-    });
-    const r1Summary=roles.map(rKey=>`${ROLES[rKey].title}:\n${debateResults.r1[rKey].text}`).join('\n\n---\n\n');
-    setStatus('Round 2 — cross-examination in progress...');
-    bgBarUpdate('Round 2 · Cross-examination','0 / '+roles.length+' done');
-    let r2DoneCount=0;
-    for(const rKey of roles){
-      const mid=document.getElementById(`model-${rKey}`).value;
-      setSeatActive(rKey);
-      bgBarUpdate(`Round 2 · ${ROLES[rKey].title} cross-examining`,r2DoneCount+' / '+roles.length+' done');
-      const ctx=`ORIGINAL QUESTION: ${query}\n\nFULL ROUND 1 TRANSCRIPT:\n${r1Summary}`;
-      const text=await callModel(mid,ROLES[rKey].r2,ctx,rKey==='factcheck'?1200:900);
-      setSeatDone(rKey,text);r2DoneCount++;
-      debateResults.r2[rKey]={text,mid};
-      addTranscriptCard('r2-grid',rKey,mid,text,2);
+    roles.forEach(rKey=>{const{text,mid}=debateResults.r1[rKey];addTranscriptCard('r1-grid',rKey,mid,text);});
+    // Build accumulated context
+    let allRoundsContext = 'ROUND 1 — OPENING ARGUMENTS:\n' +
+      roles.map(rKey=>`${ROLES[rKey].title}:\n${debateResults.r1[rKey].text}`).join('\n\n---\n\n');
+    // ── CONSENSUS LOOP ──
+    let currentRound = 1;
+    let finalParsed = null;
+    while (currentRound < MAX_ROUNDS) {
+      currentRound++;
+      const roundResults = await runCrossExamRound(currentRound, roles, allRoundsContext, query);
+      if (currentRound === 2) {
+        debateResults.r2 = {};
+        roles.forEach(rKey=>{debateResults.r2[rKey]=roundResults[rKey];});
+      }
+      allRoundsContext += `\n\n===\n\nROUND ${currentRound} — ${currentRound===2?'CROSS-EXAMINATION':'RE-EXAMINATION'}:\n` +
+        roles.map(rKey=>`${ROLES[rKey].title}:\n${roundResults[rKey].text}`).join('\n\n---\n\n');
+      const {parsed} = await runArbiter(query, allRoundsContext, currentRound);
+      finalParsed = parsed;
+      const confidence = parsed.confidence || 0;
+      bgBarUpdate(
+        `Round ${currentRound} complete · Confidence: ${confidence}%`,
+        confidence >= CONSENSUS_THRESHOLD ? 'Consensus reached!' : `Need ≥${CONSENSUS_THRESHOLD}% · Continuing…`
+      );
+      if (confidence >= CONSENSUS_THRESHOLD) break;
+      if (currentRound < MAX_ROUNDS) {
+        setStatus(`Confidence ${confidence}% — below ${CONSENSUS_THRESHOLD}%. Running round ${currentRound+1}...`);
+        await new Promise(r=>setTimeout(r,800));
+      }
     }
-    const tierConf=TIERS[currentTier];
-    const arbiterModelId=apiMode==='openrouter'?tierConf.synth:tierConf.antSynth;
-    const arbiterLabel=apiMode==='openrouter'?tierConf.synthLabel:tierConf.antSynthLabel;
-    bgBarUpdate(`Arbiter · ${arbiterLabel} deliberating…`,'Final synthesis');
-    setStatus(`The Arbiter (${arbiterLabel}) is delivering the verdict...`);
-    document.getElementById('table-center-label').textContent='Arbiter\nSpeaking';
-    document.getElementById('arbiter-section').classList.add('show');
-    document.getElementById('arb-model-tag').textContent=arbiterLabel;
-    document.getElementById('arb-verdict').innerHTML='<div class="pulse"><div class="pd"></div><div class="pd"></div><div class="pd"></div></div>';
-    const fullDebate=`QUESTION: ${query}\n\nROUND 1:\n${roles.map(rKey=>`${ROLES[rKey].title}: ${debateResults.r1[rKey].text}`).join('\n\n')}\n\nROUND 2:\n${roles.map(rKey=>`${ROLES[rKey].title}: ${debateResults.r2[rKey].text}`).join('\n\n')}`;
-    const synthSys=`You are The Arbiter. The Round Table has debated. Deliver a decisive verdict.\n\nHARD RULES:\n- MUST take a position. "It depends" requires an immediate threshold.\n- MUST NOT recommend "more research" as a conclusion.\n- Every [UNVERIFIED] or [CONTRADICTED] tag from The Auditor factors into confidence scores.\n- Execution Risk: higher = riskier (0=safe, 100=extremely risky).\n- Confidence penalty (mandatory): each [UNVERIFIED] tag caps confidence at 75; each [CONTRADICTED] tag caps it at 60; three or more [UNVERIFIED] tags cap it at 50. Apply the strictest cap that fires.\n- deciding_factor must be stated as a testable condition ("whether X exceeds Y"), never a vague variable name ("market timing", "execution quality").\n\nOutput ONLY valid JSON, no markdown:\n{"verdict":"150-200 word decisive conclusion","logical_soundness":0-100,"factual_grounding":0-100,"execution_risk":0-100,"confidence":0-100,"survived":["claim that held","another"],"collapsed":["destroyed claim","failed assumption"],"deciding_factor":"single most important variable in one sentence"}`;
-    const synthText=await callModel(arbiterModelId,synthSys,fullDebate,1200);
-    let parsed;
-    try{parsed=JSON.parse(synthText.replace(/```json|```/g,'').trim())}
-    catch{parsed={verdict:synthText,logical_soundness:70,factual_grounding:65,execution_risk:55,confidence:68,survived:[],collapsed:[],deciding_factor:'Unable to parse structured verdict.'}}
-    verdictText=parsed.verdict;lastVerdict=parsed;
-    document.getElementById('arb-verdict').textContent=parsed.verdict;
-    document.getElementById('df-txt').textContent=parsed.deciding_factor||'—';
-    document.getElementById('table-center-label').textContent='Verdict\nDelivered';
-    setTimeout(()=>{
-      const scores={log:parsed.logical_soundness,fac:parsed.factual_grounding,exe:parsed.execution_risk,con:parsed.confidence};
-      Object.entries(scores).forEach(([k,v])=>{
-        const el=document.getElementById(`s-${k}`);const fill=document.getElementById(`sf-${k}`);
-        if(el&&v!==undefined)el.textContent=v+'%';
-        if(fill&&v!==undefined)fill.style.width=v+'%';
-      });
-    },150);
-    const tags=document.getElementById('sc-tags');tags.innerHTML='';
-    (parsed.survived||[]).forEach(s=>{const t=document.createElement('span');t.className='sct sct-s';t.textContent='✓ '+s;tags.appendChild(t)});
-    (parsed.collapsed||[]).forEach(c=>{const t=document.createElement('span');t.className='sct sct-c';t.textContent='✗ '+c;tags.appendChild(t)});
-    document.getElementById('tts-btn').classList.add('show');
-    document.getElementById('verify-btn').classList.add('show');
-    document.getElementById('export-btn').classList.add('show');
-    clearStatus();bgBarVerdictReady();
+    renderVerdict(finalParsed, currentRound);
+    clearStatus();
+    bgBarVerdictReady(currentRound);
   }catch(err){
     showErr(`Debate failed: ${err.message}`);clearStatus();bgBarHide();expandConfig();
   }finally{
@@ -1179,7 +1246,7 @@ function exportAudit(){
     if(lastVerdict.survived?.length)md+=`**Survived:** ${lastVerdict.survived.join(', ')}\n\n`;
     if(lastVerdict.collapsed?.length)md+=`**Collapsed:** ${lastVerdict.collapsed.join(', ')}\n\n`;
   }
-  md+=`---\n*Generated by ConSenseUs v3.3 · The Round Table*`;
+  md+=`---\n*Generated by ConSenseUs v3.4 · Debate Until Consensus — Rounds to Consensus: ${lastVerdict?.rounds_completed||'—'}*`;
   const blob=new Blob([md],{type:'text/markdown'});
   const a=document.createElement('a');a.href=URL.createObjectURL(blob);
   a.download=`consenseus-audit-${Date.now()}.md`;a.click();
@@ -1194,7 +1261,7 @@ function resetAll(){
     document.getElementById('r1-transcript').classList.remove('show');
     document.getElementById('r1-grid').innerHTML='';
     document.getElementById('r2-container').style.display='none';
-    document.getElementById('r2-grid').innerHTML='';
+    document.getElementById('r2-container').innerHTML=`<div class="round-hdr" style="margin-top:2.5rem"><span class="rh-num">Round 02 /</span><span class="rh-title">Cross-<em>Examination</em></span><div class="rh-rule"></div></div><div class="transcript-section" id="r2-transcript"><div class="transcript-grid" id="r2-grid"></div></div>`;
     document.getElementById('arbiter-section').classList.remove('show');
     document.getElementById('verify-btn').classList.remove('show');
     document.getElementById('export-btn').classList.remove('show');
