@@ -880,7 +880,7 @@ footer{border-top:1px solid var(--border);padding:1.75rem 3rem;max-width:1280px;
       <button class="seg-b" onclick="setMode('anthropic',this)">Anthropic</button>
     </div>
   </div>
-  <div class="cfg-row" style="margin-bottom:1rem">
+  <div class="cfg-row" style="margin-bottom:1rem;display:none">
     <span class="cfg-label">Tier</span>
     <div class="tier-row">
       <button class="tier-b t-fast on" data-tier="fastTake" onclick="setTier('fastTake',this)">⚡ Fast Take <span class="tc">~$0.05–0.08</span></button>
@@ -914,36 +914,14 @@ footer{border-top:1px solid var(--border);padding:1.75rem 3rem;max-width:1280px;
       <div style="font-family:'JetBrains Mono',monospace;font-size:0.58rem;color:var(--text3);letter-spacing:0.08em;">Uses same key as Debate mode ↑</div>
     </div>
 
-    <!-- Sub-toggle: Fast Take vs Single Perspective -->
+    <!-- Sub-toggle: Single first, Fast second -->
     <div class="qt-sub-toggle">
-      <button class="qt-sub-btn active" id="qt-sub-fast" onclick="setQTSub('fast',this)">⚡ Fast Take <span class="qt-sub-desc">4 agents · 2 rounds · ~$0.05</span></button>
-      <button class="qt-sub-btn" id="qt-sub-single" onclick="setQTSub('single',this)">💭 Single Take <span class="qt-sub-desc">1 model · 1 role · ~$0.01</span></button>
+      <button class="qt-sub-btn active" id="qt-sub-single" onclick="setQTSub('single',this)">💭 Single Take <span class="qt-sub-desc">1 model · 1 role · ~$0.01</span></button>
+      <button class="qt-sub-btn" id="qt-sub-fast" onclick="setQTSub('fast',this)">⚡ Fast Take <span class="qt-sub-desc">4 agents · 2 rounds · ~$0.05</span></button>
     </div>
 
-    <!-- Fast Take sub-panel -->
-    <div id="qt-fast-panel">
-      <p style="font-family:'Fraunces',serif;font-variation-settings:'opsz' 14,'SOFT' 100,'WONK' 0;font-size:0.88rem;font-style:italic;color:var(--text2);margin:0.75rem 0 1rem;line-height:1.55;max-width:52ch;">A full 4-agent panel debate in 2 rounds. Faster and cheaper than Consensus — but still adversarial. Best for quick gut-checks before escalating.</p>
-      <div class="qt-fast-agents">
-        <div class="qt-fast-agent r-arch"><span>▲</span><span class="qt-fa-name">Forge</span><span class="qt-fa-model" id="qf-model-advocate">—</span></div>
-        <div class="qt-fast-agent r-int"><span>▼</span><span class="qt-fa-name">Spike</span><span class="qt-fa-model" id="qf-model-devil">—</span></div>
-        <div class="qt-fast-agent r-aud"><span>◆</span><span class="qt-fa-name">Lens</span><span class="qt-fa-model" id="qf-model-factcheck">—</span></div>
-        <div class="qt-fast-agent r-real"><span>●</span><span class="qt-fa-name">Vault</span><span class="qt-fa-model" id="qf-model-strategist">—</span></div>
-      </div>
-      <div class="q-wrap" style="margin-top:1rem">
-        <div class="q-box">
-          <textarea id="qt-fast-query" placeholder="Pose a question — the Fast Take panel will debate it in 2 rounds…" rows="3" oninput="onQueryInput(this)"></textarea>
-        </div>
-        <div class="q-char-count" id="qt-fast-char-count">0 / 5000</div>
-        <div class="query-hint" id="qt-fast-query-hint"></div>
-      </div>
-      <div class="ctrl">
-        <button class="qt-get-btn" id="qt-fast-run-btn" onclick="runFastTake()">⚡ Run Fast Take</button>
-      </div>
-      <div id="qt-fast-err-area"></div>
-    </div>
-
-    <!-- Single Take sub-panel -->
-    <div id="qt-single-panel" style="display:none">
+    <!-- Single Take sub-panel (shown by default) -->
+    <div id="qt-single-panel">
       <span class="cfg-label" style="display:block;margin-bottom:0.75rem;margin-top:0.5rem">Choose a perspective</span>
       <div class="qt-role-grid" id="qt-role-grid">
         <button class="qt-role-btn selected" data-role="for" onclick="selectQTRole(this)">
@@ -971,6 +949,44 @@ footer{border-top:1px solid var(--border);padding:1.75rem 3rem;max-width:1280px;
           <div class="qt-role-label">Raw Response</div>
           <div class="qt-role-desc">Direct, no role-playing</div>
         </button>
+      </div>
+      <div class="qt-model-row">
+        <span class="cfg-label">Model</span>
+        <select class="ac-sel" id="qt-model" style="width:auto;min-width:220px;border:1px solid var(--border2);border-radius:8px;padding:0.5rem 2rem 0.5rem 0.85rem;"></select>
+      </div>
+      <span class="cfg-label" style="display:block;margin-bottom:0.55rem">Your question</span>
+      <div class="q-wrap">
+        <div class="q-box">
+          <textarea id="qt-query" placeholder="Ask anything — get one model’s sharpest take…" rows="3" oninput="onQueryInput(this)"></textarea>
+        </div>
+        <div class="q-char-count" id="qt-char-count">0 / 5000</div>
+        <div class="query-hint" id="qt-query-hint"></div>
+      </div>
+      <div class="ctrl">
+        <button class="qt-get-btn" id="qt-run-btn" onclick="runQuickTake()">💭 Get Take</button>
+      </div>
+      <div id="qt-err-area"></div>
+      <div class="qt-result" id="qt-result">
+        <div class="qt-result-shell"><div class="qt-result-core">
+          <div class="qt-result-header">
+            <span class="qt-result-role" id="qt-result-role">—</span>
+            <span class="qt-result-model" id="qt-result-model">—</span>
+          </div>
+          <div class="qt-result-body" id="qt-result-body">—</div>
+          <button class="qt-escalate-btn" onclick="escalateToDebate()">★ Escalate to full Consensus Debate →</button>
+        </div></div>
+      </div>
+    </div>
+
+    <!-- Fast Take sub-panel (hidden by default) -->
+    <div id="qt-fast-panel" style="display:none">
+      <p style="font-family:'Fraunces',serif;font-variation-settings:'opsz' 14,'SOFT' 100,'WONK' 0;font-size:0.88rem;font-style:italic;color:var(--text2);margin:0.75rem 0 1rem;line-height:1.55;max-width:52ch;">4-agent panel · 2 rounds · faster and cheaper than Consensus. Use to gut-check before escalating.</p>
+      <div class="qt-fast-agents">
+        <div class="qt-fast-agent r-arch"><span>▲</span><span class="qt-fa-name">Advocate</span><span class="qt-fa-model" id="qf-model-advocate">—</span></div>
+        <div class="qt-fast-agent r-int"><span>▼</span><span class="qt-fa-name">Devil's Adv.</span><span class="qt-fa-model" id="qf-model-devil">—</span></div>
+        <div class="qt-fast-agent r-aud"><span>◆</span><span class="qt-fa-name">Fact Checker</span><span class="qt-fa-model" id="qf-model-factcheck">—</span></div>
+        <div class="qt-fast-agent r-real"><span>●</span><span class="qt-fa-name">Realist</span><span class="qt-fa-model" id="qf-model-strategist">—</span></div>
+      </div>
       </div>
       <div class="qt-model-row">
         <span class="cfg-label">Model</span>
@@ -1925,6 +1941,11 @@ function setMode_quick(btn) {
   document.getElementById('quick-take-panel').classList.add('show');
   document.getElementById('mode-quick-btn').classList.add('active');
   document.getElementById('mode-debate-btn').classList.remove('active');
+  // Reset sub-toggle to Single Take (left, default)
+  document.getElementById('qt-single-panel').style.display = '';
+  document.getElementById('qt-fast-panel').style.display = 'none';
+  document.querySelectorAll('.qt-sub-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('qt-sub-single').classList.add('active');
   renderQTModels();
   updateFastAgentStrip();
 }
@@ -2043,9 +2064,11 @@ async function runQuickTake() {
   }
 }
 
-// 4.3 Escalate to full debate
+// 4.3 Escalate to full debate — works from both Single Take and Fast Take
 function escalateToDebate() {
-  const query = document.getElementById('qt-query').value.trim();
+  const fastQuery = document.getElementById('qt-fast-query')?.value.trim();
+  const singleQuery = document.getElementById('qt-query')?.value.trim();
+  const query = fastQuery || singleQuery || '';
   // Switch to debate mode
   setMode_debate();
   document.getElementById('mode-debate-btn').classList.add('active');
