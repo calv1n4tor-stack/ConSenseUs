@@ -338,6 +338,35 @@ header{padding:2.25rem 3rem 0;max-width:1280px;margin:0 auto;position:relative;z
 .agent-expand-btn.open{color:var(--wattle)}
 .agent-expand-btn:hover{background:var(--surface3);color:var(--text2)}
 
+/* ── THESIS STACK (above table) ── */
+.thesis-stack{
+  display:none;flex-direction:column;gap:0.35rem;
+  max-width:760px;margin:0 auto 1.2rem;padding:0 1rem;
+}
+.thesis-stack.show{display:flex}
+.thesis-pill{
+  display:flex;align-items:baseline;gap:0.65rem;
+  padding:0.52rem 0.85rem;border-radius:8px;
+  background:var(--surface2);border:1px solid var(--border);
+  animation:fadeUp 0.35s cubic-bezier(0.22,1,0.36,1);
+  cursor:pointer;transition:all 0.3s;
+}
+.thesis-pill:hover{border-color:var(--border2);background:var(--surface3)}
+.thesis-pill-icon{font-size:0.65rem;flex-shrink:0;opacity:0.8}
+.thesis-pill-role{
+  font-family:'JetBrains Mono',monospace;font-size:0.48rem;letter-spacing:0.16em;
+  text-transform:uppercase;font-weight:700;flex-shrink:0;opacity:0.7;
+}
+.thesis-pill-text{
+  font-family:'Fraunces',serif;font-variation-settings:"opsz" 14,"SOFT" 100,"WONK" 0;
+  font-size:0.8rem;font-style:italic;color:var(--text2);line-height:1.4;
+  flex:1;letter-spacing:-0.006em;
+}
+.thesis-pill-round{
+  font-family:'JetBrains Mono',monospace;font-size:0.44rem;letter-spacing:0.1em;
+  text-transform:uppercase;color:var(--text3);flex-shrink:0;
+}
+
 /* ── THREE VERDICT STATES (2.2) ── */
 .verdict-state-badge{
   display:inline-flex;align-items:center;gap:0.5rem;
@@ -636,6 +665,48 @@ textarea::placeholder{color:var(--text3);font-style:italic}
 /* ── PARSE ERROR BADGE ── */
 .parse-err-badge{display:inline-flex;align-items:center;gap:0.4rem;background:var(--amber-dim);border:1px solid var(--amber-glow);color:var(--amber);font-family:'JetBrains Mono',monospace;font-size:0.52rem;letter-spacing:0.12em;text-transform:uppercase;padding:0.28rem 0.7rem;border-radius:4px;margin-bottom:1rem;font-weight:600;}
 
+/* ── QUICK TAKE SUB-TOGGLE ── */
+.qt-sub-toggle{
+  display:flex;gap:0.35rem;background:var(--bg-tint);border:1px solid var(--border);
+  border-radius:10px;padding:3px;margin:0.5rem 0 1.25rem;width:100%;
+}
+.qt-sub-btn{
+  flex:1;font-family:'JetBrains Mono',monospace;font-size:0.54rem;letter-spacing:0.12em;
+  text-transform:uppercase;padding:0.55rem 0.8rem;border-radius:7px;border:none;
+  cursor:pointer;background:transparent;color:var(--text3);
+  transition:all 0.35s cubic-bezier(0.32,0.72,0,1);font-weight:500;
+  display:flex;align-items:center;gap:0.5rem;
+}
+.qt-sub-btn .qt-sub-desc{
+  font-size:0.48rem;opacity:0.6;letter-spacing:0.06em;text-transform:none;
+  font-family:'Instrument Sans',sans-serif;font-weight:400;
+}
+.qt-sub-btn.active{
+  background:var(--bgreen-dim);color:var(--bgreen-light);
+  border:1px solid var(--bgreen-glow);
+  box-shadow:0 0 12px var(--bgreen-glow),0 1px 0 rgba(255,255,255,0.04) inset;
+}
+.qt-sub-btn:hover:not(.active){color:var(--text2)}
+/* Fast Take agent strip inside Quick Take */
+.qt-fast-agents{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:0.4rem;margin-bottom:0.5rem;
+}
+.qt-fast-agent{
+  display:flex;flex-direction:column;align-items:center;gap:0.25rem;
+  padding:0.65rem 0.4rem;border-radius:8px;border:1px solid var(--border);
+  background:var(--bg-tint);font-size:0.65rem;
+  transition:all 0.3s;
+}
+.qt-fast-agent:hover{border-color:var(--border2);transform:translateY(-1px)}
+.qt-fa-name{
+  font-family:'Space Grotesk',sans-serif;font-size:0.56rem;letter-spacing:0.1em;
+  text-transform:uppercase;font-weight:700;color:var(--text2);
+}
+.qt-fa-model{
+  font-family:'JetBrains Mono',monospace;font-size:0.44rem;color:var(--text3);
+  letter-spacing:0.04em;text-align:center;line-height:1.3;
+}
+
 /* ── QUICK TAKE MODE (Phase 4) ── */
 .mode-toggle{display:flex;gap:0.4rem;background:var(--bg-tint);border:1px solid var(--border);border-radius:12px;padding:3px;margin-bottom:1.5rem;width:fit-content;}
 .mode-btn{
@@ -643,8 +714,17 @@ textarea::placeholder{color:var(--text3);font-style:italic}
   padding:0.52rem 1.1rem;border-radius:9px;border:none;cursor:pointer;background:transparent;
   color:var(--text3);transition:all 0.4s cubic-bezier(0.32,0.72,0,1);font-weight:500;
 }
-.mode-btn.active{background:var(--surface3);color:var(--text);box-shadow:0 1px 0 rgba(255,255,255,0.04) inset,0 2px 6px rgba(0,0,0,0.15);}
 .mode-btn:hover:not(.active){color:var(--text2)}
+/* Quick Take tab = bgreen (Fast Take colour) */
+.mode-btn.m-quick.active{
+  background:var(--bgreen-dim);color:var(--bgreen-light);
+  border:1px solid var(--bgreen-glow);box-shadow:0 0 16px var(--bgreen-glow),0 1px 0 rgba(255,255,255,0.04) inset;
+}
+/* Consensus Debate tab = amber (Consensus tier colour) */
+.mode-btn.m-debate.active{
+  background:var(--amber-dim);color:var(--amber);
+  border:1px solid var(--amber-glow);box-shadow:0 0 16px var(--amber-glow),0 1px 0 rgba(255,255,255,0.04) inset;
+}
 
 .quick-take-panel{display:none;animation:fadeUp 0.35s cubic-bezier(0.22,1,0.36,1)}
 .quick-take-panel.show{display:block}
@@ -783,8 +863,8 @@ footer{border-top:1px solid var(--border);padding:1.75rem 3rem;max-width:1280px;
 
   <!-- 4.1 Mode Toggle -->
   <div class="mode-toggle">
-    <button class="mode-btn active" id="mode-debate-btn" onclick="setMode_debate(this)">⚖️ Consensus Debate</button>
-    <button class="mode-btn" id="mode-quick-btn" onclick="setMode_quick(this)">💭 Quick Take</button>
+    <button class="mode-btn m-debate active" id="mode-debate-btn" onclick="setMode_debate(this)">★ Consensus Debate</button>
+    <button class="mode-btn m-quick" id="mode-quick-btn" onclick="setMode_quick(this)">⚡ Quick Take</button>
   </div>
 
   <!-- Consensus Debate Panel (default) -->
@@ -827,85 +907,115 @@ footer{border-top:1px solid var(--border);padding:1.75rem 3rem;max-width:1280px;
   <div id="err-area"></div>
 </div><!-- /debate-config-panel -->
 
-  <!-- 4.1+4.2 Quick Take Panel -->
+  <!-- Quick Take Panel -->
   <div class="quick-take-panel" id="quick-take-panel">
     <div class="cfg-row">
       <span class="cfg-label">API Key</span>
       <div style="font-family:'JetBrains Mono',monospace;font-size:0.58rem;color:var(--text3);letter-spacing:0.08em;">Uses same key as Debate mode ↑</div>
     </div>
 
-    <span class="cfg-label" style="display:block;margin-bottom:0.75rem">Choose a perspective</span>
-    <div class="qt-role-grid" id="qt-role-grid">
-      <button class="qt-role-btn selected" data-role="for" onclick="selectQTRole(this)">
-        <span class="qt-role-icon">▲</span>
-        <div class="qt-role-label">For It</div>
-        <div class="qt-role-desc">Strongest case in favour</div>
-      </button>
-      <button class="qt-role-btn" data-role="against" onclick="selectQTRole(this)">
-        <span class="qt-role-icon">▼</span>
-        <div class="qt-role-label">Against It</div>
-        <div class="qt-role-desc">Finds the weakest assumption</div>
-      </button>
-      <button class="qt-role-btn" data-role="factcheck" onclick="selectQTRole(this)">
-        <span class="qt-role-icon">◆</span>
-        <div class="qt-role-label">Fact Check</div>
-        <div class="qt-role-desc">Tags every claim [VERIFIED/UNVERIFIED]</div>
-      </button>
-      <button class="qt-role-btn" data-role="risk" onclick="selectQTRole(this)">
-        <span class="qt-role-icon">●</span>
-        <div class="qt-role-label">Risk Analysis</div>
-        <div class="qt-role-desc">Most likely failure mode</div>
-      </button>
-      <button class="qt-role-btn" data-role="raw" onclick="selectQTRole(this)">
-        <span class="qt-role-icon">→</span>
-        <div class="qt-role-label">Raw Response</div>
-        <div class="qt-role-desc">Direct, no role-playing</div>
-      </button>
+    <!-- Sub-toggle: Fast Take vs Single Perspective -->
+    <div class="qt-sub-toggle">
+      <button class="qt-sub-btn active" id="qt-sub-fast" onclick="setQTSub('fast',this)">⚡ Fast Take <span class="qt-sub-desc">4 agents · 2 rounds · ~$0.05</span></button>
+      <button class="qt-sub-btn" id="qt-sub-single" onclick="setQTSub('single',this)">💭 Single Take <span class="qt-sub-desc">1 model · 1 role · ~$0.01</span></button>
     </div>
 
-    <div class="qt-model-row">
-      <span class="cfg-label">Model</span>
-      <select class="ac-sel" id="qt-model" style="width:auto;min-width:220px;border:1px solid var(--border2);border-radius:8px;padding:0.5rem 2rem 0.5rem 0.85rem;">
-        <!-- populated by renderQTModels() -->
-      </select>
-    </div>
-
-    <span class="cfg-label" style="display:block;margin-bottom:0.55rem">Your question</span>
-    <div class="q-wrap">
-      <div class="q-box">
-        <textarea id="qt-query" placeholder="Ask anything — get one model's sharpest take…" rows="3" oninput="onQueryInput(this)"></textarea>
+    <!-- Fast Take sub-panel -->
+    <div id="qt-fast-panel">
+      <p style="font-family:'Fraunces',serif;font-variation-settings:'opsz' 14,'SOFT' 100,'WONK' 0;font-size:0.88rem;font-style:italic;color:var(--text2);margin:0.75rem 0 1rem;line-height:1.55;max-width:52ch;">A full 4-agent panel debate in 2 rounds. Faster and cheaper than Consensus — but still adversarial. Best for quick gut-checks before escalating.</p>
+      <div class="qt-fast-agents">
+        <div class="qt-fast-agent r-arch"><span>▲</span><span class="qt-fa-name">Forge</span><span class="qt-fa-model" id="qf-model-advocate">—</span></div>
+        <div class="qt-fast-agent r-int"><span>▼</span><span class="qt-fa-name">Spike</span><span class="qt-fa-model" id="qf-model-devil">—</span></div>
+        <div class="qt-fast-agent r-aud"><span>◆</span><span class="qt-fa-name">Lens</span><span class="qt-fa-model" id="qf-model-factcheck">—</span></div>
+        <div class="qt-fast-agent r-real"><span>●</span><span class="qt-fa-name">Vault</span><span class="qt-fa-model" id="qf-model-strategist">—</span></div>
       </div>
-      <div class="q-char-count" id="qt-char-count">0 / 5000</div>
-      <div class="query-hint" id="qt-query-hint"></div>
+      <div class="q-wrap" style="margin-top:1rem">
+        <div class="q-box">
+          <textarea id="qt-fast-query" placeholder="Pose a question — the Fast Take panel will debate it in 2 rounds…" rows="3" oninput="onQueryInput(this)"></textarea>
+        </div>
+        <div class="q-char-count" id="qt-fast-char-count">0 / 5000</div>
+        <div class="query-hint" id="qt-fast-query-hint"></div>
+      </div>
+      <div class="ctrl">
+        <button class="qt-get-btn" id="qt-fast-run-btn" onclick="runFastTake()">⚡ Run Fast Take</button>
+      </div>
+      <div id="qt-fast-err-area"></div>
     </div>
 
-    <div class="ctrl">
-      <button class="qt-get-btn" id="qt-run-btn" onclick="runQuickTake()">💭 Get Take</button>
-    </div>
-    <div id="qt-err-area"></div>
-
-    <!-- 4.2 Result area -->
-    <div class="qt-result" id="qt-result">
-      <div class="qt-result-shell">
-        <div class="qt-result-core">
+    <!-- Single Take sub-panel -->
+    <div id="qt-single-panel" style="display:none">
+      <span class="cfg-label" style="display:block;margin-bottom:0.75rem;margin-top:0.5rem">Choose a perspective</span>
+      <div class="qt-role-grid" id="qt-role-grid">
+        <button class="qt-role-btn selected" data-role="for" onclick="selectQTRole(this)">
+          <span class="qt-role-icon">▲</span>
+          <div class="qt-role-label">For It</div>
+          <div class="qt-role-desc">Strongest case in favour</div>
+        </button>
+        <button class="qt-role-btn" data-role="against" onclick="selectQTRole(this)">
+          <span class="qt-role-icon">▼</span>
+          <div class="qt-role-label">Against It</div>
+          <div class="qt-role-desc">Finds the weakest assumption</div>
+        </button>
+        <button class="qt-role-btn" data-role="factcheck" onclick="selectQTRole(this)">
+          <span class="qt-role-icon">◆</span>
+          <div class="qt-role-label">Fact Check</div>
+          <div class="qt-role-desc">Tags every claim [VERIFIED/UNVERIFIED]</div>
+        </button>
+        <button class="qt-role-btn" data-role="risk" onclick="selectQTRole(this)">
+          <span class="qt-role-icon">●</span>
+          <div class="qt-role-label">Risk Analysis</div>
+          <div class="qt-role-desc">Most likely failure mode</div>
+        </button>
+        <button class="qt-role-btn" data-role="raw" onclick="selectQTRole(this)">
+          <span class="qt-role-icon">→</span>
+          <div class="qt-role-label">Raw Response</div>
+          <div class="qt-role-desc">Direct, no role-playing</div>
+        </button>
+      </div>
+      <div class="qt-model-row">
+        <span class="cfg-label">Model</span>
+        <select class="ac-sel" id="qt-model" style="width:auto;min-width:220px;border:1px solid var(--border2);border-radius:8px;padding:0.5rem 2rem 0.5rem 0.85rem;"></select>
+      </div>
+      <span class="cfg-label" style="display:block;margin-bottom:0.55rem">Your question</span>
+      <div class="q-wrap">
+        <div class="q-box">
+          <textarea id="qt-query" placeholder="Ask anything — get one model's sharpest take…" rows="3" oninput="onQueryInput(this)"></textarea>
+        </div>
+        <div class="q-char-count" id="qt-char-count">0 / 5000</div>
+        <div class="query-hint" id="qt-query-hint"></div>
+      </div>
+      <div class="ctrl">
+        <button class="qt-get-btn" id="qt-run-btn" onclick="runQuickTake()">💭 Get Take</button>
+      </div>
+      <div id="qt-err-area"></div>
+      <div class="qt-result" id="qt-result">
+        <div class="qt-result-shell"><div class="qt-result-core">
           <div class="qt-result-header">
             <span class="qt-result-role" id="qt-result-role">—</span>
             <span class="qt-result-model" id="qt-result-model">—</span>
           </div>
           <div class="qt-result-body" id="qt-result-body">—</div>
-          <!-- 4.3 Escalate button -->
-          <button class="qt-escalate-btn" onclick="escalateToDebate()">
-            ⚖️ Run full Consensus Debate on this question →
-          </button>
-        </div>
+          <button class="qt-escalate-btn" onclick="escalateToDebate()">★ Escalate to full Consensus Debate →</button>
+        </div></div>
       </div>
     </div>
+
+    <!-- Shared escalate from Fast Take -->
+    <div id="qt-fast-escalate" style="display:none;margin-top:1.2rem">
+      <button class="qt-escalate-btn" style="width:100%;justify-content:center" onclick="escalateToDebate()">
+        ★ Push to full Consensus Debate →
+      </button>
+    </div>
+
   </div><!-- /quick-take-panel -->
 
 </div><!-- /config -->
 </div><!-- /config-shell -->
 
 <div class="debate-area" id="debate-area">
+  <!-- Thesis Stack -->
+  <div class="thesis-stack" id="thesis-stack"></div>
+
   <div id="table-container" style="display:none">
     <div class="round-hdr">
       <span class="rh-num" id="round-num-label">Round 01 /</span>
@@ -1010,7 +1120,8 @@ const OR_MODELS=[
   // Consensus tier
   {id:'anthropic/claude-opus-4-6',label:'Claude Opus 4.6',tier:'consensus'},
   {id:'x-ai/grok-4.20',label:'Grok 4.20',tier:'consensus'},
-  {id:'google/gemini-2.5-pro',label:'Gemini 2.5 Pro',tier:'consensus'},
+  {id:'google/gemini-3.1-pro-preview',label:'Gemini 3.1 Pro',tier:'consensus'},
+  {id:'google/gemini-2.5-pro',label:'Gemini 2.5 Pro',tier:'extra'},
   {id:'openai/gpt-5',label:'GPT-5',tier:'consensus'},
   // Extras / alternatives
   {id:'anthropic/claude-sonnet-4-5',label:'Claude Sonnet 4.5',tier:'extra'},
@@ -1049,12 +1160,12 @@ const TIERS={
     description:'Unlimited rounds — stops at convergence or 5 rounds max.',
     advocate:'anthropic/claude-opus-4-6',
     devil:'x-ai/grok-4.20',
-    factcheck:'google/gemini-2.5-pro',
+    factcheck:'google/gemini-3.1-pro-preview',
     strategist:'deepseek/deepseek-v3.2',
-    synth:'anthropic/claude-opus-4-6',
-    synthLabel:'Claude Opus 4.6',
-    antSynth:'claude-opus-4-6-20260101',
-    antSynthLabel:'Claude Opus 4.6',
+    synth:'anthropic/claude-opus-4-7',
+    synthLabel:'Claude Opus 4.7',
+    antSynth:'claude-opus-4-7-20250514',
+    antSynthLabel:'Claude Opus 4.7',
     maxRounds:5,
     cost:'~$0.15–0.40',
   },
@@ -1063,19 +1174,19 @@ const TIERS={
 const THESIS_INSTRUCTION = `\n\nBegin your response with a single sentence of 15 words or fewer that states your core position. Place it on its own line, prefixed with "THESIS: ". Then elaborate fully below it.`;
 
 const ROLES={
-  advocate:{key:'advocate',icon:'▲',name:'Architect',title:'The Architect',color:'arch',
+  advocate:{key:'advocate',icon:'▲',name:'Forge',title:'Forge — The Architect',color:'arch',
     r1:`You are The Architect. Build the 3 strongest arguments FOR the premise. No hedging. No concessions. Every claim must include a mechanism and specific evidence. NEVER use "however" or "on the other hand". Evidence must be a named source, a concrete mechanism, or a falsifiable prediction — never an appeal to unnamed authority ("studies show", "experts agree"). If you cannot name the source, state the causal mechanism explicitly instead. Max 200 words.`+THESIS_INSTRUCTION,
     r2:`You are The Architect. The Round Table has heard all opening arguments. Defend your strongest point against the Interrogator's attack. Quote or paraphrase the Interrogator's specific attack in your opening line before responding — if you cannot name what they attacked, you are not defending, you are restating. Acknowledge one [CONTRADICTED] tag only if you can immediately reframe why it doesn't undermine your thesis. Penalized for agreement. Max 150 words.`+THESIS_INSTRUCTION,
     vPrompt:`You are an independent verification agent. Assess The Architect's claims: which are factually solid vs speculative? Name at least one specific claim as solid and one as speculative — quote them verbatim. If every claim is solid or every claim is speculative, say so explicitly and explain why. What is their strongest surviving argument? Max 120 words.`},
-  devil:{key:'devil',icon:'▼',name:'Interrogator',title:'The Interrogator',color:'int',
+  devil:{key:'devil',icon:'▼',name:'Spike',title:'Spike — The Interrogator',color:'int',
     r1:`You are The Interrogator. Find the weakest structural assumption and make it collapse. Agreement = failure. No softening phrases. Attack sequence: (1) Name the weakest assumption as a single declarative sentence the premise depends on being true — not a restatement of the premise itself. If you cannot state it as "This only works if X", you have not found the assumption yet. (2) Show why it fails in the real world. (3) What is being hidden. (4) Actual outcome when assumption breaks. Max 180 words.`+THESIS_INSTRUCTION,
     r2:`You are The Interrogator. The Architect patched their argument. Find the new crack. The new crack must be in a different structural assumption than the one you attacked in Round 1 — if you recycle the same target, the attack fails. State which assumption you are now targeting and confirm it differs from your opening. If they pivoted, attack the pivot. Strictly forbidden from sounding like agreement. Max 150 words.`+THESIS_INSTRUCTION,
     vPrompt:`You are an independent verification agent. Were The Interrogator's attacks logically valid? Which was strongest? What was overblown? For the strongest attack, state the logical form (e.g., "claim X requires Y, Y is false, therefore X fails"); for the overblown one, state which step of its logic does not hold. Max 120 words.`},
-  factcheck:{key:'factcheck',icon:'◆',name:'Auditor',title:'The Auditor',color:'aud',
+  factcheck:{key:'factcheck',icon:'◆',name:'Lens',title:'Lens — The Auditor',color:'aud',
     r1:`You are The Auditor. You have exactly one job: tag every factual claim made in the source text. No opinions, no analysis, no preamble, no summary.\n\nOUTPUT FORMAT — one claim per line, exactly this structure:\n- [TAG] → Claim (≤12 words) → Evidence (≤15 words)\n\nTAGS — use exactly one per line:\n[VERIFIED] — claim matches widely documented fact\n[UNVERIFIED] — claim is plausible but you cannot confirm the source\n[CONTRADICTED] — claim conflicts with widely documented fact\n[uncertain source] — claim cites a specific source but you cannot confirm that source is accurate\n\nHARD LIMITS:\n- Maximum 8 claims total\n- Maximum 150 words total across all claims combined\n- If you cannot name a source, the tag is [UNVERIFIED] — do not invent sources\n- No text outside the bulleted list. No intro, no conclusion, no "Here are the claims:"`+THESIS_INSTRUCTION,
     r2:`You are The Auditor. Tag only factual claims that were newly introduced during Round 2 cross-examination — not claims already tagged in Round 1. If Round 2 provided new evidence that resolves a Round 1 [UNVERIFIED] tag, note it with prefix UPDATE: on its own line.\n\nOUTPUT FORMAT — one claim per line, exactly this structure:\n- [TAG] → Claim (≤12 words) → Evidence (≤15 words)\n\nHARD LIMITS:\n- Maximum 8 claims total\n- Maximum 150 words total\n- Same tag set as Round 1: [VERIFIED] [UNVERIFIED] [CONTRADICTED] [uncertain source]\n- No text outside the bulleted list`+THESIS_INSTRUCTION,
     vPrompt:`You are an independent verification agent. Pick the three most load-bearing claims in the debate (the ones the verdict depends on) and cross-check only those — for each, state VERIFIED/UNVERIFIED/CONTRADICTED with one-line justification. Do not attempt to cover all claims. Max 120 words.`},
-  strategist:{key:'strategist',icon:'●',name:'Realist',title:'The Realist',color:'real',
+  strategist:{key:'strategist',icon:'●',name:'Vault',title:'Vault — The Realist',color:'real',
     r1:`You are The Realist. No position for or against. Execution risk only. Output: (1) Most likely failure mode with specific mechanism. (2) Hidden dependency nobody mentioned. (3) Concrete decision criterion — a numeric threshold, observable event, or measurable metric that would flip your risk assessment. Examples of valid form: "if X exceeds 15%", "if Y happens before Q2", "if Z metric drops below N". Vague criteria ("if conditions are right") fail this role. Max 160 words.`+THESIS_INSTRUCTION,
     r2:`You are The Realist. Update the risk picture based on the full Round 1 debate and Auditor tags. What changed? What didn't? Update failure mode and decision criterion. If Round 1 produced no new information that changes your Round 1 risk assessment, say so explicitly — do not invent updates. Only revise the failure mode or decision criterion if a specific Auditor tag or debate exchange warrants it, and name which one. Max 140 words.`+THESIS_INSTRUCTION,
     vPrompt:`You are an independent verification agent. Were The Realist's failure modes realistic? Was the decision criterion actionable? For each, quote the specific claim you are evaluating before judging it — "actionable" means a reader could act on it today without further clarification. Max 120 words.`}
@@ -1157,6 +1268,7 @@ async function runCrossExamRound(roundNum, roles, fullContext, query) {
     const text = await callModel(mid, prompt, ctx, rKey === 'factcheck' ? 1200 : 900);
     setSeatDone(rKey, text);doneCount++;
     roundResults[rKey] = {text, mid};
+    pushThesisToStack(rKey, text, roundNum);
     addTranscriptCard(gridId, rKey, mid, text);
   }
   return roundResults;
@@ -1465,9 +1577,34 @@ function setSeatDone(rKey,text){
 function extractThesis(text) {
   const m = text.match(/^THESIS:\s*(.+)/m);
   if (m) return { thesis: m[1].trim(), body: text.replace(/^THESIS:.+\n?/m, '').trim() };
-  // Fallback: use first sentence
   const first = text.split(/[.!?]/)[0];
   return { thesis: (first||text).substring(0,120).trim(), body: text };
+}
+
+// ── THESIS STACK ABOVE TABLE ──
+function pushThesisToStack(rKey, text, roundNum) {
+  const role = ROLES[rKey];
+  const { thesis } = extractThesis(text);
+  const color = role.color==='arch'?'wattle':role.color==='int'?'red':role.color==='aud'?'blue':'amber';
+  const stack = document.getElementById('thesis-stack');
+  stack.classList.add('show');
+  const pill = document.createElement('div');
+  pill.className = 'thesis-pill';
+  // Find the matching transcript card id to scroll to
+  const gridId = roundNum === 1 ? 'r1-grid' : 'r2-grid';
+  pill.innerHTML = `
+    <span class="thesis-pill-icon" style="color:var(--${color})">${role.icon}</span>
+    <span class="thesis-pill-role" style="color:var(--${color})">${role.name}</span>
+    <span class="thesis-pill-text">${thesis}</span>
+    <span class="thesis-pill-round">R${roundNum}</span>`;
+  pill.onclick = () => {
+    // Scroll to the relevant transcript section
+    const target = roundNum === 1
+      ? document.getElementById('r1-transcript')
+      : document.getElementById('r2-transcript');
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+  stack.appendChild(pill);
 }
 
 function addTranscriptCard(gridId,rKey,modelId,text){
@@ -1543,6 +1680,8 @@ async function runDebate(){
   document.getElementById('verify-btn').classList.remove('show');
   document.getElementById('export-btn').classList.remove('show');
   lastQuery=query;lastVerdict=null;verdictText='';debateResults={r1:{},r2:{}};
+  document.getElementById('thesis-stack').innerHTML='';
+  document.getElementById('thesis-stack').classList.remove('show');
   document.getElementById('r2-container').innerHTML=`<div class="round-hdr" style="margin-top:2.5rem"><span class="rh-num">Round 02 /</span><span class="rh-title">Cross-<em>Examination</em></span><div class="rh-rule"></div></div><div class="transcript-section" id="r2-transcript"><div class="transcript-grid" id="r2-grid"></div></div>`;
   ['r1-transcript','r2-transcript'].forEach(id=>{
     document.getElementById(id)?.classList.remove('show');
@@ -1574,7 +1713,9 @@ async function runDebate(){
       return Promise.all([activatePromise,apiPromise]).then(([,text])=>{
         setSeatDone(rKey,text);r1DoneCount++;
         bgBarUpdate('Round 1 · '+r1DoneCount+' / '+roles.length+' done');
-        debateResults.r1[rKey]={text,mid};return{rKey,text,mid};
+        debateResults.r1[rKey]={text,mid};
+        pushThesisToStack(rKey, text, 1);
+        return{rKey,text,mid};
       });
     });
     await Promise.all(r1Promises);
@@ -1785,6 +1926,68 @@ function setMode_quick(btn) {
   document.getElementById('mode-quick-btn').classList.add('active');
   document.getElementById('mode-debate-btn').classList.remove('active');
   renderQTModels();
+  updateFastAgentStrip();
+}
+
+function setQTSub(mode, btn) {
+  document.querySelectorAll('.qt-sub-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('qt-fast-panel').style.display = mode === 'fast' ? '' : 'none';
+  document.getElementById('qt-single-panel').style.display = mode === 'single' ? '' : 'none';
+  if (mode === 'single') renderQTModels();
+  if (mode === 'fast') updateFastAgentStrip();
+}
+
+function updateFastAgentStrip() {
+  const td = TIERS['fastTake'];
+  const map = {advocate:'qf-model-advocate',devil:'qf-model-devil',factcheck:'qf-model-factcheck',strategist:'qf-model-strategist'};
+  Object.entries(map).forEach(([role, elId]) => {
+    const el = document.getElementById(elId);
+    if (el) el.textContent = mLabel(td[role]);
+  });
+}
+
+async function runFastTake() {
+  const query = document.getElementById('qt-fast-query').value.trim();
+  if (!query) { document.getElementById('qt-fast-query').focus(); return; }
+  const validation = validateQuery(query);
+  if (!validation.valid) {
+    document.getElementById('qt-fast-err-area').innerHTML = `<div class="err">⚠ ${validation.msg}</div>`;
+    return;
+  }
+  const key = document.getElementById('api-key').value.trim();
+  if (!key) {
+    document.getElementById('qt-fast-err-area').innerHTML = `<div class="err">⚠ Enter your API key above.</div>`;
+    return;
+  }
+  const btn = document.getElementById('qt-fast-run-btn');
+  btn.disabled = true; btn.textContent = '⏳ Debating...';
+  document.getElementById('qt-fast-err-area').innerHTML = '';
+  document.getElementById('qt-fast-escalate').style.display = 'none';
+  // Temporarily switch to fastTake tier and run a full debate
+  const prevTier = currentTier;
+  currentTier = 'fastTake';
+  document.getElementById('query').value = query;
+  // Switch to debate panel, run, then switch back to quick take view
+  try {
+    // Run the debate in the main area — switch view first
+    setMode_debate();
+    document.getElementById('mode-debate-btn').classList.add('active');
+    document.getElementById('mode-quick-btn').classList.remove('active');
+    // Sync the tier buttons
+    document.querySelectorAll('.tier-b').forEach(b => b.classList.remove('on'));
+    const ftBtn = document.querySelector('[data-tier="fastTake"]');
+    if (ftBtn) ftBtn.classList.add('on');
+    renderAgents();
+    onQueryInput(document.getElementById('query'));
+    await runDebate();
+    // After debate completes, show escalate button
+    document.getElementById('qt-fast-escalate').style.display = 'block';
+  } catch(e) {
+    document.getElementById('qt-fast-err-area').innerHTML = `<div class="err">⚠ ${e.message}</div>`;
+  } finally {
+    btn.disabled = false; btn.textContent = '⚡ Run Fast Take';
+  }
 }
 
 function renderQTModels() {
