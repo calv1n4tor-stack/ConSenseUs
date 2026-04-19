@@ -309,16 +309,57 @@ header{padding:2.25rem 3rem 0;max-width:1280px;margin:0 auto;position:relative;z
   letter-spacing:0.04em;transition:background-color 0.3s;
 }
 .ac-sel:hover{background-color:var(--surface3)}.ac-sel option{background:var(--surface-solid);color:var(--text)}
-.bench{padding:0.75rem 1rem 0.9rem;border-top:1px solid var(--border);background:var(--surface)}
-.bench-row{display:flex;align-items:center;gap:0.6rem;margin-bottom:0.42rem}
-.bench-row:last-child{margin-bottom:0}
-.bench-label{font-family:'JetBrains Mono',monospace;font-size:0.5rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--text3);width:58px;flex-shrink:0;font-weight:500;}
-.bench-track{flex:1;height:3px;background:var(--border2);border-radius:2px;overflow:hidden;position:relative;}
-.bench-track::after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 9%,rgba(255,255,255,0.06) 9% 10%);pointer-events:none;}
-.bench-fill{height:100%;border-radius:2px;transition:width 0.8s cubic-bezier(0.32,0.72,0,1);box-shadow:0 0 8px currentColor;}
-.r-arch .bench-fill{background:var(--wattle)}.r-int .bench-fill{background:var(--red)}
-.r-aud .bench-fill{background:var(--blue)}.r-real .bench-fill{background:var(--amber)}
-.bench-val{font-family:'JetBrains Mono',monospace;font-size:0.5rem;color:var(--text2);width:24px;text-align:right;font-variant-numeric:tabular-nums;font-weight:500;}
+.r-arch .ac-ico,.r-arch .ac-tog.on{border-color:var(--wattle)}
+
+/* ── COLLAPSED AGENT CARDS (2.1) ── */
+.agent-thesis{
+  padding:0.6rem 1rem 0.55rem;
+  font-family:'Fraunces',serif;font-variation-settings:"opsz" 14,"SOFT" 100,"WONK" 0;
+  font-size:0.82rem;line-height:1.5;color:var(--text2);font-style:italic;
+  cursor:pointer;border-top:1px solid var(--border);
+  transition:color 0.3s;letter-spacing:-0.008em;
+}
+.agent-thesis:hover{color:var(--text)}
+.agent-thesis::after{content:' ↓';font-size:0.65rem;opacity:0.5;font-style:normal;letter-spacing:0}
+.agent-full-arg{
+  padding:0.75rem 1rem 0.9rem;border-top:1px solid var(--border);
+  font-family:'Fraunces',serif;font-variation-settings:"opsz" 14,"SOFT" 100,"WONK" 0;
+  font-size:0.82rem;line-height:1.65;color:var(--text2);font-weight:400;
+  display:none;letter-spacing:-0.006em;
+}
+.agent-full-arg.open{display:block;animation:fadeUp 0.3s cubic-bezier(0.22,1,0.36,1)}
+.agent-expand-btn{
+  display:block;width:100%;padding:0.48rem 1rem;background:var(--surface2);
+  border:none;border-top:1px solid var(--border);
+  font-family:'JetBrains Mono',monospace;font-size:0.52rem;letter-spacing:0.14em;
+  text-transform:uppercase;color:var(--text3);cursor:pointer;
+  transition:all 0.3s;text-align:left;
+}
+.agent-expand-btn.open{color:var(--wattle)}
+.agent-expand-btn:hover{background:var(--surface3);color:var(--text2)}
+
+/* ── THREE VERDICT STATES (2.2) ── */
+.verdict-state-badge{
+  display:inline-flex;align-items:center;gap:0.5rem;
+  font-family:'JetBrains Mono',monospace;font-size:0.6rem;letter-spacing:0.2em;
+  text-transform:uppercase;font-weight:700;padding:0.45rem 1rem;
+  border-radius:999px;margin-bottom:1.2rem;
+}
+.vstate-consensus{background:var(--bgreen-dim);color:var(--bgreen-light);border:1px solid var(--bgreen-glow)}
+.vstate-partial{background:var(--amber-dim);color:var(--amber);border:1px solid var(--amber-glow)}
+.vstate-disagree{background:var(--red-dim);color:var(--red);border:1px solid var(--red-glow)}
+
+/* ── QUERY VALIDATION (2.5) ── */
+.query-hint{
+  font-family:'JetBrains Mono',monospace;font-size:0.52rem;letter-spacing:0.1em;
+  color:var(--text3);margin-top:0.4rem;display:none;padding:0 0.2rem;
+}
+.query-hint.warn{display:block;color:var(--amber)}
+.query-hint.err{display:block;color:var(--red)}
+.q-char-count{
+  font-family:'JetBrains Mono',monospace;font-size:0.5rem;color:var(--text3);
+  text-align:right;margin-top:0.3rem;letter-spacing:0.06em;
+}
 
 /* ── QUERY BOX ── */
 .q-wrap{margin:1rem 0 1.2rem}
@@ -573,6 +614,86 @@ textarea::placeholder{color:var(--text3);font-style:italic}
 .reset-btn{display:inline-flex;align-items:center;gap:0.5rem;background:transparent;border:1px solid var(--border2);padding:0.7rem 1.25rem;border-radius:999px;font-family:'JetBrains Mono',monospace;font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;cursor:pointer;color:var(--text3);font-weight:500;margin-top:1.8rem;transition:all 0.5s cubic-bezier(0.32,0.72,0,1);}
 .reset-btn:hover{border-color:var(--text);color:var(--text);transform:translateY(-1px)}
 
+/* ── MODEL META TAGS ── */
+.model-meta{margin-top:0.5rem;display:flex;gap:0.4rem;flex-wrap:wrap;}
+.model-tag-fast{font-family:'JetBrains Mono',monospace;font-size:0.5rem;letter-spacing:0.1em;text-transform:uppercase;font-weight:600;padding:0.22rem 0.55rem;border-radius:3px;background:var(--wattle-dim);color:var(--wattle);border:1px solid var(--wattle-glow);}
+.model-tag-cons{font-family:'JetBrains Mono',monospace;font-size:0.5rem;letter-spacing:0.1em;text-transform:uppercase;font-weight:600;padding:0.22rem 0.55rem;border-radius:3px;background:var(--bgreen-dim);color:var(--bgreen-light);border:1px solid var(--bgreen-glow);}
+.model-tag-extra{font-family:'JetBrains Mono',monospace;font-size:0.5rem;letter-spacing:0.1em;text-transform:uppercase;font-weight:600;padding:0.22rem 0.55rem;border-radius:3px;background:var(--surface3);color:var(--text3);border:1px solid var(--border2);}
+
+/* ── COST MODAL ── */
+.cost-modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(6px);z-index:999;align-items:center;justify-content:center;}
+.cost-modal-overlay.show{display:flex;animation:fadeUp 0.3s cubic-bezier(0.22,1,0.36,1)}
+.cost-modal{background:var(--surface-solid);border:1px solid var(--border-strong);border-radius:18px;padding:2rem 2.2rem;max-width:400px;width:90%;box-shadow:0 24px 64px -12px rgba(0,0,0,0.6),0 0 0 1px var(--wattle-glow);}
+.cost-modal-title{font-family:'Fraunces',serif;font-variation-settings:"opsz" 24,"SOFT" 60,"WONK" 0;font-size:1.1rem;font-weight:500;color:var(--text);margin-bottom:0.5rem;letter-spacing:-0.015em;}
+.cost-modal-body{font-family:'Instrument Sans',sans-serif;font-size:0.88rem;color:var(--text2);line-height:1.6;margin-bottom:1.4rem;}
+.cost-modal-range{font-family:'JetBrains Mono',monospace;font-size:1.1rem;color:var(--wattle);font-weight:600;letter-spacing:0.04em;display:block;margin:0.75rem 0 0.25rem;}
+.cost-modal-actions{display:flex;gap:0.75rem;justify-content:flex-end;}
+.cost-modal-cancel{background:transparent;border:1px solid var(--border2);color:var(--text3);padding:0.65rem 1.2rem;border-radius:999px;font-family:'JetBrains Mono',monospace;font-size:0.58rem;letter-spacing:0.16em;text-transform:uppercase;cursor:pointer;transition:all 0.3s;}
+.cost-modal-cancel:hover{border-color:var(--text);color:var(--text);}
+.cost-modal-run{background:var(--wattle);border:none;color:var(--bgreen);padding:0.65rem 1.4rem;border-radius:999px;font-family:'JetBrains Mono',monospace;font-size:0.58rem;letter-spacing:0.16em;text-transform:uppercase;cursor:pointer;font-weight:700;transition:all 0.3s;}
+.cost-modal-run:hover{background:var(--wattle-soft);transform:translateY(-1px);}
+
+/* ── PARSE ERROR BADGE ── */
+.parse-err-badge{display:inline-flex;align-items:center;gap:0.4rem;background:var(--amber-dim);border:1px solid var(--amber-glow);color:var(--amber);font-family:'JetBrains Mono',monospace;font-size:0.52rem;letter-spacing:0.12em;text-transform:uppercase;padding:0.28rem 0.7rem;border-radius:4px;margin-bottom:1rem;font-weight:600;}
+
+/* ── QUICK TAKE MODE (Phase 4) ── */
+.mode-toggle{display:flex;gap:0.4rem;background:var(--bg-tint);border:1px solid var(--border);border-radius:12px;padding:3px;margin-bottom:1.5rem;width:fit-content;}
+.mode-btn{
+  font-family:'JetBrains Mono',monospace;font-size:0.58rem;letter-spacing:0.14em;text-transform:uppercase;
+  padding:0.52rem 1.1rem;border-radius:9px;border:none;cursor:pointer;background:transparent;
+  color:var(--text3);transition:all 0.4s cubic-bezier(0.32,0.72,0,1);font-weight:500;
+}
+.mode-btn.active{background:var(--surface3);color:var(--text);box-shadow:0 1px 0 rgba(255,255,255,0.04) inset,0 2px 6px rgba(0,0,0,0.15);}
+.mode-btn:hover:not(.active){color:var(--text2)}
+
+.quick-take-panel{display:none;animation:fadeUp 0.35s cubic-bezier(0.22,1,0.36,1)}
+.quick-take-panel.show{display:block}
+
+.qt-role-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:0.5rem;margin:0.85rem 0 1.2rem;}
+.qt-role-btn{
+  padding:0.7rem 0.9rem;border-radius:10px;border:1px solid var(--border2);background:var(--bg-tint);
+  cursor:pointer;text-align:left;transition:all 0.35s cubic-bezier(0.32,0.72,0,1);
+}
+.qt-role-btn:hover{border-color:var(--border-strong);transform:translateY(-1px)}
+.qt-role-btn.selected{border-color:var(--wattle-glow);background:var(--wattle-dim);box-shadow:0 0 14px var(--wattle-glow)}
+.qt-role-icon{font-size:1rem;margin-bottom:0.3rem;display:block}
+.qt-role-label{font-family:'JetBrains Mono',monospace;font-size:0.54rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--text2);font-weight:600;}
+.qt-role-desc{font-family:'Instrument Sans',sans-serif;font-size:0.72rem;color:var(--text3);margin-top:0.2rem;line-height:1.4;}
+
+.qt-model-row{display:flex;align-items:center;gap:0.75rem;margin-bottom:1.2rem;flex-wrap:wrap;}
+.qt-get-btn{
+  display:inline-flex;align-items:center;gap:0.6rem;background:var(--wattle);color:var(--bgreen);
+  border:none;padding:0.78rem 1.6rem;border-radius:999px;font-family:'JetBrains Mono',monospace;
+  font-size:0.62rem;letter-spacing:0.16em;text-transform:uppercase;cursor:pointer;font-weight:700;
+  transition:all 0.4s cubic-bezier(0.32,0.72,0,1);
+}
+.qt-get-btn:hover{background:var(--wattle-soft);transform:translateY(-1px);box-shadow:0 8px 24px -6px var(--wattle-glow)}
+.qt-get-btn:disabled{opacity:0.5;cursor:not-allowed;transform:none}
+
+.qt-result{display:none;margin-top:1.5rem;animation:fadeUp 0.5s cubic-bezier(0.22,1,0.36,1)}
+.qt-result.show{display:block}
+.qt-result-shell{
+  border-radius:16px;padding:2px;
+  background:linear-gradient(135deg,var(--wattle),var(--bgreen-light) 60%,var(--wattle-soft));
+  box-shadow:0 0 40px var(--wattle-glow),0 12px 40px -12px rgba(var(--shadow-color),0.4);
+}
+.qt-result-core{background:var(--bg-tint);border-radius:14px;padding:1.6rem 1.8rem;}
+.qt-result-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:0.5rem;}
+.qt-result-role{font-family:'JetBrains Mono',monospace;font-size:0.56rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--wattle);font-weight:700;}
+.qt-result-model{font-family:'JetBrains Mono',monospace;font-size:0.52rem;color:var(--text3);background:var(--surface2);padding:0.22rem 0.6rem;border-radius:4px;border:1px solid var(--border2);}
+.qt-result-body{
+  font-family:'Fraunces',serif;font-variation-settings:"opsz" 18,"SOFT" 80,"WONK" 0;
+  font-size:0.98rem;line-height:1.72;color:var(--text);font-weight:400;letter-spacing:-0.012em;
+}
+.qt-escalate-btn{
+  display:inline-flex;align-items:center;gap:0.6rem;margin-top:1.4rem;
+  background:transparent;border:1px solid var(--border-strong);color:var(--text2);
+  padding:0.72rem 1.35rem;border-radius:999px;font-family:'JetBrains Mono',monospace;
+  font-size:0.58rem;letter-spacing:0.14em;text-transform:uppercase;cursor:pointer;font-weight:500;
+  transition:all 0.4s cubic-bezier(0.32,0.72,0,1);
+}
+.qt-escalate-btn:hover{border-color:var(--wattle);color:var(--wattle);transform:translateY(-1px);box-shadow:0 4px 16px -4px var(--wattle-glow)}
+
 /* ── FOOTER ── */
 footer{border-top:1px solid var(--border);padding:1.75rem 3rem;max-width:1280px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;position:relative;z-index:10;flex-wrap:wrap;gap:0.75rem;}
 .ft{font-family:'JetBrains Mono',monospace;font-size:0.56rem;letter-spacing:0.2em;color:var(--text3);text-transform:uppercase;font-weight:500;}
@@ -598,6 +719,7 @@ footer{border-top:1px solid var(--border);padding:1.75rem 3rem;max-width:1280px;
 
 <header>
   <div class="brand-bar">
+    <a href="ConSenseUs_Landing_Page.html" class="nav-back" style="font-family:'JetBrains Mono',monospace;font-size:0.56rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--text3);text-decoration:none;padding:0.4rem 0.8rem;border:1px solid var(--border2);border-radius:999px;transition:all 0.3s;margin-right:0.5rem;">← ConSenseUs</a>
     <div class="brand-mark">
       <div class="brand-sigil">
         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -658,6 +780,15 @@ footer{border-top:1px solid var(--border);padding:1.75rem 3rem;max-width:1280px;
 
 <div class="config-shell" id="config-shell">
 <div class="config">
+
+  <!-- 4.1 Mode Toggle -->
+  <div class="mode-toggle">
+    <button class="mode-btn active" id="mode-debate-btn" onclick="setMode_debate(this)">⚖️ Consensus Debate</button>
+    <button class="mode-btn" id="mode-quick-btn" onclick="setMode_quick(this)">💭 Quick Take</button>
+  </div>
+
+  <!-- Consensus Debate Panel (default) -->
+  <div id="debate-config-panel">
   <div class="cfg-row">
     <span class="cfg-label">API Key</span>
     <div class="key-wrap">
@@ -672,9 +803,8 @@ footer{border-top:1px solid var(--border);padding:1.75rem 3rem;max-width:1280px;
   <div class="cfg-row" style="margin-bottom:1rem">
     <span class="cfg-label">Tier</span>
     <div class="tier-row">
-      <button class="tier-b t-fast" data-tier="fast" onclick="setTier('fast',this)">⚡ Fast <span class="tc">~$0.04</span></button>
-      <button class="tier-b t-bal on" data-tier="balanced" onclick="setTier('balanced',this)">◈ Balanced <span class="tc">~$0.06</span></button>
-      <button class="tier-b t-max" data-tier="max" onclick="setTier('max',this)">★ Maximum <span class="tc">~$0.80</span></button>
+      <button class="tier-b t-fast on" data-tier="fastTake" onclick="setTier('fastTake',this)">⚡ Fast Take <span class="tc">~$0.05–0.08</span></button>
+      <button class="tier-b t-max" data-tier="consensus" onclick="setTier('consensus',this)">★ Consensus <span class="tc">~$0.15–0.40</span></button>
     </div>
   </div>
   <span class="cfg-label" style="display:block;margin-bottom:0.75rem">Agents — assign models, toggle roles</span>
@@ -682,8 +812,10 @@ footer{border-top:1px solid var(--border);padding:1.75rem 3rem;max-width:1280px;
   <span class="cfg-label" style="display:block;margin-bottom:0.55rem">Your question, decision, or claim</span>
   <div class="q-wrap">
     <div class="q-box">
-      <textarea id="query" placeholder="Pose a decision, claim, or question to the Round Table…" rows="3"></textarea>
+      <textarea id="query" placeholder="Pose a decision, claim, or question to the Round Table…" rows="3" oninput="onQueryInput(this)"></textarea>
     </div>
+    <div class="q-char-count" id="q-char-count">0 / 5000</div>
+    <div class="query-hint" id="query-hint"></div>
   </div>
   <p class="hook-copy">Four models. Two rounds of adversarial debate. One verdict. Ready in under 60 seconds.</p>
   <div class="ctrl">
@@ -693,8 +825,85 @@ footer{border-top:1px solid var(--border);padding:1.75rem 3rem;max-width:1280px;
   </div>
   <div class="status-bar" id="status-bar"><span class="sdot"></span><span id="status-txt"></span></div>
   <div id="err-area"></div>
-</div>
-</div>
+</div><!-- /debate-config-panel -->
+
+  <!-- 4.1+4.2 Quick Take Panel -->
+  <div class="quick-take-panel" id="quick-take-panel">
+    <div class="cfg-row">
+      <span class="cfg-label">API Key</span>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:0.58rem;color:var(--text3);letter-spacing:0.08em;">Uses same key as Debate mode ↑</div>
+    </div>
+
+    <span class="cfg-label" style="display:block;margin-bottom:0.75rem">Choose a perspective</span>
+    <div class="qt-role-grid" id="qt-role-grid">
+      <button class="qt-role-btn selected" data-role="for" onclick="selectQTRole(this)">
+        <span class="qt-role-icon">▲</span>
+        <div class="qt-role-label">For It</div>
+        <div class="qt-role-desc">Strongest case in favour</div>
+      </button>
+      <button class="qt-role-btn" data-role="against" onclick="selectQTRole(this)">
+        <span class="qt-role-icon">▼</span>
+        <div class="qt-role-label">Against It</div>
+        <div class="qt-role-desc">Finds the weakest assumption</div>
+      </button>
+      <button class="qt-role-btn" data-role="factcheck" onclick="selectQTRole(this)">
+        <span class="qt-role-icon">◆</span>
+        <div class="qt-role-label">Fact Check</div>
+        <div class="qt-role-desc">Tags every claim [VERIFIED/UNVERIFIED]</div>
+      </button>
+      <button class="qt-role-btn" data-role="risk" onclick="selectQTRole(this)">
+        <span class="qt-role-icon">●</span>
+        <div class="qt-role-label">Risk Analysis</div>
+        <div class="qt-role-desc">Most likely failure mode</div>
+      </button>
+      <button class="qt-role-btn" data-role="raw" onclick="selectQTRole(this)">
+        <span class="qt-role-icon">→</span>
+        <div class="qt-role-label">Raw Response</div>
+        <div class="qt-role-desc">Direct, no role-playing</div>
+      </button>
+    </div>
+
+    <div class="qt-model-row">
+      <span class="cfg-label">Model</span>
+      <select class="ac-sel" id="qt-model" style="width:auto;min-width:220px;border:1px solid var(--border2);border-radius:8px;padding:0.5rem 2rem 0.5rem 0.85rem;">
+        <!-- populated by renderQTModels() -->
+      </select>
+    </div>
+
+    <span class="cfg-label" style="display:block;margin-bottom:0.55rem">Your question</span>
+    <div class="q-wrap">
+      <div class="q-box">
+        <textarea id="qt-query" placeholder="Ask anything — get one model's sharpest take…" rows="3" oninput="onQueryInput(this)"></textarea>
+      </div>
+      <div class="q-char-count" id="qt-char-count">0 / 5000</div>
+      <div class="query-hint" id="qt-query-hint"></div>
+    </div>
+
+    <div class="ctrl">
+      <button class="qt-get-btn" id="qt-run-btn" onclick="runQuickTake()">💭 Get Take</button>
+    </div>
+    <div id="qt-err-area"></div>
+
+    <!-- 4.2 Result area -->
+    <div class="qt-result" id="qt-result">
+      <div class="qt-result-shell">
+        <div class="qt-result-core">
+          <div class="qt-result-header">
+            <span class="qt-result-role" id="qt-result-role">—</span>
+            <span class="qt-result-model" id="qt-result-model">—</span>
+          </div>
+          <div class="qt-result-body" id="qt-result-body">—</div>
+          <!-- 4.3 Escalate button -->
+          <button class="qt-escalate-btn" onclick="escalateToDebate()">
+            ⚖️ Run full Consensus Debate on this question →
+          </button>
+        </div>
+      </div>
+    </div>
+  </div><!-- /quick-take-panel -->
+
+</div><!-- /config -->
+</div><!-- /config-shell -->
 
 <div class="debate-area" id="debate-area">
   <div id="table-container" style="display:none">
@@ -731,7 +940,7 @@ In Progress</div>
     </div>
     <div class="arb-shell">
       <div class="arb-core">
-        <div class="arb-crown">
+        <div class="arb-crown" id="arb-crown">
           <div class="arb-ico">⚖</div>
           <div class="arb-label">The Arbiter</div>
           <div class="arb-model-tag" id="arb-model-tag">—</div>
@@ -749,12 +958,37 @@ In Progress</div>
         </div>
         <div class="sc-tags" id="sc-tags"></div>
         <button class="tts-btn" id="tts-btn" onclick="hearVerdict()">▶ Hear the Verdict</button>
+        <button class="tts-btn" id="tts-stop" style="display:none;background:var(--red-dim);border-color:var(--red-glow);color:var(--red)" onclick="stopTTS()">■ Stop</button>
+        <select id="tts-voice" style="display:none;font-family:'JetBrains Mono',monospace;font-size:0.52rem;background:var(--surface2);border:1px solid var(--border2);color:var(--text2);padding:0.35rem 0.65rem;border-radius:6px;letter-spacing:0.06em;cursor:pointer;margin-top:0.5rem">
+          <option value="onyx">Onyx (deep)</option>
+          <option value="alloy">Alloy (neutral)</option>
+          <option value="echo">Echo (clear)</option>
+          <option value="fable">Fable (warm)</option>
+          <option value="nova">Nova (bright)</option>
+          <option value="shimmer">Shimmer (soft)</option>
+        </select>
       </div>
     </div>
     <button class="reset-btn" onclick="resetAll()">↺ New Debate</button>
   </div>
 </div>
 </main>
+
+<!-- Cost Warning Modal -->
+<div class="cost-modal-overlay" id="cost-modal-overlay">
+  <div class="cost-modal">
+    <div class="cost-modal-title">⚡ Starting Debate</div>
+    <div class="cost-modal-body">
+      This will use real API credits via OpenRouter. Estimated cost for the selected tier:
+      <span class="cost-modal-range" id="cost-modal-range">—</span>
+      Cost depends on query length and number of rounds.
+    </div>
+    <div class="cost-modal-actions">
+      <button class="cost-modal-cancel" id="cost-modal-cancel">Cancel</button>
+      <button class="cost-modal-run" id="cost-modal-run">Run Anyway →</button>
+    </div>
+  </div>
+</div>
 
 <footer>
   <span class="ft">ConSenseUs v3.4 <em>·</em> Debate Until Consensus</span>
@@ -764,74 +998,113 @@ In Progress</div>
 <script>
 // ── CONSENSUS CONFIG ──
 const CONSENSUS_THRESHOLD = 70;
-const MAX_ROUNDS = 5;
+const MAX_ROUNDS = 5; // fallback; actual max pulled from TIERS[currentTier].maxRounds at runtime
 
 // ── MODELS ──
-// OR_MODELS: claude-sonnet-4-6 already present; claude-opus-4-7 added
 const OR_MODELS=[
-  {id:'anthropic/claude-sonnet-4-5',label:'Claude Sonnet 4.5',bench:{r:88,f:85,s:72}},
-  {id:'anthropic/claude-sonnet-4-6',label:'Claude Sonnet 4.6',bench:{r:90,f:86,s:76}},
-  {id:'anthropic/claude-opus-4-7',label:'Claude Opus 4.7',bench:{r:96,f:92,s:45}},
-  {id:'anthropic/claude-opus-4',label:'Claude Opus 4',bench:{r:95,f:90,s:55}},
-  {id:'openai/gpt-4.1',label:'GPT-4.1',bench:{r:90,f:82,s:78}},
-  {id:'openai/gpt-4o',label:'GPT-4o',bench:{r:87,f:80,s:82}},
-  {id:'openai/gpt-4.1-mini',label:'GPT-4.1 Mini',bench:{r:74,f:70,s:92}},
-  {id:'x-ai/grok-3',label:'Grok 3',bench:{r:89,f:78,s:75}},
-  {id:'google/gemini-2.5-pro',label:'Gemini 2.5 Pro',bench:{r:86,f:92,s:68}},
-  {id:'google/gemini-2.0-flash-001',label:'Gemini 2.0 Flash',bench:{r:78,f:80,s:95}},
-  {id:'deepseek/deepseek-r1',label:'DeepSeek R1',bench:{r:92,f:75,s:65}},
-  {id:'deepseek/deepseek-chat-v3-5',label:'DeepSeek V3',bench:{r:80,f:74,s:88}},
-  {id:'meta-llama/llama-4-maverick',label:'Llama 4 Maverick',bench:{r:78,f:72,s:85}},
-  {id:'anthropic/claude-haiku-4-5',label:'Claude Haiku 4.5',bench:{r:70,f:68,s:96}},
+  // Fast Take tier
+  {id:'anthropic/claude-sonnet-4-6',label:'Claude Sonnet 4.6',tier:'fast'},
+  {id:'x-ai/grok-4.1-fast',label:'Grok 4.1 Fast',tier:'fast'},
+  {id:'google/gemini-3.1-flash-lite-preview',label:'Gemini 3.1 Flash Lite',tier:'fast'},
+  {id:'deepseek/deepseek-v3.2',label:'DeepSeek V3.2',tier:'fast'},
+  // Consensus tier
+  {id:'anthropic/claude-opus-4-6',label:'Claude Opus 4.6',tier:'consensus'},
+  {id:'x-ai/grok-4.20',label:'Grok 4.20',tier:'consensus'},
+  {id:'google/gemini-3-pro-preview',label:'Gemini 3 Pro',tier:'consensus'},
+  // Extras / alternatives
+  {id:'anthropic/claude-sonnet-4-5',label:'Claude Sonnet 4.5',tier:'extra'},
+  {id:'x-ai/grok-4-fast',label:'Grok 4 Fast',tier:'extra'},
+  {id:'google/gemini-3-flash-preview',label:'Gemini 3 Flash',tier:'extra'},
+  {id:'deepseek/deepseek-v3.2-speciale',label:'DeepSeek V3.2 Speciale',tier:'extra'},
 ];
 const ANT_MODELS=[
-  {id:'claude-sonnet-4-5-20251001',label:'Claude Sonnet 4.5',bench:{r:88,f:85,s:72}},
-  {id:'claude-opus-4-20250514',label:'Claude Opus 4',bench:{r:95,f:90,s:55}},
-  {id:'claude-haiku-4-5-20251001',label:'Claude Haiku 4.5',bench:{r:70,f:68,s:96}},
+  {id:'claude-sonnet-4-6',label:'Claude Sonnet 4.6'},
+  {id:'claude-opus-4-6-20260101',label:'Claude Opus 4.6'},
+  {id:'claude-haiku-4-5-20251001',label:'Claude Haiku 4.5'},
 ];
 
 // ── TIERS ──
-// max.advocate changed to claude-sonnet-4-6; max.synth confirmed claude-opus-4-7 (no change needed)
 const TIERS={
-  fast:{
-    advocate:'anthropic/claude-haiku-4-5',devil:'openai/gpt-4.1-mini',
-    factcheck:'google/gemini-2.0-flash-001',strategist:'deepseek/deepseek-chat-v3-5',
-    synth:'openai/gpt-4.1',synthLabel:'GPT-4.1',
-    antSynth:'claude-sonnet-4-5-20251001',antSynthLabel:'Claude Sonnet 4.5',
-  },
-  balanced:{
-    advocate:'anthropic/claude-sonnet-4-5',devil:'openai/gpt-4.1',
-    factcheck:'google/gemini-2.5-pro',strategist:'deepseek/deepseek-r1',
-    synth:'anthropic/claude-opus-4-7',synthLabel:'Claude Opus 4.7',
-    antSynth:'claude-opus-4-7-20250514',antSynthLabel:'Claude Opus 4.7',
-  },
-  max:{
+  fastTake:{
+    label:'⚡ Fast Take',
+    tagline:'Verdict in ~90 seconds',
+    description:'Quick decisive answers. 2 rounds, fixed stop.',
     advocate:'anthropic/claude-sonnet-4-6',
-    devil:'x-ai/grok-3',
-    factcheck:'google/gemini-2.5-pro',
-    strategist:'deepseek/deepseek-r1',
-    synth:'anthropic/claude-opus-4-7',
-    synthLabel:'Claude Opus 4.7',
-    antSynth:'claude-opus-4-7-20250514',
-    antSynthLabel:'Claude Opus 4.7',
+    devil:'x-ai/grok-4.1-fast',
+    factcheck:'google/gemini-3.1-flash-lite-preview',
+    strategist:'deepseek/deepseek-v3.2',
+    synth:'anthropic/claude-sonnet-4-6',
+    synthLabel:'Claude Sonnet 4.6',
+    antSynth:'claude-sonnet-4-6',
+    antSynthLabel:'Claude Sonnet 4.6',
+    maxRounds:2,
+    cost:'~$0.05–0.08',
+  },
+  consensus:{
+    label:'★ Consensus',
+    tagline:'Debate until the panel agrees',
+    description:'Unlimited rounds — stops at convergence or 5 rounds max.',
+    advocate:'anthropic/claude-opus-4-6',
+    devil:'x-ai/grok-4.20',
+    factcheck:'google/gemini-3-pro-preview',
+    strategist:'deepseek/deepseek-v3.2',
+    synth:'anthropic/claude-opus-4-6',
+    synthLabel:'Claude Opus 4.6',
+    antSynth:'claude-opus-4-6-20260101',
+    antSynthLabel:'Claude Opus 4.6',
+    maxRounds:5,
+    cost:'~$0.15–0.40',
   },
 };
 
+const THESIS_INSTRUCTION = `\n\nBegin your response with a single sentence of 15 words or fewer that states your core position. Place it on its own line, prefixed with "THESIS: ". Then elaborate fully below it.`;
+
 const ROLES={
-  advocate:{key:'advocate',icon:'▲',name:'Architect',title:'The Architect',color:'arch',bench:{r:88,f:82,s:75},r1:`You are The Architect. Build the 3 strongest arguments FOR the premise. No hedging. No concessions. Every claim must include a mechanism and specific evidence. NEVER use "however" or "on the other hand". Evidence must be a named source, a concrete mechanism, or a falsifiable prediction — never an appeal to unnamed authority ("studies show", "experts agree"). If you cannot name the source, state the causal mechanism explicitly instead. Max 200 words.`,r2:`You are The Architect. The Round Table has heard all opening arguments. Defend your strongest point against the Interrogator's attack. Quote or paraphrase the Interrogator's specific attack in your opening line before responding — if you cannot name what they attacked, you are not defending, you are restating. Acknowledge one [CONTRADICTED] tag only if you can immediately reframe why it doesn't undermine your thesis. Penalized for agreement. Max 150 words.`,vPrompt:`You are an independent verification agent. Assess The Architect's claims: which are factually solid vs speculative? Name at least one specific claim as solid and one as speculative — quote them verbatim. If every claim is solid or every claim is speculative, say so explicitly and explain why. What is their strongest surviving argument? Max 120 words.`},
-  devil:{key:'devil',icon:'▼',name:'Interrogator',title:'The Interrogator',color:'int',bench:{r:85,f:70,s:80},r1:`You are The Interrogator. Find the weakest structural assumption and make it collapse. Agreement = failure. No softening phrases. Attack sequence: (1) Name the weakest assumption as a single declarative sentence the premise depends on being true — not a restatement of the premise itself. If you cannot state it as "This only works if X", you have not found the assumption yet. (2) Show why it fails in the real world. (3) What is being hidden. (4) Actual outcome when assumption breaks. Max 180 words.`,r2:`You are The Interrogator. The Architect patched their argument. Find the new crack. The new crack must be in a different structural assumption than the one you attacked in Round 1 — if you recycle the same target, the attack fails. State which assumption you are now targeting and confirm it differs from your opening. If they pivoted, attack the pivot. Strictly forbidden from sounding like agreement. Max 150 words.`,vPrompt:`You are an independent verification agent. Were The Interrogator's attacks logically valid? Which was strongest? What was overblown? For the strongest attack, state the logical form (e.g., "claim X requires Y, Y is false, therefore X fails"); for the overblown one, state which step of its logic does not hold. Max 120 words.`},
-  factcheck:{key:'factcheck',icon:'◆',name:'Auditor',title:'The Auditor',color:'aud',bench:{r:75,f:95,s:70},r1:`You are The Auditor. You have exactly one job: tag every factual claim made in the source text. No opinions, no analysis, no preamble, no summary.\n\nOUTPUT FORMAT — one claim per line, exactly this structure:\n- [TAG] → Claim (≤12 words) → Evidence (≤15 words)\n\nTAGS — use exactly one per line:\n[VERIFIED] — claim matches widely documented fact\n[UNVERIFIED] — claim is plausible but you cannot confirm the source\n[CONTRADICTED] — claim conflicts with widely documented fact\n[uncertain source] — claim cites a specific source but you cannot confirm that source is accurate\n\nHARD LIMITS:\n- Maximum 8 claims total\n- Maximum 150 words total across all claims combined\n- If you cannot name a source, the tag is [UNVERIFIED] — do not invent sources\n- No text outside the bulleted list. No intro, no conclusion, no "Here are the claims:"`,r2:`You are The Auditor. Tag only factual claims that were newly introduced during Round 2 cross-examination — not claims already tagged in Round 1. If Round 2 provided new evidence that resolves a Round 1 [UNVERIFIED] tag, note it with prefix UPDATE: on its own line.\n\nOUTPUT FORMAT — one claim per line, exactly this structure:\n- [TAG] → Claim (≤12 words) → Evidence (≤15 words)\n\nHARD LIMITS:\n- Maximum 8 claims total\n- Maximum 150 words total\n- Same tag set as Round 1: [VERIFIED] [UNVERIFIED] [CONTRADICTED] [uncertain source]\n- No text outside the bulleted list`,vPrompt:`You are an independent verification agent. Pick the three most load-bearing claims in the debate (the ones the verdict depends on) and cross-check only those — for each, state VERIFIED/UNVERIFIED/CONTRADICTED with one-line justification. Do not attempt to cover all claims. Max 120 words.`},
-  strategist:{key:'strategist',icon:'●',name:'Realist',title:'The Realist',color:'real',bench:{r:82,f:78,s:78},r1:`You are The Realist. No position for or against. Execution risk only. Output: (1) Most likely failure mode with specific mechanism. (2) Hidden dependency nobody mentioned. (3) Concrete decision criterion — a numeric threshold, observable event, or measurable metric that would flip your risk assessment. Examples of valid form: "if X exceeds 15%", "if Y happens before Q2", "if Z metric drops below N". Vague criteria ("if conditions are right") fail this role. Max 160 words.`,r2:`You are The Realist. Update the risk picture based on the full Round 1 debate and Auditor tags. What changed? What didn't? Update failure mode and decision criterion. If Round 1 produced no new information that changes your Round 1 risk assessment, say so explicitly — do not invent updates. Only revise the failure mode or decision criterion if a specific Auditor tag or debate exchange warrants it, and name which one. Max 140 words.`,vPrompt:`You are an independent verification agent. Were The Realist's failure modes realistic? Was the decision criterion actionable? For each, quote the specific claim you are evaluating before judging it — "actionable" means a reader could act on it today without further clarification. Max 120 words.`}
+  advocate:{key:'advocate',icon:'▲',name:'Architect',title:'The Architect',color:'arch',
+    r1:`You are The Architect. Build the 3 strongest arguments FOR the premise. No hedging. No concessions. Every claim must include a mechanism and specific evidence. NEVER use "however" or "on the other hand". Evidence must be a named source, a concrete mechanism, or a falsifiable prediction — never an appeal to unnamed authority ("studies show", "experts agree"). If you cannot name the source, state the causal mechanism explicitly instead. Max 200 words.`+THESIS_INSTRUCTION,
+    r2:`You are The Architect. The Round Table has heard all opening arguments. Defend your strongest point against the Interrogator's attack. Quote or paraphrase the Interrogator's specific attack in your opening line before responding — if you cannot name what they attacked, you are not defending, you are restating. Acknowledge one [CONTRADICTED] tag only if you can immediately reframe why it doesn't undermine your thesis. Penalized for agreement. Max 150 words.`+THESIS_INSTRUCTION,
+    vPrompt:`You are an independent verification agent. Assess The Architect's claims: which are factually solid vs speculative? Name at least one specific claim as solid and one as speculative — quote them verbatim. If every claim is solid or every claim is speculative, say so explicitly and explain why. What is their strongest surviving argument? Max 120 words.`},
+  devil:{key:'devil',icon:'▼',name:'Interrogator',title:'The Interrogator',color:'int',
+    r1:`You are The Interrogator. Find the weakest structural assumption and make it collapse. Agreement = failure. No softening phrases. Attack sequence: (1) Name the weakest assumption as a single declarative sentence the premise depends on being true — not a restatement of the premise itself. If you cannot state it as "This only works if X", you have not found the assumption yet. (2) Show why it fails in the real world. (3) What is being hidden. (4) Actual outcome when assumption breaks. Max 180 words.`+THESIS_INSTRUCTION,
+    r2:`You are The Interrogator. The Architect patched their argument. Find the new crack. The new crack must be in a different structural assumption than the one you attacked in Round 1 — if you recycle the same target, the attack fails. State which assumption you are now targeting and confirm it differs from your opening. If they pivoted, attack the pivot. Strictly forbidden from sounding like agreement. Max 150 words.`+THESIS_INSTRUCTION,
+    vPrompt:`You are an independent verification agent. Were The Interrogator's attacks logically valid? Which was strongest? What was overblown? For the strongest attack, state the logical form (e.g., "claim X requires Y, Y is false, therefore X fails"); for the overblown one, state which step of its logic does not hold. Max 120 words.`},
+  factcheck:{key:'factcheck',icon:'◆',name:'Auditor',title:'The Auditor',color:'aud',
+    r1:`You are The Auditor. You have exactly one job: tag every factual claim made in the source text. No opinions, no analysis, no preamble, no summary.\n\nOUTPUT FORMAT — one claim per line, exactly this structure:\n- [TAG] → Claim (≤12 words) → Evidence (≤15 words)\n\nTAGS — use exactly one per line:\n[VERIFIED] — claim matches widely documented fact\n[UNVERIFIED] — claim is plausible but you cannot confirm the source\n[CONTRADICTED] — claim conflicts with widely documented fact\n[uncertain source] — claim cites a specific source but you cannot confirm that source is accurate\n\nHARD LIMITS:\n- Maximum 8 claims total\n- Maximum 150 words total across all claims combined\n- If you cannot name a source, the tag is [UNVERIFIED] — do not invent sources\n- No text outside the bulleted list. No intro, no conclusion, no "Here are the claims:"`+THESIS_INSTRUCTION,
+    r2:`You are The Auditor. Tag only factual claims that were newly introduced during Round 2 cross-examination — not claims already tagged in Round 1. If Round 2 provided new evidence that resolves a Round 1 [UNVERIFIED] tag, note it with prefix UPDATE: on its own line.\n\nOUTPUT FORMAT — one claim per line, exactly this structure:\n- [TAG] → Claim (≤12 words) → Evidence (≤15 words)\n\nHARD LIMITS:\n- Maximum 8 claims total\n- Maximum 150 words total\n- Same tag set as Round 1: [VERIFIED] [UNVERIFIED] [CONTRADICTED] [uncertain source]\n- No text outside the bulleted list`+THESIS_INSTRUCTION,
+    vPrompt:`You are an independent verification agent. Pick the three most load-bearing claims in the debate (the ones the verdict depends on) and cross-check only those — for each, state VERIFIED/UNVERIFIED/CONTRADICTED with one-line justification. Do not attempt to cover all claims. Max 120 words.`},
+  strategist:{key:'strategist',icon:'●',name:'Realist',title:'The Realist',color:'real',
+    r1:`You are The Realist. No position for or against. Execution risk only. Output: (1) Most likely failure mode with specific mechanism. (2) Hidden dependency nobody mentioned. (3) Concrete decision criterion — a numeric threshold, observable event, or measurable metric that would flip your risk assessment. Examples of valid form: "if X exceeds 15%", "if Y happens before Q2", "if Z metric drops below N". Vague criteria ("if conditions are right") fail this role. Max 160 words.`+THESIS_INSTRUCTION,
+    r2:`You are The Realist. Update the risk picture based on the full Round 1 debate and Auditor tags. What changed? What didn't? Update failure mode and decision criterion. If Round 1 produced no new information that changes your Round 1 risk assessment, say so explicitly — do not invent updates. Only revise the failure mode or decision criterion if a specific Auditor tag or debate exchange warrants it, and name which one. Max 140 words.`+THESIS_INSTRUCTION,
+    vPrompt:`You are an independent verification agent. Were The Realist's failure modes realistic? Was the decision criterion actionable? For each, quote the specific claim you are evaluating before judging it — "actionable" means a reader could act on it today without further clarification. Max 120 words.`}
 };
 
 let apiMode='openrouter';
-let currentTier='balanced';
+let currentTier='fastTake';
 let activeRoles=new Set(['advocate','devil','factcheck','strategist']);
 let debateResults={r1:{},r2:{}};
 let lastQuery='';
 let lastVerdict=null;
 let verdictText='';
 let configCollapsed=false;
+
+// ── RATE LIMITING ──
+const DEBATE_COOLDOWN_MS = 4000;
+let lastDebateTime = 0;
+let sessionDebateCount = 0;
+const SESSION_HARD_LIMIT = 20;
+
+function showCostModal(costRange) {
+  return new Promise((resolve) => {
+    document.getElementById('cost-modal-range').textContent = costRange;
+    const overlay = document.getElementById('cost-modal-overlay');
+    overlay.classList.add('show');
+    const runBtn = document.getElementById('cost-modal-run');
+    const cancelBtn = document.getElementById('cost-modal-cancel');
+    const cleanup = () => { overlay.classList.remove('show'); runBtn.onclick = null; cancelBtn.onclick = null; };
+    runBtn.onclick = () => { cleanup(); resolve(true); };
+    cancelBtn.onclick = () => { cleanup(); resolve(false); };
+  });
+}
 
 // ── ADDITIONAL ROUND PROMPTS (rounds 3+) ──
 function getAdditionalRoundPrompt(rKey, roundNum) {
@@ -899,20 +1172,85 @@ async function runArbiter(query, allRoundsContext, roundNum) {
   document.getElementById('arb-verdict').innerHTML = '<div class="pulse"><div class="pd"></div><div class="pd"></div><div class="pd"></div></div>';
   const sys = `You are The Arbiter. The Round Table has completed ${roundNum} rounds. Deliver a decisive verdict.\n\nHARD RULES:\n- MUST take a position. "It depends" requires an immediate threshold.\n- MUST NOT recommend "more research" as a conclusion.\n- Confidence penalty: each [UNVERIFIED] caps at 75; each [CONTRADICTED] caps at 60; 3+ [UNVERIFIED] caps at 50. Apply strictest cap.\n- deciding_factor must be a testable condition, not a vague label.\n\nOutput ONLY valid JSON, no markdown:\n{"verdict":"150-200 word conclusion","logical_soundness":0-100,"factual_grounding":0-100,"execution_risk":0-100,"confidence":0-100,"survived":["..."],"collapsed":["..."],"deciding_factor":"one testable condition","rounds_completed":${roundNum}}`;
   const raw = await callModel(arbModelId, sys, `QUESTION: ${query}\n\nFULL DEBATE:\n${allRoundsContext}`, 1200);
-  let parsed;
-  try{parsed=JSON.parse(raw.replace(/```json|```/g,'').trim());}
-  catch{parsed={verdict:raw,logical_soundness:70,factual_grounding:65,execution_risk:55,confidence:68,survived:[],collapsed:[],deciding_factor:'Unable to parse structured verdict.',rounds_completed:roundNum};}
+  const parsed = parseArbiterVerdict(raw);
   return {parsed, arbLabel};
 }
 
+function parseArbiterVerdict(text) {
+  const clean = text.replace(/```json|```/gi, '').trim();
+  let parsed;
+  try {
+    parsed = JSON.parse(clean);
+  } catch (e) {
+    return {
+      verdict: clean,
+      logical_soundness: 50,
+      factual_grounding: 50,
+      execution_risk: 50,
+      confidence: 50,
+      scores: { logical: 50, factual: 50, risk: 50 },
+      survived: [],
+      collapsed: [],
+      deciding_factor: 'Arbiter response could not be parsed as structured JSON.',
+      rounds_completed: null,
+      parseError: true
+    };
+  }
+  return {
+    verdict:           parsed.verdict           ?? 'No verdict text returned.',
+    logical_soundness: parsed.logical_soundness ?? parsed.scores?.logical ?? 50,
+    factual_grounding: parsed.factual_grounding ?? parsed.scores?.factual ?? 50,
+    execution_risk:    parsed.execution_risk    ?? parsed.scores?.risk    ?? 50,
+    confidence:        parsed.confidence        ?? 50,
+    survived:          parsed.survived          ?? [],
+    collapsed:         parsed.collapsed         ?? [],
+    deciding_factor:   parsed.deciding_factor   ?? parsed.decidingFactor  ?? '',
+    rounds_completed:  parsed.rounds_completed  ?? parsed.roundsRun       ?? null,
+    parseError:        false
+  };
+}
+
 // ── RENDER FINAL VERDICT ──
+function getVerdictState(confidence, totalRounds) {
+  // Three verdict states based on confidence and rounds
+  if (confidence >= 70) return { cls: 'vstate-consensus', label: '✅ Consensus', icon: '✅' };
+  if (confidence >= 50) return { cls: 'vstate-partial',   label: '⚠️ Partial Convergence', icon: '⚠️' };
+  return                       { cls: 'vstate-disagree',  label: '❌ Genuine Disagreement', icon: '❌' };
+}
+
 function renderVerdict(parsed, totalRounds) {
   verdictText = parsed.verdict;lastVerdict = parsed;
+
+  // 2.2: Three verdict states
+  const state = getVerdictState(parsed.confidence || 0, totalRounds);
+  const existingState = document.getElementById('verdict-state-badge');
+  if (existingState) existingState.remove();
+  const stateBadge = document.createElement('div');
+  stateBadge.id = 'verdict-state-badge';
+  stateBadge.className = `verdict-state-badge ${state.cls}`;
+  stateBadge.textContent = state.label;
+  document.getElementById('arb-crown').appendChild(stateBadge);
+
+  // 1.3: Parse error badge
+  const existingBadge = document.getElementById('parse-err-badge');
+  if (existingBadge) existingBadge.remove();
+  if (parsed.parseError) {
+    const badge = document.createElement('div');
+    badge.id = 'parse-err-badge';
+    badge.className = 'parse-err-badge';
+    badge.innerHTML = '⚠ Structured verdict unavailable — raw response shown below';
+    document.getElementById('arb-verdict').before(badge);
+  }
+
   document.getElementById('arb-verdict').textContent = parsed.verdict;
   document.getElementById('df-txt').textContent = parsed.deciding_factor || '—';
-  document.getElementById('table-center-label').textContent = `Consensus\n${totalRounds} Round${totalRounds===1?'':'s'}`;
+
+  // 2.3: Dynamic round count display (not hardcoded)
+  const roundWord = totalRounds === 1 ? 'round' : 'rounds';
+  document.getElementById('table-center-label').textContent = `${state.icon} ${totalRounds} ${roundWord}`;
   document.getElementById('round-num-label').textContent = 'Final /';
-  document.getElementById('round-title-label').textContent = `Arbiter's Verdict · ${totalRounds} Round${totalRounds===1?'':'s'}`;
+  document.getElementById('round-title-label').textContent = `Arbiter's Verdict · ${totalRounds} ${roundWord}`;
+
   setTimeout(()=>{
     const scores={log:parsed.logical_soundness,fac:parsed.factual_grounding,exe:parsed.execution_risk,con:parsed.confidence};
     Object.entries(scores).forEach(([k,v])=>{const el=document.getElementById(`s-${k}`);const fill=document.getElementById(`sf-${k}`);if(el&&v!==undefined)el.textContent=v+'%';if(fill&&v!==undefined)fill.style.width=v+'%';});
@@ -923,6 +1261,9 @@ function renderVerdict(parsed, totalRounds) {
   document.getElementById('tts-btn').classList.add('show');
   document.getElementById('verify-btn').classList.add('show');
   document.getElementById('export-btn').classList.add('show');
+  // Show voice selector for TTS
+  const voiceSel = document.getElementById('tts-voice');
+  if (voiceSel) voiceSel.style.display = 'block';
 }
 
 function toggleTheme(){
@@ -934,9 +1275,40 @@ function toggleTheme(){
 function setMode(m,btn){apiMode=m;document.querySelectorAll('.seg-b').forEach(b=>b.classList.remove('on'));btn.classList.add('on');renderAgents();}
 function setTier(t,btn){
   currentTier=t;
-  document.querySelectorAll('.tier-b').forEach(b=>b.className=b.className.replace(/t-fast|t-bal|t-max/,'').trim().replace(' on',''));
+  document.querySelectorAll('.tier-b').forEach(b=>b.classList.remove('on'));
   btn.classList.add('on');renderAgents();
+  // Update MAX_ROUNDS dynamically
+  window._maxRounds = TIERS[currentTier].maxRounds;
 }
+// ── 2.5 QUERY VALIDATION ──
+function validateQuery(text) {
+  const len = text.trim().length;
+  if (len === 0)   return { valid: false, msg: '' };
+  if (len < 10)    return { valid: false, msg: 'Query too short — add more detail for a useful debate.' };
+  if (len > 5000)  return { valid: false, msg: `Query too long (${len}/5000 chars). Trim it down.` };
+  if (len > 3000)  return { valid: true,  warning: true, msg: `Long query (${len} chars) — this will cost more.` };
+  return { valid: true };
+}
+
+function onQueryInput(el) {
+  const text = el.value;
+  const len = text.trim().length;
+  const result = validateQuery(text);
+  // Determine which hint/count/btn to update based on textarea id
+  const isQT = el.id === 'qt-query';
+  const hint = document.getElementById(isQT ? 'qt-query-hint' : 'query-hint');
+  const count = document.getElementById(isQT ? 'qt-char-count' : 'q-char-count');
+  const btn = document.getElementById(isQT ? 'qt-run-btn' : 'run-btn');
+  if (count) count.textContent = `${len} / 5000`;
+  if (hint) {
+    hint.className = 'query-hint';
+    hint.textContent = result.msg || '';
+    if (!result.valid && result.msg) hint.classList.add('err');
+    else if (result.warning) hint.classList.add('warn');
+  }
+  if (btn) btn.disabled = !result.valid;
+}
+
 function renderAgents(){
   const grid=document.getElementById('agents-grid');grid.innerHTML='';
   const models=apiMode==='openrouter'?OR_MODELS:ANT_MODELS;
@@ -945,6 +1317,7 @@ function renderAgents(){
     const on=activeRoles.has(key);
     const defM=td[key]||models[0].id;
     const mData=models.find(m=>m.id===defM)||models[0];
+    const tierTag=mData.tier==='fast'?'<span class="model-tag-fast">⚡ Fast</span>':mData.tier==='consensus'?'<span class="model-tag-cons">★ Consensus</span>':'<span class="model-tag-extra">◆ Alt</span>';
     const card=document.createElement('div');
     card.className=`agent-card r-${role.color}${on?'':' disabled'}`;
     card.innerHTML=`
@@ -959,18 +1332,8 @@ function renderAgents(){
       <select class="ac-sel" id="model-${key}" ${on?'':'disabled'}>
         ${models.map(m=>`<option value="${m.id}" ${m.id===defM?'selected':''}>${m.label}</option>`).join('')}
       </select>
-      <div class="bench">
-        <div class="bench-row"><span class="bench-label">Reasoning</span><div class="bench-track"><div class="bench-fill" style="width:${mData.bench?.r||75}%"></div></div><span class="bench-val">${mData.bench?.r||75}</span></div>
-        <div class="bench-row"><span class="bench-label">Factual</span><div class="bench-track"><div class="bench-fill" style="width:${mData.bench?.f||75}%"></div></div><span class="bench-val">${mData.bench?.f||75}</span></div>
-        <div class="bench-row"><span class="bench-label">Speed</span><div class="bench-track"><div class="bench-fill" style="width:${mData.bench?.s||75}%"></div></div><span class="bench-val">${mData.bench?.s||75}</span></div>
-      </div>`;
-    card.querySelector('.ac-sel').addEventListener('change',function(){
-      const sel=models.find(m=>m.id===this.value)||{bench:{r:75,f:75,s:75}};
-      const fills=card.querySelectorAll('.bench-fill');const vals=card.querySelectorAll('.bench-val');
-      const b=sel.bench||{r:75,f:75,s:75};
-      fills[0].style.width=b.r+'%';fills[1].style.width=b.f+'%';fills[2].style.width=b.s+'%';
-      vals[0].textContent=b.r;vals[1].textContent=b.f;vals[2].textContent=b.s;
-    });
+      <div class="model-meta">${tierTag}</div>`;
+    card.querySelector('.ac-sel').addEventListener('change',function(){});
     grid.appendChild(card);
   });
 }
@@ -995,10 +1358,12 @@ function renderTags(t){return t.replace(/\[VERIFIED\]/g,'<span class="tag-v tv">
 
 function collapseConfig(query){
   const q=query||document.getElementById('query').value.trim();
-  const tierLabel=currentTier.charAt(0).toUpperCase()+currentTier.slice(1);
+  const tierData=TIERS[currentTier];
+  const tierLabel=tierData?tierData.label:currentTier;
+  const tierCost=tierData?` · ${tierData.cost}`:'';
   const truncQ=q.length>60?q.substring(0,57)+'…':q||'—';
   document.getElementById('csumm-q').textContent=truncQ;
-  document.getElementById('csumm-tier').textContent=tierLabel;
+  document.getElementById('csumm-tier').textContent=tierLabel+tierCost;
   document.getElementById('config-shell').classList.add('collapsed');
   document.getElementById('config-summary').classList.add('show');
   document.getElementById('bgsb-edit-btn').textContent='↑ Edit Config';
@@ -1028,7 +1393,8 @@ function bgBarUpdate(txt,progress=''){
 function bgBarVerdictReady(totalRounds){
   const bar=document.getElementById('bg-status-bar');
   document.getElementById('bgsb-dot').classList.add('done');
-  document.getElementById('bgsb-txt').textContent=`Verdict Ready ↓  (${totalRounds} round${totalRounds===1?'':'s'})`;
+  const roundWord = totalRounds === 1 ? 'round' : 'rounds';
+  document.getElementById('bgsb-txt').textContent=`Verdict Ready ↓  (${totalRounds} ${roundWord})`;
   document.getElementById('bgsb-progress').textContent='';
   bar.classList.add('verdict-ready');bar.style.cursor='pointer';
   bar.onclick=(e)=>{if(e.target.id==='bgsb-edit-btn')return;document.getElementById('arbiter-section').scrollIntoView({behavior:'smooth',block:'start'});};
@@ -1093,9 +1459,19 @@ function setSeatDone(rKey,text){
   const bub=document.getElementById(`bubble-${rKey}`);
   if(bub){bub.innerHTML=renderTags(text.substring(0,180)+(text.length>180?'…':''));bub.classList.add('show')}
 }
+function extractThesis(text) {
+  const m = text.match(/^THESIS:\s*(.+)/m);
+  if (m) return { thesis: m[1].trim(), body: text.replace(/^THESIS:.+\n?/m, '').trim() };
+  // Fallback: use first sentence
+  const first = text.split(/[.!?]/)[0];
+  return { thesis: (first||text).substring(0,120).trim(), body: text };
+}
+
 function addTranscriptCard(gridId,rKey,modelId,text){
   const role=ROLES[rKey];const grid=document.getElementById(gridId);
   const color=role.color==='arch'?'wattle':role.color==='int'?'red':role.color==='aud'?'blue':'amber';
+  const {thesis, body} = extractThesis(text);
+  const cardId = `tc-${gridId}-${rKey}-${Date.now()}`;
   const card=document.createElement('div');card.className='tr-card';
   card.style.borderTop=`2px solid var(--${color})`;
   card.innerHTML=`
@@ -1106,16 +1482,58 @@ function addTranscriptCard(gridId,rKey,modelId,text){
       </div>
       <span class="tr-model">${mLabel(modelId)}</span>
     </div>
-    <div class="tr-body">${renderTags(text)}</div>`;
+    <div class="agent-thesis" onclick="toggleTranscriptCard('${cardId}')">${thesis}</div>
+    <div class="agent-full-arg" id="${cardId}">${renderTags(body)}</div>
+    <button class="agent-expand-btn" id="${cardId}-btn" onclick="toggleTranscriptCard('${cardId}')">▸ Read full argument</button>`;
   grid.appendChild(card);
+}
+
+function toggleTranscriptCard(id) {
+  const arg = document.getElementById(id);
+  const btn = document.getElementById(id+'-btn');
+  if (!arg) return;
+  const isOpen = arg.classList.contains('open');
+  arg.classList.toggle('open', !isOpen);
+  if (btn) {
+    btn.textContent = isOpen ? '▸ Read full argument' : '▴ Collapse';
+    btn.classList.toggle('open', !isOpen);
+  }
 }
 
 async function runDebate(){
   const query=document.getElementById('query').value.trim();
   if(!query){document.getElementById('query').focus();return}
+
+  // 2.5: Validate query
+  const validation = validateQuery(query);
+  if (!validation.valid) {
+    showErr(validation.msg || 'Query too short.');
+    return;
+  }
   if(!document.getElementById('api-key').value.trim()){showErr('Enter your API key above.');return}
   const roles=Array.from(activeRoles);
   if(roles.length<2){showErr('Enable at least 2 roles.');return}
+
+  // Rate limiting
+  const now = Date.now();
+  const elapsed = now - lastDebateTime;
+  if (elapsed < DEBATE_COOLDOWN_MS) {
+    const wait = Math.ceil((DEBATE_COOLDOWN_MS - elapsed) / 1000);
+    showErr(`Please wait ${wait}s before running another debate.`);
+    return;
+  }
+  if (sessionDebateCount >= SESSION_HARD_LIMIT) {
+    showErr('Session limit reached (20 debates). Refresh to continue.');
+    return;
+  }
+  // First-run cost warning (OpenRouter mode only)
+  if (sessionDebateCount === 0 && apiMode === 'openrouter') {
+    const confirmed = await showCostModal(TIERS[currentTier].cost);
+    if (!confirmed) return;
+  }
+  lastDebateTime = Date.now();
+  sessionDebateCount++;
+
   const btn=document.getElementById('run-btn');
   btn.disabled=true;btn.textContent='Convening...';
   clearErr();
@@ -1165,7 +1583,8 @@ async function runDebate(){
     // ── CONSENSUS LOOP ──
     let currentRound = 1;
     let finalParsed = null;
-    while (currentRound < MAX_ROUNDS) {
+    const tierMaxRounds = TIERS[currentTier].maxRounds || MAX_ROUNDS;
+    while (currentRound < tierMaxRounds) {
       currentRound++;
       const roundResults = await runCrossExamRound(currentRound, roles, allRoundsContext, query);
       if (currentRound === 2) {
@@ -1182,7 +1601,7 @@ async function runDebate(){
         confidence >= CONSENSUS_THRESHOLD ? 'Consensus reached!' : `Need ≥${CONSENSUS_THRESHOLD}% · Continuing…`
       );
       if (confidence >= CONSENSUS_THRESHOLD) break;
-      if (currentRound < MAX_ROUNDS) {
+      if (currentRound < tierMaxRounds) {
         setStatus(`Confidence ${confidence}% — below ${CONSENSUS_THRESHOLD}%. Running round ${currentRound+1}...`);
         await new Promise(r=>setTimeout(r,800));
       }
@@ -1200,21 +1619,60 @@ async function runDebate(){
 async function hearVerdict(){
   if(!verdictText)return;
   const key=document.getElementById('api-key').value.trim();
-  if(!key){showErr('API key required for TTS');return}
-  const btn=document.getElementById('tts-btn');btn.textContent='⏳ Generating...';btn.disabled=true;
-  try{
-    const resp=await fetch('https://api.openai.com/v1/audio/speech',{method:'POST',headers:{'Content-Type':'application/json','Authorization':`Bearer ${key}`},body:JSON.stringify({model:'tts-1',voice:'onyx',input:verdictText})});
-    if(!resp.ok)throw new Error('TTS failed');
-    const blob=await resp.blob();const url=URL.createObjectURL(blob);
-    const audio=new Audio(url);audio.play();btn.textContent='▶ Playing...';
-    audio.onended=()=>{btn.textContent='▶ Hear the Verdict';btn.disabled=false}
-  }catch(e){
-    if('speechSynthesis' in window){
-      const utt=new SpeechSynthesisUtterance(verdictText);utt.rate=0.92;utt.pitch=0.9;
-      window.speechSynthesis.speak(utt);btn.textContent='▶ Playing...';
-      utt.onend=()=>{btn.textContent='▶ Hear the Verdict';btn.disabled=false}
-    }else{btn.textContent='▶ Hear the Verdict';btn.disabled=false;showErr('TTS unavailable. Check your OpenAI API key.');}
+  const btn=document.getElementById('tts-btn');
+  const stopBtn=document.getElementById('tts-stop');
+  const voiceSel=document.getElementById('tts-voice');
+  const voice = voiceSel ? voiceSel.value : 'onyx';
+
+  btn.textContent='⏳ Generating...';btn.disabled=true;
+
+  // Try OpenRouter TTS first (same key as debates, no separate OpenAI key needed)
+  if(key && apiMode==='openrouter'){
+    try{
+      const response=await fetch('https://openrouter.ai/api/v1/audio/speech',{
+        method:'POST',
+        headers:{'Authorization':`Bearer ${key}`,'Content-Type':'application/json'},
+        body:JSON.stringify({model:'openai/gpt-4o-mini-tts-2025-12-15',input:verdictText,voice})
+      });
+      if(!response.ok) throw new Error(`TTS API error: ${response.status}`);
+      const audioBlob=await response.blob();
+      const audioUrl=URL.createObjectURL(audioBlob);
+      playAudio(audioUrl,btn,stopBtn);
+      return;
+    }catch(e){
+      console.warn('OpenRouter TTS failed, falling back to browser speech',e);
+    }
   }
+
+  // Browser SpeechSynthesis fallback (free, no key needed)
+  if('speechSynthesis' in window){
+    const utt=new SpeechSynthesisUtterance(verdictText);
+    utt.rate=0.95;utt.pitch=1;
+    window.speechSynthesis.speak(utt);
+    btn.textContent='▶ Playing...';
+    if(stopBtn) stopBtn.style.display='inline-flex';
+    utt.onend=()=>{
+      btn.textContent='▶ Hear the Verdict';btn.disabled=false;
+      if(stopBtn) stopBtn.style.display='none';
+    };
+    stopBtn.onclick=()=>{window.speechSynthesis.cancel();btn.textContent='▶ Hear the Verdict';btn.disabled=false;stopBtn.style.display='none';};
+  }else{
+    btn.textContent='▶ Hear the Verdict';btn.disabled=false;
+    showErr('TTS unavailable. Try OpenRouter mode with a valid API key.');
+  }
+}
+
+function playAudio(url,btn,stopBtn){
+  const audio=new Audio(url);
+  audio.play();
+  btn.textContent='▶ Playing...';
+  if(stopBtn) stopBtn.style.display='inline-flex';
+  audio.onended=()=>{
+    btn.textContent='▶ Hear the Verdict';btn.disabled=false;
+    if(stopBtn) stopBtn.style.display='none';
+    URL.revokeObjectURL(url);
+  };
+  if(stopBtn) stopBtn.onclick=()=>{audio.pause();audio.currentTime=0;btn.textContent='▶ Hear the Verdict';btn.disabled=false;stopBtn.style.display='none';URL.revokeObjectURL(url);};
 }
 
 async function runVerification(){
@@ -1266,6 +1724,9 @@ function resetAll(){
     document.getElementById('verify-btn').classList.remove('show');
     document.getElementById('export-btn').classList.remove('show');
     document.getElementById('tts-btn').classList.remove('show');
+    const stopBtn=document.getElementById('tts-stop');if(stopBtn)stopBtn.style.display='none';
+    const voiceSel=document.getElementById('tts-voice');if(voiceSel)voiceSel.style.display='none';
+    const stateBadge=document.getElementById('verdict-state-badge');if(stateBadge)stateBadge.remove();
     ['log','fac','exe','con'].forEach(k=>{
       const el=document.getElementById(`s-${k}`);const fill=document.getElementById(`sf-${k}`);
       if(el)el.textContent='—';if(fill)fill.style.width='0%';
@@ -1275,6 +1736,130 @@ function resetAll(){
     document.getElementById('df-txt').textContent='—';
   },450);
   document.getElementById('query').focus();
+}
+
+// ── PHASE 4: QUICK TAKE ──
+const QUICK_ROLES = {
+  for: {
+    label: '▲ For It',
+    emoji: '▲',
+    prompt: 'Make the strongest case FOR this idea. Give 3 concrete reasons it works. Be direct and persuasive. No hedging.'
+  },
+  against: {
+    label: '▼ Against It',
+    emoji: '▼',
+    prompt: 'Find the weakest assumption this idea depends on. Why does it fail? State the core assumption in one sentence, then explain why it breaks. Be specific and adversarial.'
+  },
+  factcheck: {
+    label: '◆ Fact Check',
+    emoji: '◆',
+    prompt: 'Identify every claim that needs verification. Tag each with [VERIFY], [UNVERIFIED], or [CONTRADICTED]. Format as a bulleted list. Be precise and cite mechanisms where possible.'
+  },
+  risk: {
+    label: '● Risk Analysis',
+    emoji: '●',
+    prompt: 'What is the single most likely failure mode? State it in one sentence. Then give: (1) the specific mechanism of failure, (2) one concrete metric or event that would signal it is happening, (3) what would change your assessment. Be concrete, not vague.'
+  },
+  raw: {
+    label: '→ Raw Response',
+    emoji: '→',
+    prompt: 'Answer directly and honestly. No hedging, no role-playing, no preamble. Just your best, most direct assessment of this question or claim.'
+  }
+};
+
+let currentQTRole = 'for';
+
+function setMode_debate(btn) {
+  document.getElementById('debate-config-panel').style.display = '';
+  document.getElementById('quick-take-panel').classList.remove('show');
+  document.getElementById('mode-debate-btn').classList.add('active');
+  document.getElementById('mode-quick-btn').classList.remove('active');
+}
+
+function setMode_quick(btn) {
+  document.getElementById('debate-config-panel').style.display = 'none';
+  document.getElementById('quick-take-panel').classList.add('show');
+  document.getElementById('mode-quick-btn').classList.add('active');
+  document.getElementById('mode-debate-btn').classList.remove('active');
+  renderQTModels();
+}
+
+function renderQTModels() {
+  const sel = document.getElementById('qt-model');
+  if (!sel) return;
+  const models = apiMode === 'openrouter' ? OR_MODELS : ANT_MODELS;
+  const tier = TIERS[currentTier];
+  const defaultId = tier.advocate; // sensible default
+  sel.innerHTML = models.map(m =>
+    `<option value="${m.id}" ${m.id === defaultId ? 'selected' : ''}>${m.label}</option>`
+  ).join('');
+}
+
+function selectQTRole(btn) {
+  document.querySelectorAll('.qt-role-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  currentQTRole = btn.dataset.role;
+}
+
+async function runQuickTake() {
+  const query = document.getElementById('qt-query').value.trim();
+  if (!query) { document.getElementById('qt-query').focus(); return; }
+  const validation = validateQuery(query);
+  if (!validation.valid) {
+    document.getElementById('qt-err-area').innerHTML = `<div class="err">⚠ ${validation.msg}</div>`;
+    return;
+  }
+  const key = document.getElementById('api-key').value.trim();
+  if (!key) {
+    document.getElementById('qt-err-area').innerHTML = `<div class="err">⚠ Enter your API key above.</div>`;
+    return;
+  }
+
+  const role = QUICK_ROLES[currentQTRole];
+  const modelId = document.getElementById('qt-model').value;
+  const btn = document.getElementById('qt-run-btn');
+  btn.disabled = true; btn.textContent = '⏳ Thinking...';
+  document.getElementById('qt-err-area').innerHTML = '';
+  document.getElementById('qt-result').classList.remove('show');
+
+  try {
+    const text = await callModel(modelId, role.prompt, query, 900);
+    // Render result
+    document.getElementById('qt-result-role').textContent = role.label;
+    document.getElementById('qt-result-model').textContent = mLabel(modelId);
+    document.getElementById('qt-result-body').innerHTML = renderTags(text);
+    document.getElementById('qt-result').classList.add('show');
+    document.getElementById('qt-result').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  } catch (e) {
+    document.getElementById('qt-err-area').innerHTML = `<div class="err">⚠ ${e.message}</div>`;
+  } finally {
+    btn.disabled = false; btn.textContent = '💭 Get Take';
+  }
+}
+
+// 4.3 Escalate to full debate
+function escalateToDebate() {
+  const query = document.getElementById('qt-query').value.trim();
+  // Switch to debate mode
+  setMode_debate();
+  document.getElementById('mode-debate-btn').classList.add('active');
+  document.getElementById('mode-quick-btn').classList.remove('active');
+  // Pre-fill query and set tier to consensus
+  document.getElementById('query').value = query;
+  onQueryInput(document.getElementById('query'));
+  setTier('consensus', document.querySelector('[data-tier="consensus"]'));
+  document.querySelector('[data-tier="consensus"]').classList.add('on');
+  document.querySelector('[data-tier="fastTake"]').classList.remove('on');
+  // Scroll to query
+  document.getElementById('query').scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function stopTTS(){
+  if('speechSynthesis' in window) window.speechSynthesis.cancel();
+  const btn=document.getElementById('tts-btn');
+  const stopBtn=document.getElementById('tts-stop');
+  if(btn){btn.textContent='▶ Hear the Verdict';btn.disabled=false;}
+  if(stopBtn) stopBtn.style.display='none';
 }
 
 renderAgents();
